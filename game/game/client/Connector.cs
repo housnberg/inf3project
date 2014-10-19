@@ -26,13 +26,13 @@ namespace game.client
         /// <param name="port">applicationport</param>
         public Connector(String ip, UInt16 port)
         {
+            Contract.Requires(ip != null && ip.Length > 6 && ip.Length < 16);
+            Contract.Requires(port >= 0 && port <= 65535);
             this.connect(ip, port);
             //buffer = new Buffer();
             stream = this.getNetworkStream();
             receiver = new Thread(this.receiveServerMessage);
             receiver.Start();
-            Contract.Requires(ip != null && ip.Length > 6 && ip.Length < 16);
-            Contract.Requires(port >= 0 && port <= 65535);
             Contract.Ensures(client != null && stream != null && receiver != null);
         }
 
@@ -43,6 +43,8 @@ namespace game.client
         /// <param name="port">applicationport</param>
         public void connect(String ip, UInt16 port)
         {
+            Contract.Requires(ip != null && ip.Length > 6 && ip.Length < 16);
+            Contract.Requires(port >= 0 && port <= 65535);
             try
             {
                 if (ip != null)
@@ -70,8 +72,6 @@ namespace game.client
             {
                 Console.WriteLine(e.Message);
             }
-            Contract.Requires(ip != null && ip.Length > 6 && ip.Length < 16);
-            Contract.Requires(port >= 0 && port <= 65535);
             Contract.Ensures(client.Connected && receiver.IsAlive);
         }
 
@@ -80,6 +80,7 @@ namespace game.client
         /// </summary>
         public void disconnect()
         {
+            Contract.Requires(client != null && stream != null && receiver != null && client.Connected);
             try
             {
                 if (client == null || stream == null || receiver == null)
@@ -98,7 +99,6 @@ namespace game.client
             {
                 Console.WriteLine(e.Message);
             }
-            Contract.Requires(client != null && stream != null && receiver != null && client.Connected);
             Contract.Ensures(!client.Connected && !receiver.IsAlive);
         }
 
@@ -108,6 +108,7 @@ namespace game.client
         /// <param name="stream">the message to send</param>
         public void sendServerMessage(String message)
         {
+            Contract.Requires(stream != null && stream.CanWrite && message != null && message.Length > 0);
             try
             {
                 if (stream == null || message == null || message.Length < 1)
@@ -127,7 +128,6 @@ namespace game.client
             {
                 Console.WriteLine(e.Message);
             }
-            Contract.Requires(stream != null && stream.CanWrite && message != null && message.Length > 0);
             Contract.Ensures(stream.CanRead);
         }
 
@@ -136,6 +136,7 @@ namespace game.client
         /// </summary>
         public void receiveServerMessage()
         {
+            Contract.Requires(stream != null && stream.CanRead);
             String message;
             while (client.Connected)
             {
@@ -151,7 +152,6 @@ namespace game.client
                     */
                 }
             }
-            Contract.Requires(stream != null && stream.CanRead);
             Contract.Ensures(stream.CanRead);
         }
 
@@ -161,8 +161,6 @@ namespace game.client
         /// <returns>network stream</returns>
         private NetworkStream getNetworkStream()
         {
-            Contract.Requires(client != null && client.Connected);
-            Contract.Ensures(stream != null);
             if (client != null && client.Connected)
             {
                 return client.GetStream();
