@@ -12,6 +12,7 @@ namespace game
         private int height;
         private Field[,] fields; //2Dimensional Array
 
+
         public Map(int width, int height)
         {
             this.setWidth(width);

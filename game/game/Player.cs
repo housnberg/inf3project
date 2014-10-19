@@ -8,5 +8,6 @@ namespace game
 {
     class Player : Token
     {
+
     }
 }
