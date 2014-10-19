@@ -15,16 +15,27 @@ namespace game.client
         private TcpClient client;
         private NetworkStream stream;
         private Thread receiver;
+        //private Buffer buffer;
+
+        /// <summary>
+        /// establishes automatically a connection to the server when an 
+        /// instance is created
+        /// </summary>
+        /// <param name="ip">ip-address of the server</param>
+        /// <param name="port">applicationport</param>
         public Connector(String ip, UInt16 port)
         {
             this.connect(ip, port);
+            //buffer = new Buffer();
             stream = this.getNetworkStream();
+            receiver = new Thread(this.receiveServerMessage);
+            receiver.Start();
         }
 
         /// <summary>
         /// opens a new tcp-connection 
         /// </summary>
-        /// <param name="ip">ip-adress of the server</param>
+        /// <param name="ip">ip-address of the server</param>
         /// <param name="port">applicationport</param>
         public void connect(String ip, UInt16 port)
         {
@@ -38,10 +49,10 @@ namespace game.client
                 {
                     if (!client.Connected)
                     {
-                        client.Connect(ip, port);
+                        client = new TcpClient(ip, port);
+                        receiver.Start();
                     }
                 }
-
             }
             catch (Exception e)
             {
@@ -58,6 +69,7 @@ namespace game.client
             {
                 if (client != null && client.Connected)
                 {
+                    receiver.Abort();
                     stream.Close();
                     client.Close();
                 }
@@ -76,7 +88,7 @@ namespace game.client
         {
             try
             {
-                Byte[] data = Encoding.UTF8.GetBytes(message);
+                Byte[] data = Encoding.UTF8.GetBytes(message + "\r\n");
                 stream.Write(data, 0, data.Length);
             }
             catch (Exception e)
@@ -85,12 +97,23 @@ namespace game.client
             }
         }
 
-        /// <summary>
-        /// receives messages from the server
-        /// </summary>
-        private void receiveServerMessage()
+        public void receiveServerMessage()
         {
-
+            String message;
+            while (client.Connected)
+            {
+                message = "";
+                byte[] data = new byte[client.Available];
+                stream.Read(data, 0, data.Length);
+                message = Encoding.UTF8.GetString(data);
+                if (message != null && message.Length > 0)
+                {
+                    Console.WriteLine(message);
+                    /*
+                    * METHOD FOR SAVING THE MESSAGE IN THE BUFFER
+                    */
+                }
+            }
         }
 
         /// <summary>
