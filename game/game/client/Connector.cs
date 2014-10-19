@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Net;
 using System.Net.Sockets;
+using System.Diagnostics.Contracts;
 
 
 namespace game.client
@@ -30,6 +31,9 @@ namespace game.client
             stream = this.getNetworkStream();
             receiver = new Thread(this.receiveServerMessage);
             receiver.Start();
+            Contract.Requires(ip != null && ip.Length > 6 && ip.Length < 16);
+            Contract.Requires(port >= 0 && port <= 65535);
+            Contract.Ensures(client != null && stream != null && receiver != null);
         }
 
         /// <summary>
@@ -41,23 +45,34 @@ namespace game.client
         {
             try
             {
-                if (client == null)
+                if (ip != null)
                 {
-                    client = new TcpClient(ip, port);
+                    if (client == null)
+                    {
+                        client = new TcpClient(ip, port);
+                    }
+                    else
+                    {
+                        if (!client.Connected)
+                        {
+                            client = new TcpClient(ip, port);
+                            receiver.Start();
+                        }
+                    }
+                    Console.WriteLine("client connected");
                 }
                 else
                 {
-                    if (!client.Connected)
-                    {
-                        client = new TcpClient(ip, port);
-                        receiver.Start();
-                    }
+                    throw new System.ArgumentException("Parameter 'ip' cannot be null");
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }
+            Contract.Requires(ip != null && ip.Length > 6 && ip.Length < 16);
+            Contract.Requires(port >= 0 && port <= 65535);
+            Contract.Ensures(client.Connected && receiver.IsAlive);
         }
 
         /// <summary>
@@ -67,17 +82,24 @@ namespace game.client
         {
             try
             {
-                if (client != null && client.Connected)
+                if (client == null || stream == null || receiver == null)
+                {
+                    throw new System.ArgumentException("Parameter cannot be null");
+                }
+                if (client.Connected)
                 {
                     receiver.Abort();
                     stream.Close();
                     client.Close();
+                    Console.WriteLine("client disconnected");
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }
+            Contract.Requires(client != null && stream != null && receiver != null && client.Connected);
+            Contract.Ensures(!client.Connected && !receiver.IsAlive);
         }
 
         /// <summary>
@@ -88,15 +110,30 @@ namespace game.client
         {
             try
             {
-                Byte[] data = Encoding.UTF8.GetBytes(message + "\r\n");
-                stream.Write(data, 0, data.Length);
+                if (stream == null || message == null || message.Length < 1)
+                {
+                    throw new System.ArgumentException("Parameter cannot be null or the length of the message cannot be < 1");
+                }
+                else 
+                {
+                    if (stream.CanWrite)
+                    {
+                        Byte[] data = Encoding.UTF8.GetBytes(message + "\r\n");
+                        stream.Write(data, 0, data.Length);
+                    }
+                }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }
+            Contract.Requires(stream != null && stream.CanWrite && message != null && message.Length > 0);
+            Contract.Ensures(stream.CanRead);
         }
 
+        /// <summary>
+        /// receives messages from server permanently
+        /// </summary>
         public void receiveServerMessage()
         {
             String message;
@@ -114,6 +151,8 @@ namespace game.client
                     */
                 }
             }
+            Contract.Requires(stream != null && stream.CanRead);
+            Contract.Ensures(stream.CanRead);
         }
 
         /// <summary>
@@ -122,6 +161,8 @@ namespace game.client
         /// <returns>network stream</returns>
         private NetworkStream getNetworkStream()
         {
+            Contract.Requires(client != null && client.Connected);
+            Contract.Ensures(stream != null);
             if (client != null && client.Connected)
             {
                 return client.GetStream();
