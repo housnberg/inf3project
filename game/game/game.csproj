@@ -48,6 +48,7 @@
     <Compile Include="Field.cs" />
     <Compile Include="GameManager.cs" />
     <Compile Include="Map.cs" />
+    <Compile Include="Parser.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
