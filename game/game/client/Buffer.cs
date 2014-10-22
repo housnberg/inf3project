@@ -8,15 +8,26 @@ namespace game.client
 {
     class Buffer
     {
-       // Es ist noch ein kleiner Fehler drin, wenn man die Liste komplett leert
-
-
         private Knot root;
+        private int size = 0;
 
 
         public Buffer(String s)
         {
             root = new Knot(s, null);
+        }
+        
+        public Boolean isFull()
+        {
+            if (size > 1000)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+                
         }
 
         public Boolean isEmpty()
@@ -37,52 +48,45 @@ namespace game.client
             if (root == null)
             {
                 root = new Knot(s, null);
+                size++;
             }
             else
             {
                 Knot k = new Knot(s, root);
                 root = k;
+                size++;
             }
         }
 
         // get the strings from the list
         public String get()
         {
+            String data = "";
             if (root == null)
             {
-                return "leer";
+               data = "keine Daten vorhanden";
             }
-            else
+            else if (root.getNext() == null)// exist one root
+            {
+                data = root.getData();
+                root = null;
+                size--;
+            }
+            else// exist more than one root
             {
                 Knot k = root;
-                Knot next;
-                Knot previous = null;
-                do
+                Knot previous = root;
+                while (k.getNext() != null)
                 {
-                    next = k.getNext();
-                    if (next != null)
-                    {
-                        previous = k;
-                        k = next;
-                    }
+                    previous = k;
+                    k = k.getNext();
                 }
-                while (next != null);
-                String tmp = k.getData();
-                if (previous.getNext() == null)
-                {
-                    root = null;
-                }
-                else
-                {
-                    previous.setNext(null);
-                }
-
-                return tmp;
-
-
+                data = k.getData();
+                k = null;
+                previous.setNext(null);
             }
-
-        }
-
+            size--;
+            return data;
+            }
     }
 }
