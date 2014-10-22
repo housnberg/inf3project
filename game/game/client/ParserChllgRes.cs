@@ -14,7 +14,7 @@ namespace game.client
         bool msg_is_vld;
 
         /// <summary>
-        /// Parses the message applying the "CHALLENGE" rule. Will eventually call the ParserToken or ParserMap class.
+        /// Parses the message applying the "CHALLENGE" rule.
         /// </summary>
         /// <param name="msg">Part of original message, is expected to fit the "CHALLANGE" rule</param>
         void parseChllg(String msg)
@@ -24,7 +24,7 @@ namespace game.client
         }
 
         /// <summary>
-        /// Parses the message applying the "RESULT" rule. Will eventually call the ParserToken or ParserMap class.
+        /// Parses the message applying the "RESULT" rule. Will eventually call the parseOpp(String msg) method.
         /// </summary>
         /// <param name="msg">Part of original message, is expected to fit the "RESULT" rule</param>
         void parseRes(String msg)
