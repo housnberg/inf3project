@@ -45,6 +45,7 @@
     <Compile Include="client\Connector.cs" />
     <Compile Include="client\Knot.cs" />
     <Compile Include="client\ParserChllgRes.cs" />
+    <Compile Include="client\ParserToken.cs" />
     <Compile Include="client\ParserUpdDel.cs" />
     <Compile Include="Dragon.cs" />
     <Compile Include="Field.cs" />
