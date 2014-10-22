@@ -7,7 +7,7 @@ using System.Diagnostics.Contracts;
 
 namespace game
 {
-    class ParserGate : System.Threading.Thread
+    public class ParserGate : System.Threading.Thread
     {
         String msg;
         bool msg_is_vld;
@@ -33,12 +33,21 @@ namespace game
         }
 
         /// <summary>
-        /// Parses the message and extracts information from it.
+        /// Parses the message and extracts information from it. Will call other methods, choosing based on message content.
         /// </summary>
         /// <param name="msg">The message extracted from the buffer.</param>
         void parse(String msg)
         {
             Contract.Requires(msg != null);
+            Contract.Ensures(msg_is_vld);
+        }
+
+        /// <summary>
+        /// Parses the message applying the "MESSAGE" rule.
+        /// </summary>
+        /// <param name="p_msg">Part of original message, is expected to fit the "MESSAGE" rule</param>
+        void parseMsg(String p_msg){
+            Contract.Requires(p_msg != null && msg_is_vld);
             Contract.Ensures(msg_is_vld);
         }
 
