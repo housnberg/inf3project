@@ -52,6 +52,67 @@ namespace game
         }
 
         /// <summary>
+        /// Parses the message applying the "ANSWER" rule.
+        /// </summary>
+        /// <param name="p_msg">Part of original message, is expected to fit the "ANSWER" rule</param>
+        void parseAns(String p_msg)
+        {
+            Contract.Requires(p_msg != null && msg_is_vld);
+            Contract.Ensures(msg_is_vld);
+        }
+
+        /// <summary>
+        /// Parses the message applying the "YOURID" rule.
+        /// </summary>
+        /// <param name="p_msg">Part of original message, is expected to fit the "YOURID" rule</param>
+        void parseYourId(String p_msg)
+        {
+            Contract.Requires(p_msg != null && msg_is_vld);
+            Contract.Ensures(msg_is_vld);
+        }
+
+        /// <summary>
+        /// Parses the message applying the "TIME" rule.
+        /// </summary>
+        /// <param name="p_msg">Part of original message, is expected to fit the "TIME" rule</param>
+        void parseTime(String p_msg)
+        {
+            Contract.Requires(p_msg != null && msg_is_vld);
+            Contract.Ensures(msg_is_vld);
+        }
+
+        /// <summary>
+        /// Parses the message applying the "ONLINE" rule.
+        /// </summary>
+        /// <param name="p_msg">Part of original message, is expected to fit the "ONLINE" rule</param>
+        void parseOnline(String p_msg)
+        {
+            Contract.Requires(p_msg != null && msg_is_vld);
+            Contract.Ensures(msg_is_vld);
+        }
+
+        /// <summary>
+        /// Parses the message applying the "ENTITIES" rule.
+        /// </summary>
+        /// <param name="p_msg">Part of original message, is expected to fit the "ENTITIES" rule</param>
+        void parseEntities(String p_msg)
+        {
+            Contract.Requires(p_msg != null && msg_is_vld);
+            Contract.Ensures(msg_is_vld);
+        }
+
+        /// <summary>
+        /// Parses the message applying the "PLAYERS" rule.
+        /// </summary>
+        /// <param name="p_msg">Part of original message, is expected to fit the "PLAYERS" rule</param>
+        void parseMsg(String p_msg)
+        {
+            Contract.Requires(p_msg != null && msg_is_vld);
+            Contract.Ensures(msg_is_vld);
+        }
+       
+
+        /// <summary>
         /// After parsing the message, this method passes the extracted information on to methods required to process the information.
         /// </summary>
         void passInf()
