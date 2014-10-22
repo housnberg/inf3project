@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,31 +36,29 @@ namespace game
             return this.xPos;
         }
 
-        public int getXPos()
+        public int getYPos()
         {
-            return this.yPos;
+            return this.xPos;
         }
 
         public String getDesc()
         {
-            return this.desc;
+            return desc;
         }
+
+        
 
         public void setXPos(int xPos)
         {
-            if (xPos < 0 || xPos > GameManager.height)
-            {
-                throw new  Exception ("Falsche X-Koordinate für die Figur! Der Wert darf nicht kleiner als 0 und  nicht größer als " + GameManager.height + " sein!");
-            }
+            Contract.Requires(xPos >= 0 && xPos < GameManager.height);
+
             this.xPos = xPos;
         }
 
         public void setYPos(int yPos)
         {
-            if (yPos < 0 || yPos > GameManager.width)
-            {
-                throw new  Exception ("Falsche Y-Koordinate für die Figur! Der Wert darf nicht kleiner als 0 und  nicht größer als " + GameManager.width + " sein!");
-            }
+            Contract.Requires(yPos >= 0 && yPos < GameManager.width);
+
             this.yPos = yPos;
         }
     }

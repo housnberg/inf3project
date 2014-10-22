@@ -1,7 +1,9 @@
-﻿using game.client;
+﻿using game.Backend;
+using game.client;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +22,9 @@ namespace game
 
         public void startGame(String ipAdress, UInt16 port)
         {
+            Contract.Requires(ipAdress != null);
+            Contract.Requires(port != null);
+
             players = new ArrayList();
             dragons = new ArrayList();
             connector = new Connector(ipAdress, port);
@@ -32,6 +37,8 @@ namespace game
          /// <param name="connector">The actual game connector</param>
          /// <param name="message">The message being sent to the server via the connector</param>
         public void sendCommand(String message){
+
+            Contract.Requires(message != null);
             connector.sendServerMessage(message);
         }
 
@@ -41,10 +48,8 @@ namespace game
         /// <param name="player">Player to be added</param>
         public void storePlayer(Player player)
         {
-            if (player == null)
-            {
-                throw new Exception("Ungültige Wertübergabe. Ein Spieler kann nicht 'NULL' sein!");
-            }
+            Contract.Requires(player != null);
+          
             players.Add(player);
         }
 
@@ -54,19 +59,24 @@ namespace game
         /// <param name="player">Player to be removed</param>
         public void deletePlayer(Player player)
         {
-            if (player == null)
-            {
-                throw new Exception("Ungültige Wertübergabe. Ein Spieler kann nicht 'NULL' sein!");
-            }
+            Contract.Requires(player != null);
+            Boolean isRemoved = false;
+
             foreach (Player p in players)
             {
                 if (p.Equals(player))
                 {
                     players.Remove(player);
+                    isRemoved = true;
                     break;
                 }
             }
-            
+            if (isRemoved == false)
+            {
+                Console.Out.WriteLine("Der Spieler existiert nicht in dem Spiel und ist damit bereits gelöscht!");
+                isRemoved = true;
+            }
+            Contract.Ensures(isRemoved);
         }
 
         /// <summary>
@@ -75,10 +85,9 @@ namespace game
         /// <param name="id">ID of the Player to be removed</param>
         public void deletePlayer(int id)
         {
-            if (id < 0)
-            {
-                throw new Exception("Spieler-ID kann nicht kleiner als 0 sein!");
-            }
+            Contract.Requires(id != null && id > 0 && id < 100);
+            Boolean isRemoved = false;
+
             foreach (Player p in players)
             {
                 if (p.getID() == id)
@@ -86,9 +95,30 @@ namespace game
                     players.Remove(p);
                     break;
                 }
-            
             }
+            if (isRemoved == false)
+            {
+                Console.Out.WriteLine("Der Spieler mit der ID '" + id + "'  existiert nicht in dem Spiel und ist damit bereits gelöscht!");
+                isRemoved = true;
+            }
+            Contract.Ensures(isRemoved);
+        }
 
+        public void deleteToken(Token token)
+        {
+            Contract.Requires(token != null);
+
+        }
+
+        public void beginChallenge (Minigame minigame, Player playerOne, Player playerTwo)
+        {
+            Contract.Requires(minigame != null && playerOne != null && playerTwo != null);
+            Contract.Requires(!(playerOne.getBusy()) && !(playerTwo.getBusy()));
+        }
+
+        public void forceReload(Map map)
+        {
+            Contract.Requires(map != null);
         }
 
         public int getNumberOfPlayers()
@@ -96,9 +126,10 @@ namespace game
             return numberOfPlayer;
         }
 
-        public void setNumberOfPlayers()
+        public Map getMap()
         {
-
+            return this.map;
         }
+       
     }
 }
