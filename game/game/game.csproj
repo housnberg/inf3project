@@ -41,7 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="client\Buffer.cs" />
+    <Compile Include="client\Cache.cs" />
     <Compile Include="client\Connector.cs" />
     <Compile Include="client\Knot.cs" />
     <Compile Include="client\ParserChllgRes.cs" />

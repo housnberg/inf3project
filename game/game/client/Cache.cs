@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace game.client
 {
-    class Buffer
+    class Cache
     {
         private Knot root;
         private int size = 0;
 
 
-        public Buffer(String s)
+        public Cache(String s)
         {
             root = new Knot(s, null);
         }
