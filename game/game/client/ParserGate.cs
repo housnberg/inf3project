@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics.Contracts;
 
-namespace game
+namespace game.client
 {
-    public class ParserGate : System.Threading.Thread
+    public class ParserGate
     {
         String msg;
         bool msg_is_vld;
