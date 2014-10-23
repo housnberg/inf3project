@@ -7,7 +7,7 @@ using System.Diagnostics.Contracts;
 
 namespace game.client
 {
-    class ParserChllgRes
+    public class ParserChallengeResult
     {
         public ParserGate parserGate;
         public String message;

@@ -52,11 +52,11 @@
     <Compile Include="client\Fifo.cs" />
     <Compile Include="client\Connector.cs" />
     <Compile Include="client\Knot.cs" />
-    <Compile Include="client\ParserChllgRes.cs" />
+    <Compile Include="client\ParserChallengeResult.cs" />
     <Compile Include="client\ParserGate.cs" />
     <Compile Include="client\ParserMap.cs" />
     <Compile Include="client\ParserToken.cs" />
-    <Compile Include="client\ParserUpdDel.cs" />
+    <Compile Include="client\ParserUpdateDelete.cs" />
     <Compile Include="GUI\Gui.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

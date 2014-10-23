@@ -7,7 +7,7 @@ using System.Diagnostics.Contracts;
 
 namespace game.client
 {
-    class ParserUpdDel
+    public class ParserUpdateDelete
     {
 
         public ParserGate parserGate;
