@@ -10,9 +10,9 @@ namespace game.client
     class ParserMap
     {
 
-        ParserGate pg;
-        String msg;
-        bool msg_is_vld;
+        ParserGate parserGate;
+        String message;
+        bool messageIsValid;
 
         /// <summary>
         /// Parses the message applying the "MAP" rule.
@@ -20,8 +20,8 @@ namespace game.client
         /// <param name="p_msg">Part of original message, is expected to fit the "MAP" rule.</param>
         void parseMap(String p_msg)
         {
-            Contract.Requires(p_msg != null && msg_is_vld);
-            Contract.Ensures(msg_is_vld);
+            Contract.Requires(p_msg != null && messageIsValid);
+            Contract.Ensures(messageIsValid);
         }
 
         /// <summary>
@@ -30,8 +30,8 @@ namespace game.client
         /// <param name="p_msg">Part of original message, is expected to fit the "MAPCELL" rule.</param>
         void parseMapcell(String p_msg)
         {
-            Contract.Requires(p_msg != null && msg_is_vld);
-            Contract.Ensures(msg_is_vld);
+            Contract.Requires(p_msg != null && messageIsValid);
+            Contract.Ensures(messageIsValid);
         }
 
         /// <summary>
@@ -40,8 +40,8 @@ namespace game.client
         /// <param name="p_msg">Part of original message, is expected to fit the "PROPERTY" rule.</param>
         void parsePrprty(String p_msg)
         {
-            Contract.Requires(p_msg != null && msg_is_vld);
-            Contract.Ensures(msg_is_vld);
+            Contract.Requires(p_msg != null && messageIsValid);
+            Contract.Ensures(messageIsValid);
         }
     }
 }

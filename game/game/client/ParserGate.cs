@@ -9,9 +9,9 @@ namespace game.client
 {
     public class ParserGate
     {
-        String msg;
-        bool msg_is_vld;
-        bool msg_is_av;
+        String message;
+        bool messageIsValid;
+        bool messageIsAvailable;
 
         /// <summary>
         /// Receives incoming messages from the buffer.
@@ -24,22 +24,22 @@ namespace game.client
         }
 
         /// <summary>
-        /// Gets one full message from the buffer, if one is available, and stores it in the msg variable.
+        /// Gets one full message from the buffer, if one is available, and stores it in the message variable.
         /// </summary>
         void getMsg()
         {
-            Contract.Requires(msg_is_av);
-            Contract.Ensures(msg != null);
+            Contract.Requires(messageIsAvailable);
+            Contract.Ensures(message != null);
         }
 
         /// <summary>
         /// Parses the message and extracts information from it. Will call other methods, choosing based on message content.
         /// </summary>
-        /// <param name="msg">The message extracted from the buffer.</param>
-        void parse(String msg)
+        /// <param name="message">The message extracted from the buffer.</param>
+        void parse(String message)
         {
-            Contract.Requires(msg != null);
-            Contract.Ensures(msg_is_vld);
+            Contract.Requires(message != null);
+            Contract.Ensures(messageIsValid);
         }
 
         /// <summary>
@@ -47,8 +47,8 @@ namespace game.client
         /// </summary>
         /// <param name="p_msg">Part of original message, is expected to fit the "MESSAGE" rule.</param>
         void parseMsg(String p_msg){
-            Contract.Requires(p_msg != null && msg_is_vld);
-            Contract.Ensures(msg_is_vld);
+            Contract.Requires(p_msg != null && messageIsValid);
+            Contract.Ensures(messageIsValid);
         }
 
         /// <summary>
@@ -57,8 +57,8 @@ namespace game.client
         /// <param name="p_msg">Part of original message, is expected to fit the "ANSWER" rule</param>
         void parseAns(String p_msg)
         {
-            Contract.Requires(p_msg != null && msg_is_vld);
-            Contract.Ensures(msg_is_vld);
+            Contract.Requires(p_msg != null && messageIsValid);
+            Contract.Ensures(messageIsValid);
         }
 
         /// <summary>
@@ -67,8 +67,8 @@ namespace game.client
         /// <param name="p_msg">Part of original message, is expected to fit the "YOURID" rule.</param>
         void parseYourId(String p_msg)
         {
-            Contract.Requires(p_msg != null && msg_is_vld);
-            Contract.Ensures(msg_is_vld);
+            Contract.Requires(p_msg != null && messageIsValid);
+            Contract.Ensures(messageIsValid);
         }
 
         /// <summary>
@@ -77,8 +77,8 @@ namespace game.client
         /// <param name="p_msg">Part of original message, is expected to fit the "TIME" rule.</param>
         void parseTime(String p_msg)
         {
-            Contract.Requires(p_msg != null && msg_is_vld);
-            Contract.Ensures(msg_is_vld);
+            Contract.Requires(p_msg != null && messageIsValid);
+            Contract.Ensures(messageIsValid);
         }
 
         /// <summary>
@@ -87,8 +87,8 @@ namespace game.client
         /// <param name="p_msg">Part of original message, is expected to fit the "ONLINE" rule.</param>
         void parseOnline(String p_msg)
         {
-            Contract.Requires(p_msg != null && msg_is_vld);
-            Contract.Ensures(msg_is_vld);
+            Contract.Requires(p_msg != null && messageIsValid);
+            Contract.Ensures(messageIsValid);
         }
 
         /// <summary>
@@ -97,8 +97,8 @@ namespace game.client
         /// <param name="p_msg">Part of original message, is expected to fit the "ENTITIES" rule.</param>
         void parseEntities(String p_msg)
         {
-            Contract.Requires(p_msg != null && msg_is_vld);
-            Contract.Ensures(msg_is_vld);
+            Contract.Requires(p_msg != null && messageIsValid);
+            Contract.Ensures(messageIsValid);
         }
 
         /// <summary>
@@ -107,8 +107,8 @@ namespace game.client
         /// <param name="p_msg">Part of original message, is expected to fit the "PLAYERS" rule.</param>
         void parseMsg(String p_msg)
         {
-            Contract.Requires(p_msg != null && msg_is_vld);
-            Contract.Ensures(msg_is_vld);
+            Contract.Requires(p_msg != null && messageIsValid);
+            Contract.Ensures(messageIsValid);
         }
        
 
@@ -117,8 +117,8 @@ namespace game.client
         /// </summary>
         void passInf()
         {
-            Contract.Requires(msg_is_vld);
-            Contract.Ensures(msg == null);
+            Contract.Requires(messageIsValid);
+            Contract.Ensures(message == null);
         }
     }
 }

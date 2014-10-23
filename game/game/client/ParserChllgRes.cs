@@ -9,38 +9,38 @@ namespace game.client
 {
     class ParserChllgRes
     {
-        ParserGate pg;
-        String msg;
-        bool msg_is_vld;
+        ParserGate parserGate;
+        String message;
+        bool messageIsValid;
 
         /// <summary>
         /// Parses the message applying the "CHALLENGE" rule.
         /// </summary>
-        /// <param name="msg">Part of original message, is expected to fit the "CHALLANGE" rule.</param>
-        void parseChllg(String msg)
+        /// <param name="message">Part of original message, is expected to fit the "CHALLANGE" rule.</param>
+        void parseChllg(String message)
         {
-            Contract.Requires(msg != null && msg_is_vld);
-            Contract.Ensures(msg_is_vld);
+            Contract.Requires(message != null && messageIsValid);
+            Contract.Ensures(messageIsValid);
         }
 
         /// <summary>
-        /// Parses the message applying the "RESULT" rule. Will eventually call the parseOpp(String msg) method.
+        /// Parses the message applying the "RESULT" rule. Will eventually call the parseOpp(String message) method.
         /// </summary>
-        /// <param name="msg">Part of original message, is expected to fit the "RESULT" rule.</param>
-        void parseRes(String msg)
+        /// <param name="message">Part of original message, is expected to fit the "RESULT" rule.</param>
+        void parseRes(String message)
         {
-            Contract.Requires(msg != null && msg_is_vld);
-            Contract.Ensures(msg_is_vld);
+            Contract.Requires(message != null && messageIsValid);
+            Contract.Ensures(messageIsValid);
         }
 
         /// <summary>
         /// Parses the message applying the "OPPONENT" rule. Will eventually call the ParserToken or ParserMap class.
         /// </summary>
-        /// <param name="msg">Part of original message, is expected to fit the "OPPONENT" rule.</param>
-        void parseOpp(String msg)
+        /// <param name="message">Part of original message, is expected to fit the "OPPONENT" rule.</param>
+        void parseOpp(String message)
         {
-            Contract.Requires(msg != null && msg_is_vld);
-            Contract.Ensures(msg_is_vld);
+            Contract.Requires(message != null && messageIsValid);
+            Contract.Ensures(messageIsValid);
         }
     }
 }
