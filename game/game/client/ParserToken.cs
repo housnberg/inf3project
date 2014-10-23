@@ -17,20 +17,20 @@ namespace game.client
         /// <summary>
         /// Parses the message applying the "PLAYER" rule.
         /// </summary>
-        /// <param name="p_msg">Part of original message, is expected to fit the "PLAYER" rule:</param>
-        void parsePlayer(String p_msg)
+        /// <param name="partOfMessage">Part of original message, is expected to fit the "PLAYER" rule:</param>
+        void parsePlayer(String partOfMessage)
         {
-            Contract.Requires(p_msg != null && messageIsValid);
+            Contract.Requires(partOfMessage != null && messageIsValid);
             Contract.Ensures(messageIsValid);
         }
 
         /// <summary>
         /// Parses the message applying the "DRAGON" rule.
         /// </summary>
-        /// <param name="p_msg">Part of original message, is expected to fit the "DRAGON" rule:</param>
-        void parseDrgn(String p_msg)
+        /// <param name="partOfMessage">Part of original message, is expected to fit the "DRAGON" rule:</param>
+        void parseDragon(String partOfMessage)
         {
-            Contract.Requires(p_msg != null && messageIsValid);
+            Contract.Requires(partOfMessage != null && messageIsValid);
             Contract.Ensures(messageIsValid);
         }
     }

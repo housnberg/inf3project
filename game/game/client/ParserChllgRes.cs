@@ -17,7 +17,7 @@ namespace game.client
         /// Parses the message applying the "CHALLENGE" rule.
         /// </summary>
         /// <param name="message">Part of original message, is expected to fit the "CHALLANGE" rule.</param>
-        void parseChllg(String message)
+        void parseChallenge(String message)
         {
             Contract.Requires(message != null && messageIsValid);
             Contract.Ensures(messageIsValid);
@@ -27,7 +27,7 @@ namespace game.client
         /// Parses the message applying the "RESULT" rule. Will eventually call the parseOpp(String message) method.
         /// </summary>
         /// <param name="message">Part of original message, is expected to fit the "RESULT" rule.</param>
-        void parseRes(String message)
+        void parseResult(String message)
         {
             Contract.Requires(message != null && messageIsValid);
             Contract.Ensures(messageIsValid);
@@ -37,7 +37,7 @@ namespace game.client
         /// Parses the message applying the "OPPONENT" rule. Will eventually call the ParserToken or ParserMap class.
         /// </summary>
         /// <param name="message">Part of original message, is expected to fit the "OPPONENT" rule.</param>
-        void parseOpp(String message)
+        void parseOpponent(String message)
         {
             Contract.Requires(message != null && messageIsValid);
             Contract.Ensures(messageIsValid);

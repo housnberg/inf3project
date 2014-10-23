@@ -17,30 +17,30 @@ namespace game.client
         /// <summary>
         /// Parses the message applying the "MAP" rule.
         /// </summary>
-        /// <param name="p_msg">Part of original message, is expected to fit the "MAP" rule.</param>
-        void parseMap(String p_msg)
+        /// <param name="partOfMessage">Part of original message, is expected to fit the "MAP" rule.</param>
+        void parseMap(String partOfMessage)
         {
-            Contract.Requires(p_msg != null && messageIsValid);
+            Contract.Requires(partOfMessage != null && messageIsValid);
             Contract.Ensures(messageIsValid);
         }
 
         /// <summary>
         /// Parses the message applying the "MAPCELL" rule.
         /// </summary>
-        /// <param name="p_msg">Part of original message, is expected to fit the "MAPCELL" rule.</param>
-        void parseMapcell(String p_msg)
+        /// <param name="partOfMessage">Part of original message, is expected to fit the "MAPCELL" rule.</param>
+        void parseMapcell(String partOfMessage)
         {
-            Contract.Requires(p_msg != null && messageIsValid);
+            Contract.Requires(partOfMessage != null && messageIsValid);
             Contract.Ensures(messageIsValid);
         }
 
         /// <summary>
         /// Parses the message applying the "PROPERTY" rule.
         /// </summary>
-        /// <param name="p_msg">Part of original message, is expected to fit the "PROPERTY" rule.</param>
-        void parsePrprty(String p_msg)
+        /// <param name="partOfMessage">Part of original message, is expected to fit the "PROPERTY" rule.</param>
+        void parseProperty(String partOfMessage)
         {
-            Contract.Requires(p_msg != null && messageIsValid);
+            Contract.Requires(partOfMessage != null && messageIsValid);
             Contract.Ensures(messageIsValid);
         }
     }
