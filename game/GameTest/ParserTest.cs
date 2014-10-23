@@ -124,20 +124,23 @@ namespace GameTest
 
         public void parseMapTest()
         {
-            bool messageIsValid = true;
-            Assert.IsTrue(parserGate.messageIsValid);
+            ParserMap parserMap = new ParserMap();
+            parserMap.parseMap(parserMap.message);
+            Assert.IsTrue(parserMap.messageIsValid);
         }
 
         public void parseMapcellTest()
         {
-            bool messageIsValid = true;
-            Assert.IsTrue(parserGate.messageIsValid);
+            ParserMap parserMap = new ParserMap();
+            parserMap.parseMapcell(parserMap.message);
+            Assert.IsTrue(parserMap.messageIsValid);
         }
 
         public void parsePropertyTest()
         {
-            bool messageIsValid = true;
-            Assert.IsTrue(parserGate.messageIsValid);
+            ParserMap parserMap = new ParserMap();
+            parserMap.parseProperty(parserMap.message);
+            Assert.IsTrue(parserMap.messageIsValid);
         }
     }
 }
