@@ -110,14 +110,16 @@ namespace GameTest
 
         public void parseDragonTest()
         {
-            bool messageIsValid = true;
-            Assert.IsTrue(parserGate.messageIsValid);
+            ParserToken parserToken = new ParserToken();
+            parserToken.parseDragon(parserToken.message);
+            Assert.IsTrue(parserToken.messageIsValid);
         }
 
         public void parsePlayerTest()
         {
-            bool messageIsValid = true;
-            Assert.IsTrue(parserGate.messageIsValid);
+            ParserToken parserToken = new ParserToken();
+            parserToken.parsePlayer(parserToken.message);
+            Assert.IsTrue(parserToken.messageIsValid);
         }
 
         public void parseMapTest()
