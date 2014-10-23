@@ -16,7 +16,7 @@ namespace game.client
         private TcpClient client;
         private NetworkStream stream;
         private Thread receiver;
-        private Cache buffer;
+        private Fifo buffer;
         //private Buffer buffer;
 
         /// <summary>
@@ -219,7 +219,7 @@ namespace game.client
         /// method mainly used for unit tests
         /// </summary>
         /// <returns>the used buffer</returns>
-        public Cache getBuffer()
+        public Fifo getBuffer()
         {
             return buffer;
         }

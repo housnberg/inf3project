@@ -52,7 +52,7 @@
   <ItemGroup>
     <Compile Include="ConnectorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="CacheTest.cs" />
+    <Compile Include="FifoTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\game\game.csproj">

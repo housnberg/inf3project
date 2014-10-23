@@ -3,18 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics.Contracts;
 
 namespace game.client
 {
-    class Cache
+    public class Fifo
     {
         private Knot root;
         private int size = 0;
 
 
-        public Cache(String s)
+        public Fifo(String s)
         {
+            Contract.Requires(s != null);
             root = new Knot(s, null);
+            Contract.Ensures(s.Length > 0);
         }
         
         public Boolean isFull()
@@ -30,6 +33,14 @@ namespace game.client
                 
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+
+
+
         public Boolean isEmpty()
         {
             if (root == null)
@@ -42,7 +53,9 @@ namespace game.client
             }
         }
 
-        // Insert strings into the list
+        /// <summary>
+        /// Insert strings into the list 
+        /// </summary>
         public void put(String s)
         {
             if (root == null)
@@ -87,6 +100,21 @@ namespace game.client
             }
             size--;
             return data;
-            }
+        }
+
+
+        [ContractInvariantMethod]
+        protected void ObjectInvariant()
+        {
+            Contract.Invariant(this.buffer != null);
+            
+        }
+
+
+
+
+
+
+
     }
 }

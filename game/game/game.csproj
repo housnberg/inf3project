@@ -49,7 +49,7 @@
     <Compile Include="backend\Player.cs" />
     <Compile Include="backend\Program.cs" />
     <Compile Include="backend\Token.cs" />
-    <Compile Include="client\Cache.cs" />
+    <Compile Include="client\Fifo.cs" />
     <Compile Include="client\Connector.cs" />
     <Compile Include="client\Knot.cs" />
     <Compile Include="client\ParserChllgRes.cs" />
