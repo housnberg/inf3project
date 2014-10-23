@@ -157,7 +157,7 @@ namespace game.client
             {
                 Console.WriteLine(e.Message);
             }*/
-            Contract.Ensures(stream.CanRead);
+            Contract.Ensures(stream.DataAvailable);
         }
 
         /// <summary>
@@ -185,6 +185,7 @@ namespace game.client
                     //METHOD FOR SAVING THE MESSAGE IN THE BUFFER
                 }
             }*/
+            Contract.Ensures(stream.DataAvailable);
             Contract.Ensures(!buffer.isEmpty());
         }
 
@@ -212,6 +213,33 @@ namespace game.client
         public TcpClient getTcpClient()
         {
             return client;
+        }
+
+        /// <summary>
+        /// method mainly used for unit tests
+        /// </summary>
+        /// <returns>the used buffer</returns>
+        public Cache getBuffer()
+        {
+            return buffer;
+        }
+
+        /// <summary>
+        /// method mainly used for unit tests
+        /// </summary>
+        /// <returns>the used networkstream</returns>
+        public NetworkStream getStream()
+        {
+            return stream;
+        }
+
+        /// <summary>
+        /// method mainly used for unit tests
+        /// </summary>
+        /// <returns>the used receiver-thread</returns>
+        public Thread getReceiver()
+        {
+            return receiver;
         }
 
         [ContractInvariantMethod]
