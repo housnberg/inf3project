@@ -75,32 +75,37 @@ namespace GameTest
 
         public void parseUpdateTest()
         {
-            
-            Assert.IsTrue(parserGate.messageIsValid);
+            ParserUpdateDelete parserUpdateDelete = new ParserUpdateDelete();
+            parserUpdateDelete.parseUpdate(parserUpdateDelete.message);
+            Assert.IsTrue(parserUpdateDelete.messageIsValid);
         }
 
         public void parseDeleteTest()
         {
-            bool messageIsValid = true;
-            Assert.IsTrue(parserGate.messageIsValid);
+            ParserUpdateDelete parserUpdateDelete = new ParserUpdateDelete();
+            parserUpdateDelete.parseDelete(parserUpdateDelete.message);
+            Assert.IsTrue(parserUpdateDelete.messageIsValid);
         }
 
         public void parseChallengeTest()
         {
-            bool messageIsValid = true;
-            Assert.IsTrue(parserGate.messageIsValid);
+            ParserChallengeResult parserChallengeResult = new ParserChallengeResult();
+            parserChallengeResult.parseChallenge(parserChallengeResult.message);
+            Assert.IsTrue(parserChallengeResult.messageIsValid);
         }
 
         public void parseResultTest()
         {
-            bool messageIsValid = true;
-            Assert.IsTrue(parserGate.messageIsValid);
+            ParserChallengeResult parserChallengeResult = new ParserChallengeResult();
+            parserChallengeResult.parseResult(parserChallengeResult.message);
+            Assert.IsTrue(parserChallengeResult.messageIsValid);
         }
 
         public void parseOpponentTest()
         {
-            bool messageIsValid = true;
-            Assert.IsTrue(parserGate.messageIsValid);
+            ParserChallengeResult parserChallengeResult = new ParserChallengeResult();
+            parserChallengeResult.parseOpponent(parserChallengeResult.message);
+            Assert.IsTrue(parserChallengeResult.messageIsValid);
         }
 
         public void parseDragonTest()
