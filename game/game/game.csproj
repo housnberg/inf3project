@@ -57,6 +57,7 @@
     <Compile Include="client\ParserToken.cs" />
     <Compile Include="client\ParserUpdDel.cs" />
     <Compile Include="client\ParserGate.cs" />
+    <Compile Include="GUI\Gui.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
