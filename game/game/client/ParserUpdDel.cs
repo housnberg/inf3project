@@ -10,15 +10,15 @@ namespace game.client
     class ParserUpdDel
     {
 
-        ParserGate parserGate;
-        String message;
-        bool messageIsValid;
+        public ParserGate parserGate;
+        public String message;
+        public bool messageIsValid;
 
         /// <summary>
         /// Parses the message applying the "UPDATE" rule. Will eventually call the ParserToken or ParserMap class.
         /// </summary>
         /// <param name="message">Part of original message, is expected to fit the "UPDATE" rule</param>
-        void parseUpdate(String message)
+        public void parseUpdate(String message)
         {
             Contract.Requires(message != null && messageIsValid);
             Contract.Ensures(messageIsValid);
@@ -28,7 +28,7 @@ namespace game.client
         /// Parses the message applying the "DELETE" rule. Will eventually call the ParserToken class.
         /// </summary>
         /// <param name="message">Part of original message, is expected to fit the "DELETE" rule</param>
-        void parseDelete(String message)
+        public void parseDelete(String message)
         {
             Contract.Requires(message != null && messageIsValid);
             Contract.Ensures(messageIsValid);

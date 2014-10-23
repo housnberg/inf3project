@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using game.client;
 
 namespace GameTest
 {
@@ -7,16 +8,18 @@ namespace GameTest
     public class ParserTest
     {
         [TestMethod]
-        public void getMessage()
+        public void getMessageTest()
         {
-            String message;
-            Assert.IsNotNull(message);
+            ParserGate parserGate = new ParserGate();
+            parserGate.getMessage();
+            Assert.IsNotNull(parserGate.message);
         }
 
         public void parseTest()
         {
-            bool messageIsValid = true;
-            Assert.IsTrue(messageIsValid);
+            ParserGate parserGate = new ParserGate();
+            parserGate.parse(parserGate.message);
+            Assert.IsTrue(parserGate.messageIsValid);
         }
 
         public void parseMessageTest()

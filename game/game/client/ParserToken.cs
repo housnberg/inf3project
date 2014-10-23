@@ -7,18 +7,18 @@ using System.Diagnostics.Contracts;
 
 namespace game.client
 {
-    class ParserToken
+    public class ParserToken
     {
 
-        ParserGate parserGate;
-        String message;
-        bool messageIsValid;
+        public ParserGate parserGate;
+        public String message;
+        public bool messageIsValid;
 
         /// <summary>
         /// Parses the message applying the "PLAYER" rule.
         /// </summary>
         /// <param name="partOfMessage">Part of original message, is expected to fit the "PLAYER" rule:</param>
-        void parsePlayer(String partOfMessage)
+        public void parsePlayer(String partOfMessage)
         {
             Contract.Requires(partOfMessage != null && messageIsValid);
             Contract.Ensures(messageIsValid);
@@ -28,7 +28,7 @@ namespace game.client
         /// Parses the message applying the "DRAGON" rule.
         /// </summary>
         /// <param name="partOfMessage">Part of original message, is expected to fit the "DRAGON" rule:</param>
-        void parseDragon(String partOfMessage)
+        public void parseDragon(String partOfMessage)
         {
             Contract.Requires(partOfMessage != null && messageIsValid);
             Contract.Ensures(messageIsValid);

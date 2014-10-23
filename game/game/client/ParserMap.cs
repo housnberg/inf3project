@@ -7,18 +7,18 @@ using System.Diagnostics.Contracts;
 
 namespace game.client
 {
-    class ParserMap
+    public class ParserMap
     {
 
-        ParserGate parserGate;
-        String message;
-        bool messageIsValid;
+        public ParserGate parserGate;
+        public String message;
+        public bool messageIsValid;
 
         /// <summary>
         /// Parses the message applying the "MAP" rule.
         /// </summary>
         /// <param name="partOfMessage">Part of original message, is expected to fit the "MAP" rule.</param>
-        void parseMap(String partOfMessage)
+        public void parseMap(String partOfMessage)
         {
             Contract.Requires(partOfMessage != null && messageIsValid);
             Contract.Ensures(messageIsValid);
@@ -28,7 +28,7 @@ namespace game.client
         /// Parses the message applying the "MAPCELL" rule.
         /// </summary>
         /// <param name="partOfMessage">Part of original message, is expected to fit the "MAPCELL" rule.</param>
-        void parseMapcell(String partOfMessage)
+        public void parseMapcell(String partOfMessage)
         {
             Contract.Requires(partOfMessage != null && messageIsValid);
             Contract.Ensures(messageIsValid);
@@ -38,7 +38,7 @@ namespace game.client
         /// Parses the message applying the "PROPERTY" rule.
         /// </summary>
         /// <param name="partOfMessage">Part of original message, is expected to fit the "PROPERTY" rule.</param>
-        void parseProperty(String partOfMessage)
+        public void parseProperty(String partOfMessage)
         {
             Contract.Requires(partOfMessage != null && messageIsValid);
             Contract.Ensures(messageIsValid);

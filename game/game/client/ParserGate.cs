@@ -9,16 +9,16 @@ namespace game.client
 {
     public class ParserGate
     {
-        String message;
-        bool messageIsValid;
-        bool messageIsAvailable;
+        public String message;
+        public bool messageIsValid;
+        public bool messageIsAvailable;
 
         /// <summary>
         /// Receives incoming messages from the buffer.
         /// Ensures that incoming messages from the server contain valid information.
         /// The information is then extracted and passed down to the GameManager
         /// </summary>
-        ParserGate()
+        public ParserGate()
         {
 
         }
@@ -26,7 +26,7 @@ namespace game.client
         /// <summary>
         /// Gets one full message from the buffer, if one is available, and stores it in the message variable.
         /// </summary>
-        void getMsg()
+        public void getMessage()
         {
             Contract.Requires(messageIsAvailable);
             Contract.Ensures(message != null);
@@ -36,7 +36,7 @@ namespace game.client
         /// Parses the message and extracts information from it. Will call other methods, choosing based on message content.
         /// </summary>
         /// <param name="message">The message extracted from the buffer.</param>
-        void parse(String message)
+        public void parse(String message)
         {
             Contract.Requires(message != null);
             Contract.Ensures(messageIsValid);
@@ -46,7 +46,8 @@ namespace game.client
         /// Parses the message applying the "MESSAGE" rule.
         /// </summary>
         /// <param name="partOfMessage">Part of original message, is expected to fit the "MESSAGE" rule.</param>
-        void parseMessage(String partOfMessage){
+        public void parseMessage(String partOfMessage)
+        {
             Contract.Requires(partOfMessage != null && messageIsValid);
             Contract.Ensures(messageIsValid);
         }
@@ -55,7 +56,7 @@ namespace game.client
         /// Parses the message applying the "ANSWER" rule, which further applies the "OKAY", "DENY", "UNKNOWN" and "INVALID" rules.
         /// </summary>
         /// <param name="partOfMessage">Part of original message, is expected to fit the "ANSWER" rule</param>
-        void parseAnswer(String partOfMessage)
+        public void parseAnswer(String partOfMessage)
         {
             Contract.Requires(partOfMessage != null && messageIsValid);
             Contract.Ensures(messageIsValid);
@@ -65,7 +66,7 @@ namespace game.client
         /// Parses the message applying the "YOURID" rule.
         /// </summary>
         /// <param name="partOfMessage">Part of original message, is expected to fit the "YOURID" rule.</param>
-        void parseYourId(String partOfMessage)
+        public void parseYourId(String partOfMessage)
         {
             Contract.Requires(partOfMessage != null && messageIsValid);
             Contract.Ensures(messageIsValid);
@@ -75,7 +76,7 @@ namespace game.client
         /// Parses the message applying the "TIME" rule.
         /// </summary>
         /// <param name="partOfMessage">Part of original message, is expected to fit the "TIME" rule.</param>
-        void parseTime(String partOfMessage)
+        public void parseTime(String partOfMessage)
         {
             Contract.Requires(partOfMessage != null && messageIsValid);
             Contract.Ensures(messageIsValid);
@@ -85,7 +86,7 @@ namespace game.client
         /// Parses the message applying the "ONLINE" rule.
         /// </summary>
         /// <param name="partOfMessage">Part of original message, is expected to fit the "ONLINE" rule.</param>
-        void parseOnline(String partOfMessage)
+        public void parseOnline(String partOfMessage)
         {
             Contract.Requires(partOfMessage != null && messageIsValid);
             Contract.Ensures(messageIsValid);
@@ -95,7 +96,7 @@ namespace game.client
         /// Parses the message applying the "ENTITIES" rule.
         /// </summary>
         /// <param name="partOfMessage">Part of original message, is expected to fit the "ENTITIES" rule.</param>
-        void parseEntities(String partOfMessage)
+        public void parseEntities(String partOfMessage)
         {
             Contract.Requires(partOfMessage != null && messageIsValid);
             Contract.Ensures(messageIsValid);
@@ -105,17 +106,17 @@ namespace game.client
         /// Parses the message applying the "PLAYERS" rule.
         /// </summary>
         /// <param name="partOfMessage">Part of original message, is expected to fit the "PLAYERS" rule.</param>
-        void parsePlayers(String partOfMessage)
+        public void parsePlayers(String partOfMessage)
         {
             Contract.Requires(partOfMessage != null && messageIsValid);
             Contract.Ensures(messageIsValid);
         }
-       
+
 
         /// <summary>
         /// After parsing the message, this method passes the extracted information on to methods required to process the information.
         /// </summary>
-        void passInformation()
+        public void passInformation()
         {
             Contract.Requires(messageIsValid);
             Contract.Ensures(message == null);
