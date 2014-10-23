@@ -16,6 +16,7 @@ namespace game.client
         private TcpClient client;
         private NetworkStream stream;
         private Thread receiver;
+        private Fifo buffer;
         //private Buffer buffer;
 
         /// <summary>
@@ -26,14 +27,25 @@ namespace game.client
         /// <param name="port">applicationport</param>
         public Connector(String ip, UInt16 port)
         {
-            Contract.Requires(ip != null && ip.Length > 6 && ip.Length < 16);
-            Contract.Requires(port >= 0 && port <= 65535);
-            this.connect(ip, port);
+            Contract.Requires(ip != null);
+            Contract.Requires(ip.Length > 6);
+            Contract.Requires(ip.Length < 16);
+            Contract.Requires(port >= 0);
+            Contract.Requires(port <= 65535);
+            /*this.connect(ip, port);
             //buffer = new Buffer();
             stream = this.getNetworkStream();
             receiver = new Thread(this.receiveServerMessage);
-            receiver.Start();
-            Contract.Ensures(client != null && stream != null && receiver != null);
+            receiver.Start();*/
+            Contract.Ensures(client != null);
+            Contract.Ensures(client.Connected);
+            Contract.Ensures(stream != null);
+            Contract.Ensures(stream.CanWrite);
+            Contract.Ensures(stream.CanRead);
+            Contract.Ensures(receiver != null);
+            Contract.Ensures(receiver.IsAlive);
+            Contract.Ensures(buffer != null);
+            Contract.Ensures(buffer.isEmpty());
         }
 
         /// <summary>
@@ -43,9 +55,12 @@ namespace game.client
         /// <param name="port">applicationport</param>
         public void connect(String ip, UInt16 port)
         {
-            Contract.Requires(ip != null && ip.Length > 6 && ip.Length < 16);
-            Contract.Requires(port >= 0 && port <= 65535);
-            try
+            Contract.Requires(ip != null);
+            Contract.Requires(ip.Length > 6);
+            Contract.Requires(ip.Length < 16);
+            Contract.Requires(port >= 0);
+            Contract.Requires(port <= 65535);
+            /*try
             {
                 if (ip != null)
                 {
@@ -71,8 +86,10 @@ namespace game.client
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-            }
-            Contract.Ensures(client.Connected && receiver.IsAlive);
+            }*/
+            Contract.Ensures(client != null);
+            Contract.Ensures(client.Connected);
+            Contract.Ensures(receiver.IsAlive);
         }
 
         /// <summary>
@@ -80,8 +97,12 @@ namespace game.client
         /// </summary>
         public void disconnect()
         {
-            Contract.Requires(client != null && stream != null && receiver != null && client.Connected);
-            try
+            Contract.Requires(client != null);
+            Contract.Requires(client.Connected);
+            Contract.Requires(stream != null);
+            Contract.Requires(receiver != null);
+            Contract.Requires(receiver.IsAlive);
+            /*try
             {
                 if (client == null || stream == null || receiver == null)
                 {
@@ -98,8 +119,11 @@ namespace game.client
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-            }
-            Contract.Ensures(!client.Connected && !receiver.IsAlive);
+            }*/
+            Contract.Ensures(!client.Connected);
+            Contract.Ensures(!receiver.IsAlive);
+            Contract.Ensures(!stream.CanRead);
+            Contract.Ensures(!stream.CanWrite);
         }
 
         /// <summary>
@@ -108,8 +132,13 @@ namespace game.client
         /// <param name="stream">the message to send</param>
         public void sendServerMessage(String message)
         {
-            Contract.Requires(stream != null && stream.CanWrite && message != null && message.Length > 0);
-            try
+            Contract.Requires(message != null);
+            Contract.Requires(message.Length >= 1);
+            Contract.Requires(client != null);
+            Contract.Requires(client.Connected);
+            Contract.Requires(stream != null);
+            Contract.Requires(stream.CanWrite);
+            /*try
             {
                 if (stream == null || message == null || message.Length < 1)
                 {
@@ -127,17 +156,23 @@ namespace game.client
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-            }
-            Contract.Ensures(stream.CanRead);
+            }*/
+            Contract.Ensures(stream.DataAvailable);
         }
 
         /// <summary>
         /// receives messages from server permanently
         /// </summary>
-        public void receiveServerMessage()
+        private void receiveServerMessage()
         {
-            Contract.Requires(stream != null && stream.CanRead);
-            String message;
+            Contract.Requires(client != null);
+            Contract.Requires(client.Connected);
+            Contract.Requires(stream != null);
+            Contract.Requires(stream.CanRead);
+            Contract.Requires(receiver != null);
+            Contract.Requires(receiver.IsAlive);
+            Contract.Requires(buffer != null);
+            /*String message;
             while (client.Connected)
             {
                 message = "";
@@ -147,12 +182,11 @@ namespace game.client
                 if (message != null && message.Length > 0)
                 {
                     Console.WriteLine(message);
-                    /*
-                    * METHOD FOR SAVING THE MESSAGE IN THE BUFFER
-                    */
+                    //METHOD FOR SAVING THE MESSAGE IN THE BUFFER
                 }
-            }
-            Contract.Ensures(stream.CanRead);
+            }*/
+            Contract.Ensures(stream.DataAvailable);
+            Contract.Ensures(!buffer.isEmpty());
         }
 
         /// <summary>
@@ -161,6 +195,7 @@ namespace game.client
         /// <returns>network stream</returns>
         private NetworkStream getNetworkStream()
         {
+
             if (client != null && client.Connected)
             {
                 return client.GetStream();
@@ -178,6 +213,42 @@ namespace game.client
         public TcpClient getTcpClient()
         {
             return client;
+        }
+
+        /// <summary>
+        /// method mainly used for unit tests
+        /// </summary>
+        /// <returns>the used buffer</returns>
+        public Fifo getBuffer()
+        {
+            return buffer;
+        }
+
+        /// <summary>
+        /// method mainly used for unit tests
+        /// </summary>
+        /// <returns>the used networkstream</returns>
+        public NetworkStream getStream()
+        {
+            return stream;
+        }
+
+        /// <summary>
+        /// method mainly used for unit tests
+        /// </summary>
+        /// <returns>the used receiver-thread</returns>
+        public Thread getReceiver()
+        {
+            return receiver;
+        }
+
+        [ContractInvariantMethod]
+        protected void ObjectInvariant () 
+        {
+            Contract.Invariant(this.buffer != null);
+            Contract.Invariant(this.client != null);
+            Contract.Invariant(this.stream != null);
+            Contract.Invariant(this.receiver != null);
         }
     }
 }

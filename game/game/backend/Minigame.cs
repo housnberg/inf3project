@@ -4,10 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace game
+namespace game.Backend
 {
-    class Player : Token
+    class Minigame
     {
 
+        public Minigame()
+        {
+
+        }
     }
 }

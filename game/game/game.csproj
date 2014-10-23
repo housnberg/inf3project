@@ -41,22 +41,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="client\Buffer.cs" />
+    <Compile Include="backend\Dragon.cs" />
+    <Compile Include="backend\Field.cs" />
+    <Compile Include="backend\GameManager.cs" />
+    <Compile Include="backend\Map.cs" />
+    <Compile Include="backend\Minigame.cs" />
+    <Compile Include="backend\Player.cs" />
+    <Compile Include="backend\Program.cs" />
+    <Compile Include="backend\Token.cs" />
+    <Compile Include="client\Fifo.cs" />
     <Compile Include="client\Connector.cs" />
     <Compile Include="client\Knot.cs" />
     <Compile Include="client\ParserChllgRes.cs" />
     <Compile Include="client\ParserMap.cs" />
     <Compile Include="client\ParserToken.cs" />
     <Compile Include="client\ParserUpdDel.cs" />
-    <Compile Include="Dragon.cs" />
-    <Compile Include="Field.cs" />
-    <Compile Include="GameManager.cs" />
-    <Compile Include="Map.cs" />
     <Compile Include="client\ParserGate.cs" />
-    <Compile Include="Player.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="GUI\Gui.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Token.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
