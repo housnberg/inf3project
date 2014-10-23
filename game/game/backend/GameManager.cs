@@ -10,24 +10,29 @@ using System.Threading.Tasks;
 
 namespace game
 {
-    class GameManager
+    public class GameManager
     {
         private Map map;
         private ArrayList players;
         private ArrayList dragons;
-        private int numberOfPlayer;
+        private int numberOfPlayers;
         private Connector connector;
         public static int height;
         public static int width;
 
-        public void startGame(String ipAdress, UInt16 port)
+        public GameManager(String ipAdress, UInt16 port)
+        {
+            //this.startGame(ipAdress, port);
+        }
+
+        private void startGame(String ipAdress, UInt16 port)
         {
             Contract.Requires(ipAdress != null);
             Contract.Requires(port != null);
 
-            players = new ArrayList();
-            dragons = new ArrayList();
-            connector = new Connector(ipAdress, port);
+            //players = new ArrayList();
+            //dragons = new ArrayList();
+            //connector = new Connector(ipAdress, port);
 
         }
 
@@ -39,7 +44,7 @@ namespace game
         public void sendCommand(String message){
 
             Contract.Requires(message != null);
-            connector.sendServerMessage(message);
+            //connector.sendServerMessage(message);
         }
 
         /// <summary>
@@ -62,20 +67,20 @@ namespace game
             Contract.Requires(player != null);
             Boolean isRemoved = false;
 
-            foreach (Player p in players)
-            {
-                if (p.Equals(player))
-                {
-                    players.Remove(player);
-                    isRemoved = true;
-                    break;
-                }
-            }
-            if (isRemoved == false)
-            {
-                Console.Out.WriteLine("Der Spieler existiert nicht in dem Spiel und ist damit bereits gelöscht!");
-                isRemoved = true;
-            }
+            //foreach (Player p in players)
+            //{
+            //    if (p.Equals(player))
+            //    {
+            //        players.Remove(player);
+            //        isRemoved = true;
+            //        break;
+            //    }
+            //}
+            //if (isRemoved == false)
+            //{
+            //    Console.Out.WriteLine("Der Spieler existiert nicht in dem Spiel und ist damit bereits gelöscht!");
+            //    isRemoved = true;
+            //}
             Contract.Ensures(isRemoved);
         }
 
@@ -85,50 +90,79 @@ namespace game
         /// <param name="id">ID of the Player to be removed</param>
         public void deletePlayer(int id)
         {
-            Contract.Requires(id != null && id > 0 && id < 100);
+            Contract.Requires(id != null);
+            Contract.Requires(id > 0);
+            Contract.Requires( id < 100);
             Boolean isRemoved = false;
 
-            foreach (Player p in players)
-            {
-                if (p.getID() == id)
-                {
-                    players.Remove(p);
-                    break;
-                }
-            }
-            if (isRemoved == false)
-            {
-                Console.Out.WriteLine("Der Spieler mit der ID '" + id + "'  existiert nicht in dem Spiel und ist damit bereits gelöscht!");
-                isRemoved = true;
-            }
+            //foreach (Player p in players)
+            //{
+            //    if (p.getID() == id)
+            //    {
+            //        players.Remove(p);
+            //        break;
+            //    }
+            //}
+            //if (isRemoved == false)
+            //{
+            //    Console.Out.WriteLine("Der Spieler mit der ID '" + id + "'  existiert nicht in dem Spiel und ist damit bereits gelöscht!");
+            //    isRemoved = true;
+            //}
             Contract.Ensures(isRemoved);
         }
 
+        /// <summary>
+        /// Removes a certain Token from the GameManager's ArrayList by searching for the specific Object
+        /// </summary>
+        /// <param name="token">Token to be removed from the game</param>
         public void deleteToken(Token token)
         {
             Contract.Requires(token != null);
 
         }
 
+        /// <summary>
+        /// Begins a certain minigame with two different players
+        /// </summary>
+        /// <param name="playerOne">Player One taking part in the minigame</param>
+        /// <param name="playerTwo">Player Two taking part in the minigame</param>
+        /// <param name="minigame">Ceratin Minigame to be started</param>
         public void beginChallenge (Minigame minigame, Player playerOne, Player playerTwo)
         {
-            Contract.Requires(minigame != null && playerOne != null && playerTwo != null);
-            Contract.Requires(!(playerOne.getBusy()) && !(playerTwo.getBusy()));
+            Contract.Requires(minigame != null);
+            Contract.Requires(playerOne != null);
+            Contract.Requires(playerTwo != null);
+            Contract.Requires(!(playerOne.getBusy()));
+            Contract.Requires(!(playerTwo.getBusy()));
         }
 
+        /// <summary>
+        /// Forces the Map to reload
+        /// </summary>
+        /// <param name="map">Map of the game</param>
         public void forceReload(Map map)
         {
             Contract.Requires(map != null);
         }
 
+        /// <summary>
+        /// Returns the number of Players participating in the game
+        /// </summary>
         public int getNumberOfPlayers()
         {
-            return numberOfPlayer;
+            return numberOfPlayers;
         }
 
         public Map getMap()
         {
             return this.map;
+        }
+
+        [ContractInvariantMethod]
+        protected void ObjectInvariant()
+        {
+            Contract.Invariant(this.players != null);
+            Contract.Invariant(this.connector != null);
         }
        
     }
