@@ -13,12 +13,10 @@ namespace game
     public class GameManager
     {
         private Map map;
-        private ArrayList players;
-        private ArrayList dragons;
+        private List <Player> players;
+        private List <Dragon> dragons;
         private int numberOfPlayers;
         private Connector connector;
-        public static int height;
-        public static int width;
 
         public GameManager(String ipAdress, UInt16 port)
         {
