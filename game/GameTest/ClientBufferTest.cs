@@ -43,7 +43,8 @@ namespace GameTest
              ClientBuffer buffer = ClientBuffer.getBufferInstance();
              String testString = "Test";
              buffer.put(testString);
-             Assert.IsTrue(testString.Equals(buffer.getElement()));
+             //Assert.IsTrue(testString.Equals(buffer.getElement()));
+             Assert.IsTrue(testString == buffer.getElement());
          }
 
          [TestMethod]
