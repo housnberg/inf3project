@@ -31,7 +31,7 @@ namespace game.client
             Contract.Requires(message != null);
             Contract.Requires(message.Length > 0);
             Contract.Requires(fifo != null);
-            Contract.Requires(!this.isFull());
+            Contract.Requires(!(this.isFull()));
             //fifo.Add(message);
             Contract.Ensures(!this.isEmpty());
         }
@@ -44,7 +44,7 @@ namespace game.client
         {
             Contract.Requires(fifo != null);
             Contract.Requires(fifo.ElementAt(0) != null);
-            Contract.Requires(!this.isEmpty());
+            Contract.Requires(!(this.isEmpty()));
             /*String message = fifo.ElementAt(0);
             fifo.RemoveAt(0);
             return message;*/
