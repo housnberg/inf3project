@@ -50,6 +50,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="ClientBufferTest.cs" />
     <Compile Include="ConnectorTest.cs" />
     <Compile Include="GameManagerTest.cs" />
     <Compile Include="ParserTest.cs" />

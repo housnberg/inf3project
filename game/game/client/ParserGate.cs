@@ -9,7 +9,7 @@ namespace game.client
 {
     public class ParserGate
     {
-        Buffer buffer;
+        ClientBuffer buffer;
         public String message;
         public bool messageIsValid;
         public bool messageIsAvailable;
