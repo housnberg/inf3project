@@ -27,7 +27,7 @@ namespace GameTest
         }
 
          [TestMethod]
-         public void addMultipleElements()
+         public void addMultipleElementsTest()
          {
              ClientBuffer buffer = ClientBuffer.getBufferInstance();
              buffer.put("Test1");
@@ -47,13 +47,25 @@ namespace GameTest
          }
 
          [TestMethod]
-         public void emptyBuffer()
+         public void emptyBufferTest()
          {
              ClientBuffer buffer = ClientBuffer.getBufferInstance();
              String testString = "Test";
              buffer.put(testString);
              buffer.getElement();
              Assert.IsTrue(buffer.isEmpty());
+         }
+
+         [TestMethod]
+         public void fullBufferTest()
+         {
+             ClientBuffer buffer = ClientBuffer.getBufferInstance();
+             String testString = "Test";
+             for (int i = 0; i <= 1000; i++)
+             {
+                 buffer.put(testString);
+             }
+             Assert.IsTrue(buffer.isFull());
          }
 
     }
