@@ -9,6 +9,7 @@ namespace game.client
 {
     public class ParserGate
     {
+        Buffer buffer;
         public String message;
         public bool messageIsValid;
         public bool messageIsAvailable;
@@ -120,6 +121,12 @@ namespace game.client
         {
             Contract.Requires(messageIsValid);
             Contract.Ensures(message == null);
+        }
+
+        [ContractInvariantMethod]
+        void ObjectInvariant()
+        {
+            Contract.Invariant(buffer != null);
         }
     }
 }

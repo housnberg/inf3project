@@ -142,5 +142,6 @@ namespace GameTest
             parserMap.parseProperty(parserMap.message);
             Assert.IsTrue(parserMap.messageIsValid);
         }
+
     }
 }

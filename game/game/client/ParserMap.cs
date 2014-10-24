@@ -43,5 +43,11 @@ namespace game.client
             Contract.Requires(partOfMessage != null && messageIsValid);
             Contract.Ensures(messageIsValid);
         }
+
+        [ContractInvariantMethod]
+        void ObjectInvariant()
+        {
+            Contract.Invariant(parserGate != null);
+        }
     }
 }
