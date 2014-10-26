@@ -16,8 +16,7 @@ namespace game.client
         private TcpClient client;
         private NetworkStream stream;
         private Thread receiver;
-        private Fifo buffer;
-        //private Buffer buffer;
+        private ClientBuffer buffer;
 
         /// <summary>
         /// establishes automatically a connection to the server when an 
@@ -32,11 +31,11 @@ namespace game.client
             Contract.Requires(ip.Length < 16);
             Contract.Requires(port >= 0);
             Contract.Requires(port <= 65535);
-            /*this.connect(ip, port);
-            //buffer = new Buffer();
+            this.connect(ip, port);
+            buffer = ClientBuffer.getBufferInstance();
             stream = this.getNetworkStream();
             receiver = new Thread(this.receiveServerMessage);
-            receiver.Start();*/
+            receiver.Start();
             Contract.Ensures(client != null);
             Contract.Ensures(client.Connected);
             Contract.Ensures(stream != null);
@@ -60,10 +59,13 @@ namespace game.client
             Contract.Requires(ip.Length < 16);
             Contract.Requires(port >= 0);
             Contract.Requires(port <= 65535);
-            /*try
+            try
             {
-                if (ip != null)
+                if (ip == null || ip.Length > 16 || ip.Length < 7)  
                 {
+                    throw new ArgumentException("parameter cannot be null and parameter length must be bigger 7 and smaller 16");
+                }
+                else {
                     if (client == null)
                     {
                         client = new TcpClient(ip, port);
@@ -78,15 +80,11 @@ namespace game.client
                     }
                     Console.WriteLine("client connected");
                 }
-                else
-                {
-                    throw new System.ArgumentException("Parameter 'ip' cannot be null");
-                }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-            }*/
+            }
             Contract.Ensures(client != null);
             Contract.Ensures(client.Connected);
             Contract.Ensures(receiver.IsAlive);
@@ -102,7 +100,7 @@ namespace game.client
             Contract.Requires(stream != null);
             Contract.Requires(receiver != null);
             Contract.Requires(receiver.IsAlive);
-            /*try
+            try
             {
                 if (client == null || stream == null || receiver == null)
                 {
@@ -119,7 +117,7 @@ namespace game.client
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-            }*/
+            }
             Contract.Ensures(!client.Connected);
             Contract.Ensures(!receiver.IsAlive);
             Contract.Ensures(!stream.CanRead);
@@ -138,11 +136,11 @@ namespace game.client
             Contract.Requires(client.Connected);
             Contract.Requires(stream != null);
             Contract.Requires(stream.CanWrite);
-            /*try
+            try
             {
-                if (stream == null || message == null || message.Length < 1)
+                if (message == null || message.Length < 1)
                 {
-                    throw new System.ArgumentException("Parameter cannot be null or the length of the message cannot be < 1");
+                    throw new System.ArgumentException("Parameter cannot be null or the parameter length cannot be < 1");
                 }
                 else 
                 {
@@ -156,7 +154,7 @@ namespace game.client
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-            }*/
+            }
             Contract.Ensures(stream.DataAvailable);
         }
 
@@ -172,7 +170,7 @@ namespace game.client
             Contract.Requires(receiver != null);
             Contract.Requires(receiver.IsAlive);
             Contract.Requires(buffer != null);
-            /*String message;
+            String message;
             while (client.Connected)
             {
                 message = "";
@@ -182,9 +180,9 @@ namespace game.client
                 if (message != null && message.Length > 0)
                 {
                     Console.WriteLine(message);
-                    //METHOD FOR SAVING THE MESSAGE IN THE BUFFER
+                    buffer.put(message);
                 }
-            }*/
+            }
             Contract.Ensures(stream.DataAvailable);
             Contract.Ensures(!buffer.isEmpty());
         }
@@ -219,7 +217,7 @@ namespace game.client
         /// method mainly used for unit tests
         /// </summary>
         /// <returns>the used buffer</returns>
-        public Fifo getBuffer()
+        public ClientBuffer getBuffer()
         {
             return buffer;
         }
