@@ -32,7 +32,16 @@ namespace game.client
             Contract.Requires(message.Length > 0);
             Contract.Requires(fifo != null);
             Contract.Requires(!(this.isFull()));
-            //fifo.Add(message);
+            /*
+            if ((message == null)||(message.Length < 0)||(fifo == null))
+            {
+                throw new ArgumentException("The message is null or smaller 0, or the fifo is null");
+            }
+            else
+            {
+                fifo.Add(message);
+            }
+            */
             Contract.Ensures(!this.isEmpty());
         }
 
@@ -45,9 +54,18 @@ namespace game.client
             Contract.Requires(fifo != null);
             Contract.Requires(fifo.ElementAt(0) != null);
             Contract.Requires(!(this.isEmpty()));
-            /*String message = fifo.ElementAt(0);
-            fifo.RemoveAt(0);
-            return message;*/
+            /*
+            if ((fifo == null)||(this.isEmpty()))
+            {
+                throw new ArgumentException("Fifo is null or the Buffer is empty");
+            }
+            else
+            {
+                String message = fifo.ElementAt(0);
+                fifo.RemoveAt(0);
+              return message;
+            }
+            */
             Contract.Ensures(!this.isFull());
         }
 
