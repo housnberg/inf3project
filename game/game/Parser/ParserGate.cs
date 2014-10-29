@@ -4,15 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics.Contracts;
+using game.client;
 
-namespace game.client
+namespace game.Parser
 {
     public class ParserGate
     {
-        ClientBuffer buffer;
-        public String message;
-        public bool messageIsValid;
-        public bool messageIsAvailable;
+        private ClientBuffer buffer;
+        private String message;
+        private bool messageIsValid;
+        private bool messageIsAvailable;
 
         /// <summary>
         /// Receives incoming messages from the buffer.
