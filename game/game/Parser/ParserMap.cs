@@ -82,7 +82,7 @@ namespace game.Parser
         /// Parses the message applying the "MAP" rule.
         /// </summary>
         /// <param name="partOfMessage">Part of original message, is expected to fit the "MAP" rule.</param>
-        public void parseMap(String partOfMessage)
+        private void parseMap(String partOfMessage)
         {
             Contract.Requires(partOfMessage != null && messageIsValid);
             Contract.Ensures(messageIsValid);
@@ -92,7 +92,7 @@ namespace game.Parser
         /// Parses the message applying the "MAPCELL" rule.
         /// </summary>
         /// <param name="partOfMessage">Part of original message, is expected to fit the "MAPCELL" rule.</param>
-        public void parseMapcell(String partOfMessage)
+        private void parseMapcell(String partOfMessage)
         {
             Contract.Requires(partOfMessage != null && messageIsValid);
             Contract.Ensures(messageIsValid);
@@ -102,7 +102,7 @@ namespace game.Parser
         /// Parses the message applying the "PROPERTY" rule.
         /// </summary>
         /// <param name="partOfMessage">Part of original message, is expected to fit the "PROPERTY" rule.</param>
-        public void parseProperty(String partOfMessage)
+        private void parseProperty(String partOfMessage)
         {
             Contract.Requires(partOfMessage != null && messageIsValid);
             Contract.Ensures(messageIsValid);
