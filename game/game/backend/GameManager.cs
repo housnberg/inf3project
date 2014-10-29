@@ -17,6 +17,7 @@ namespace game
         private List <Dragon> dragons;
         private int numberOfPlayers;
         private Connector connector;
+        private static GameManager gameManager;
 
         public GameManager(String ipAdress, UInt16 port)
         {
@@ -161,6 +162,35 @@ namespace game
         {
             Contract.Invariant(this.players != null);
             Contract.Invariant(this.connector != null);
+        }
+
+        public int getMapHeight()
+        {
+            if (this.map != null)
+            {
+                return this.map.getHeight();
+            }
+            else
+            {
+                return -1;
+            }
+        }
+
+        public int getMapWidth()
+        {
+            if (this.map != null)
+            {
+                return this.map.getWidth();
+            }
+            else
+            {
+                return -1;
+            }
+        }
+
+        public static GameManager getGameManagerInstance()
+        {
+            return GameManager.gameManager;
         }
        
     }
