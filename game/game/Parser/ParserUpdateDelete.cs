@@ -82,7 +82,7 @@ namespace game.Parser
         /// Parses the message applying the "UPDATE" rule. Will eventually call the ParserToken or ParserMap class.
         /// </summary>
         /// <param name="message">Part of original message, is expected to fit the "UPDATE" rule</param>
-        public void parseUpdate(String message)
+        private void parseUpdate(String message)
         {
             Contract.Requires(message != null && messageIsValid);
             Contract.Ensures(messageIsValid);
@@ -92,7 +92,7 @@ namespace game.Parser
         /// Parses the message applying the "DELETE" rule. Will eventually call the ParserToken class.
         /// </summary>
         /// <param name="message">Part of original message, is expected to fit the "DELETE" rule</param>
-        public void parseDelete(String message)
+        private void parseDelete(String message)
         {
             Contract.Requires(message != null && messageIsValid);
             Contract.Ensures(messageIsValid);
