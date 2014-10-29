@@ -15,7 +15,9 @@ namespace game.Parser
 
         ParserChallengeResult(ParserGate parserGate, String message, bool messageIsValid)
         {
-
+            setParserGate(parserGate);
+            setMessage(message);
+            setMessageIsValid(messageIsValid);
         }
 
         /// <summary>
