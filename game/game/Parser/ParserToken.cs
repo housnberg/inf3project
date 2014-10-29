@@ -82,7 +82,7 @@ namespace game.Parser
         /// Parses the message applying the "PLAYER" rule.
         /// </summary>
         /// <param name="partOfMessage">Part of original message, is expected to fit the "PLAYER" rule:</param>
-        public void parsePlayer(String partOfMessage)
+        private void parsePlayer(String partOfMessage)
         {
             Contract.Requires(partOfMessage != null && messageIsValid);
             Contract.Ensures(messageIsValid);
@@ -92,7 +92,7 @@ namespace game.Parser
         /// Parses the message applying the "DRAGON" rule.
         /// </summary>
         /// <param name="partOfMessage">Part of original message, is expected to fit the "DRAGON" rule:</param>
-        public void parseDragon(String partOfMessage)
+        private void parseDragon(String partOfMessage)
         {
             Contract.Requires(partOfMessage != null && messageIsValid);
             Contract.Ensures(messageIsValid);
