@@ -110,6 +110,9 @@ namespace game.client
             return fifo.Count;
         }
 
+        /// <summary>
+        /// method clear the buffer
+        /// </summary>
         public void clear()
         {
             Contract.Requires(fifo != null);
