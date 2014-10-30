@@ -110,6 +110,15 @@ namespace game.client
             return fifo.Count;
         }
 
+        public void clear()
+        {
+            Contract.Requires(fifo != null);
+            fifo.Clear();
+        }
+
+
+
+
         /// <summary>
         /// method returns a static instance of the buffer
         /// implemented visa singleton-architecture
