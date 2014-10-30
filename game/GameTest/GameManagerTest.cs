@@ -26,7 +26,7 @@ namespace GameTest
         public void addPlayerTest()
         {
             GameManager gm = new GameManager(ip, port);
-            gm.storePlayer(new Player("Hans"));
+            gm.storePlayer(new Player("Hans",123));
             Assert.IsTrue(gm.getNumberOfPlayers() > 0);
         }
 
@@ -34,9 +34,9 @@ namespace GameTest
         public void deletePlayerTest()
         {
             GameManager gm = new GameManager(ip, port);
-            Player playerOne = new Player("Hans");
+            Player playerOne = new Player("Hans", 123);
             gm.storePlayer(playerOne);
-            Player playerTwo = new Player("Juergen");
+            Player playerTwo = new Player("Juergen", 124);
             gm.storePlayer(playerTwo);
             gm.deletePlayer(playerOne);
             Assert.IsTrue(gm.getNumberOfPlayers() == 1);
@@ -46,11 +46,11 @@ namespace GameTest
         public void deletePlayerByID()
         {
             GameManager gm = new GameManager(ip, port);
-            Player playerOne = new Player("Hans");
+            Player playerOne = new Player("Hans", 123);
             gm.storePlayer(playerOne);
-            Player playerTwo = new Player("Juergen");
+            Player playerTwo = new Player("Juergen", 124);
             gm.storePlayer(playerTwo);
-            gm.deletePlayer(playerOne.getID());
+            gm.deletePlayer(123);
             Assert.IsTrue(gm.getNumberOfPlayers() == 1);
         }
 

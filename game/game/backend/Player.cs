@@ -8,18 +8,12 @@ namespace game
 {
     public class Player : Token
     {
-        private String name;
-        private int ID;
-        public Player(String name)
+        
+        public Player(String name, int id)
         {
-            this.name = name;
+            this.setName(name);
+            this.setID(id);
         }
-
-        public int getID()
-        {
-            return this.ID;
-        }
-
 
     }
 }

@@ -42,12 +42,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="backend\Dragon.cs" />
+    <Compile Include="backend\Dragonhunt.cs" />
     <Compile Include="backend\Field.cs" />
     <Compile Include="backend\GameManager.cs" />
     <Compile Include="backend\Map.cs" />
     <Compile Include="backend\Minigame.cs" />
     <Compile Include="backend\Player.cs" />
     <Compile Include="backend\Program.cs" />
+    <Compile Include="backend\Skirmish.cs" />
+    <Compile Include="backend\Staghunt.cs" />
     <Compile Include="backend\Token.cs" />
     <Compile Include="client\ClientBuffer.cs" />
     <Compile Include="client\Fifo.cs" />

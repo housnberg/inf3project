@@ -8,5 +8,12 @@ namespace game
 {
     class Dragon : Token
     {
+
+        public Dragon(string name, int id)
+        {
+            this.setName(name);
+            this.setID(id);
+        }
+
     }
 }

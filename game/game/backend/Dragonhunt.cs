@@ -1,14 +1,15 @@
-﻿using System;
+﻿using game.Backend;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace game.Backend
+namespace game.backend
 {
-    class Minigame
+    class Dragonhunt : Minigame
     {
-        public Minigame()
+        public Dragonhunt()
         {
 
         }
