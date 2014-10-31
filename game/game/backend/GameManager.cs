@@ -62,11 +62,11 @@ namespace game
         /// Adds a Player to the GameManager's ArrayList
         /// </summary>
         /// <param name="player">Player to be added</param>
-        public void storePlayer(Token token)
+        public void storePlayer(Player token) // make player out of it
         {
             Contract.Requires(token != null);
             Contract.Requires(token is Player);
-            Player player = (Player)token;
+            Player player = (Player)token;//throw da shit away
 
             players.Add(player);
         }

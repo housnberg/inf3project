@@ -11,7 +11,7 @@ namespace game.client
     public class ClientBuffer
     {
         private List<String> fifo;
-        private const int MAX_SIZE = 1000;
+        private const int MAX_SIZE = 49;
         private static ClientBuffer buffer;
 
         private ClientBuffer()
@@ -66,7 +66,9 @@ namespace game.client
               return message;
             }
             */
+            
             Contract.Ensures(!this.isFull());
+            return "";
         }
 
         /// <summary>
@@ -129,7 +131,7 @@ namespace game.client
         /// <returns>current buffer instance</returns>
         public static ClientBuffer getBufferInstance() 
         {
-            if (ClientBuffer.buffer == null)
+            if (ClientBuffer.buffer == null)  // CHANGE DA MATHAFACKING METHOD
             {
                 return (ClientBuffer.buffer = new ClientBuffer());
             }
