@@ -9,11 +9,7 @@ namespace game
 {
     class Field
     {
-        public static const int WALKABLE = 0;
-        public static const int WALL = 1;
-        public static const int FOREST = 2;
-        public static const int WATER = 3;
-        public static const int HUNTABLE = 4;
+        public static enum fieldType { WALKABLE, HUNTABLE, FOREST, WATER, WALL};
 
         private int row;
         private int column;
