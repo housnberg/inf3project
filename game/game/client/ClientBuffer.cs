@@ -12,7 +12,8 @@ namespace game.client
     {
         private List<String> fifo;
         private const int MAX_SIZE = 49;
-        private static ClientBuffer buffer;
+        private static ClientBuffer buffer = new ClientBuffer();
+       
 
         private ClientBuffer()
         {
@@ -78,11 +79,12 @@ namespace game.client
         public Boolean isEmpty()
         {
             Contract.Requires(fifo != null);
-            /*if (fifo.Count == 0)
+            Boolean isEmpty = false;
+            if (fifo.Count == 0)
             {
-                return true;
+                isEmpty = true;
             }
-            return false;*/
+            return isEmpty;
             Contract.Ensures(Contract.Result<Boolean>() == false || Contract.Result<Boolean>() == true);
         }
 
@@ -131,12 +133,7 @@ namespace game.client
         /// <returns>current buffer instance</returns>
         public static ClientBuffer getBufferInstance() 
         {
-            if (ClientBuffer.buffer == null)  // CHANGE DA MATHAFACKING METHOD
-            {
-                return (ClientBuffer.buffer = new ClientBuffer());
-            }
-            Contract.Ensures(ClientBuffer.buffer != null);
-            return ClientBuffer.buffer;
+            return buffer;
         }
 
         [ContractInvariantMethod]
