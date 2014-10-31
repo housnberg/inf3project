@@ -85,7 +85,7 @@ namespace game.client
                 isEmpty = true;
             }
             return isEmpty;
-            Contract.Ensures(Contract.Result<Boolean>() == false || Contract.Result<Boolean>() == true);
+            Contract.Ensures(isEmpty != null);
         }
 
         /// <summary>
@@ -95,12 +95,15 @@ namespace game.client
         public Boolean isFull()
         {
             Contract.Requires(fifo != null);
-            /*if (fifo.Count == maxAmount)
+            Boolean isFull = false;
+            /*
+            if (fifo.Count == maxAmount)
             {
-                return true;
+                isFull = true;
             }
-            return false;*/
-            Contract.Ensures(Contract.Result<Boolean>() == false || Contract.Result<Boolean>() == true);
+            return isFull;
+            */
+            Contract.Ensures(isFull != null);
         }
 
         /// <summary>
