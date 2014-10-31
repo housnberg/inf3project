@@ -84,13 +84,13 @@ namespace game
         public void setID(int id)
         {
             Contract.Requires(id > 0);
-            Contract.Requires(id < 100);
+            //Contract.Requires(id < 100);
 
             try
             {
-                if (id < 0 || id > 100)
+                if (id < 0)
                 {
-                    throw new ArgumentException("The ID for a Token needs to be greater than 0 and smaller than 100");
+                    throw new ArgumentException("The ID for a Token needs to be greater than 0!");
                 }
                 this.id = id;
             }
@@ -117,7 +117,7 @@ namespace game
 
                 if (this.busy == false && busy == false)
                 {
-                    throw new ArgumentException("The Token is already not in busy mode!");
+                    throw new ArgumentException("The Token has already lfet busy mode!");
                 }
 
                 this.busy = busy;
