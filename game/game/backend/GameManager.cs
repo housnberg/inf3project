@@ -62,10 +62,12 @@ namespace game
         /// Adds a Player to the GameManager's ArrayList
         /// </summary>
         /// <param name="player">Player to be added</param>
-        public void storePlayer(Player player)
+        public void storePlayer(Token token)
         {
-            Contract.Requires(player != null);
-          
+            Contract.Requires(token != null);
+            Contract.Requires(token is Player);
+            Player player = (Player)token;
+
             players.Add(player);
         }
 
@@ -73,11 +75,13 @@ namespace game
         /// Removes a certain Player from the GameManager's ArrayList
         /// </summary>
         /// <param name="player">Player to be removed</param>
-        public void deletePlayer(Player player)
+        public void deletePlayer(Token token)
         {
-            Contract.Requires(player != null);
-            Boolean isRemoved = false;
-
+            Contract.Requires(token != null);
+            Contract.Requires(token is Player);
+            Player player = (Player)token;
+            //Boolean isRemoved = false;
+            //
             //foreach (Player p in players)
             //{
             //    if (p.Equals(player))
@@ -92,7 +96,6 @@ namespace game
             //    Console.Out.WriteLine("Der Spieler existiert nicht in dem Spiel und ist damit bereits gelöscht!");
             //    isRemoved = true;
             //}
-            Contract.Ensures(isRemoved);
         }
 
         /// <summary>

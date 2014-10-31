@@ -34,11 +34,11 @@ namespace GameTest
         public void deletePlayerTest()
         {
             GameManager gm = new GameManager(ip, port);
-            Player playerOne = new Player("Hans", 123);
-            gm.storePlayer(playerOne);
-            Player playerTwo = new Player("Juergen", 124);
-            gm.storePlayer(playerTwo);
-            gm.deletePlayer(playerOne);
+            Token tokenOne = new Player("Hans", 123);
+            gm.storePlayer(tokenOne);
+            Token tokenTwo = new Player("Juergen", 124);
+            gm.storePlayer(tokenTwo);
+            gm.deletePlayer(tokenOne);
             Assert.IsTrue(gm.getNumberOfPlayers() == 1);
         }
 
