@@ -54,6 +54,8 @@
     <Compile Include="backend\Token.cs" />
     <Compile Include="client\ClientBuffer.cs" />
     <Compile Include="client\Connector.cs" />
+    <Compile Include="client\Receiver.cs" />
+    <Compile Include="client\Sender.cs" />
     <Compile Include="Parser\ParserChallengeResult.cs" />
     <Compile Include="Parser\ParserGate.cs" />
     <Compile Include="Parser\ParserMap.cs" />
