@@ -7,6 +7,8 @@ using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using game.Parser;
+using game.client;
 
 namespace game
 {
@@ -18,6 +20,8 @@ namespace game
         private int numberOfPlayers;
         private Connector connector;
         private static GameManager gameManager;
+        private ParserGate parserGate;
+        private ClientBuffer buffer;
 
         public GameManager(String ipAdress, UInt16 port)
         {
@@ -44,6 +48,14 @@ namespace game
 
             Contract.Requires(message != null);
             //connector.sendServerMessage(message);
+        }
+
+        /// <summary>
+        /// Method for creating the Parser object and starting it in a thread.
+        /// </summary>
+        public void createParser()
+        {
+            
         }
 
         /// <summary>
