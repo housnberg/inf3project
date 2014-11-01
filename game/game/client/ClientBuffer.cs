@@ -18,7 +18,7 @@ namespace game.client
         private ClientBuffer()
         {
             Contract.Requires(MAX_SIZE > 0);
-            //fifo = new List<String>();
+            fifo = new List<String>();
             Contract.Ensures(ClientBuffer.buffer != null);
             Contract.Ensures(fifo != null);
         }
@@ -33,7 +33,6 @@ namespace game.client
             Contract.Requires(message.Length > 0);
             Contract.Requires(fifo != null);
             Contract.Requires(!(this.isFull()));
-            /*
             if ((message == null)||(message.Length < 0)||(fifo == null))
             {
                 throw new ArgumentException("The message is null or smaller 0, or the fifo is null");
@@ -42,7 +41,6 @@ namespace game.client
             {
                 fifo.Add(message);
             }
-            */
             Contract.Ensures(!this.isEmpty());
         }
 
@@ -55,7 +53,6 @@ namespace game.client
             Contract.Requires(fifo != null);
             Contract.Requires(fifo.ElementAt(0) != null);
             Contract.Requires(!(this.isEmpty()));
-            /*
             if ((fifo == null)||(this.isEmpty()))
             {
                 throw new ArgumentException("Fifo is null or the Buffer is empty");
@@ -66,8 +63,6 @@ namespace game.client
                 fifo.RemoveAt(0);
               return message;
             }
-            */
-            
             Contract.Ensures(!this.isFull());
             return "";
         }
@@ -96,13 +91,11 @@ namespace game.client
         {
             Contract.Requires(fifo != null);
             Boolean isFull = false;
-            /*
-            if (fifo.Count == maxAmount)
+            if (fifo.Count == MAX_SIZE)
             {
                 isFull = true;
             }
             return isFull;
-            */
             Contract.Ensures(isFull != null);
         }
 
