@@ -34,9 +34,11 @@ namespace game.client
             Contract.Requires(port >= 0);
             Contract.Requires(port <= 65535);
             buffer = ClientBuffer.getBufferInstance();
-            this.connect(ip, port);
+            connect(ip, port);
             sender = new Sender(client);
             receiver = new Receiver(client);
+            receiverThread = new Thread(this.receiveServerMessage);
+            receiverThread.Start();
             Contract.Ensures(client != null);
             Contract.Ensures(client.Connected);
             Contract.Ensures(stream != null);
@@ -73,8 +75,6 @@ namespace game.client
                         client = new TcpClient(ip, port);
                         stream = this.getNetworkStream();
                         buffer.clear();
-                        receiverThread = new Thread(this.receiveServerMessage);
-                        receiverThread.Start();
                     }
                     else
                     {
@@ -166,7 +166,7 @@ namespace game.client
                     message = receiver.receive();
                     if (message != null && message.Length > 0)
                     {
-                        //for test cases only
+                        //for test purposes only
                         Console.WriteLine(message);
                         buffer.put(message);
                         buffer.splitAndStore();
