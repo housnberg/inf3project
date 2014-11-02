@@ -35,7 +35,7 @@ namespace game.client
             {
                 byte[] data = new byte[client.Available];
                 client.GetStream().Read(data, 0, data.Length);
-                return (Encoding.UTF8.GetString(data));
+                return (Encoding.UTF8.GetString(data).Trim());
             }
             catch (Exception exception)
             {
