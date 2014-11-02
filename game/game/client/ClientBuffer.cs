@@ -31,7 +31,8 @@ namespace game.client
         /// <param name="message">messages to add</param>
         public void put(String message)
         {
-            Contract.Requires(message != null);
+            fullServerMessage += message;
+            /*Contract.Requires(message != null);
             Contract.Requires(message.Length > 0);
             Contract.Requires(fifo != null);
             Contract.Requires(!(this.isFull()));
@@ -43,7 +44,7 @@ namespace game.client
             {
                 fifo.Add(message);
             }
-            Contract.Ensures(!this.isEmpty());
+            Contract.Ensures(!this.isEmpty());*/
         }
 
         /// <summary>

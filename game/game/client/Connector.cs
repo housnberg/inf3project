@@ -16,9 +16,10 @@ namespace game.client
     {
         private TcpClient client;
         private NetworkStream stream;
-        private Thread receiver;
+        private Thread receiverThread;
         private ClientBuffer buffer;
-
+        private Sender sender;
+        private Receiver receiver;
         /// <summary>
         /// establishes automatically a connection to the server when an 
         /// instance is created
@@ -34,13 +35,15 @@ namespace game.client
             Contract.Requires(port <= 65535);
             buffer = ClientBuffer.getBufferInstance();
             this.connect(ip, port);
+            sender = new Sender(client);
+            receiver = new Receiver(client);
             Contract.Ensures(client != null);
             Contract.Ensures(client.Connected);
             Contract.Ensures(stream != null);
             Contract.Ensures(stream.CanWrite);
             Contract.Ensures(stream.CanRead);
-            Contract.Ensures(receiver != null);
-            Contract.Ensures(receiver.IsAlive);
+            Contract.Ensures(receiverThread != null);
+            Contract.Ensures(receiverThread.IsAlive);
             Contract.Ensures(buffer != null);
             Contract.Ensures(buffer.isEmpty());
         }
@@ -70,8 +73,8 @@ namespace game.client
                         client = new TcpClient(ip, port);
                         stream = this.getNetworkStream();
                         buffer.clear();
-                        receiver = new Thread(this.receiveServerMessage);
-                        receiver.Start();
+                        receiverThread = new Thread(this.receiveServerMessage);
+                        receiverThread.Start();
                     }
                     else
                     {
@@ -86,7 +89,7 @@ namespace game.client
             }
             Contract.Ensures(client != null);
             Contract.Ensures(client.Connected);
-            Contract.Ensures(receiver.IsAlive);
+            Contract.Ensures(receiverThread.IsAlive);
         }
 
         /// <summary>
@@ -97,17 +100,17 @@ namespace game.client
             Contract.Requires(client != null);
             Contract.Requires(client.Connected);
             Contract.Requires(stream != null);
-            Contract.Requires(receiver != null);
-            Contract.Requires(receiver.IsAlive);
+            Contract.Requires(receiverThread != null);
+            Contract.Requires(receiverThread.IsAlive);
             try
             {
-                if (client == null || stream == null || receiver == null)
+                if (client == null || stream == null || receiverThread == null)
                 {
                     throw new System.ArgumentNullException("Parameter cannot be null");
                 }
                 if (client.Connected)
                 {
-                    receiver.Abort();
+                    receiverThread.Abort();
                     stream.Close();
                     client.Close();
                     Console.WriteLine("client disconnected");
@@ -122,7 +125,7 @@ namespace game.client
                 Console.WriteLine(exeption.Message);
             }
             Contract.Ensures(!client.Connected);
-            Contract.Ensures(!receiver.IsAlive);
+            Contract.Ensures(!receiverThread.IsAlive);
             Contract.Ensures(!stream.CanRead);
             Contract.Ensures(!stream.CanWrite);
         }
@@ -139,28 +142,7 @@ namespace game.client
             Contract.Requires(client.Connected);
             Contract.Requires(stream != null);
             Contract.Requires(stream.CanWrite);
-            try
-            {
-                if (message == null || message.Length < 1)
-                {
-                    throw new System.ArgumentException("Parameter cannot be null or the parameter length cannot be < 1");
-                }
-                else
-                {
-                    if (stream.CanWrite)
-                    {
-                        Byte[] data = Encoding.UTF8.GetBytes(message + "\r\n");
-                        stream.Write(data, 0, data.Length);
-                        //StreamWriter sw = new StreamWriter(stream);
-                        //sw.Write(message + "\r\n");
-                        //sw.Flush();
-                    }
-                }
-            }
-            catch (Exception exeption)
-            {
-                Console.WriteLine(exeption.Message);
-            }
+            sender.send(message);
             Contract.Ensures(stream.DataAvailable);
         }
 
@@ -173,37 +155,26 @@ namespace game.client
             Contract.Requires(client.Connected);
             Contract.Requires(stream != null);
             Contract.Requires(stream.CanRead);
-            Contract.Requires(receiver != null);
-            Contract.Requires(receiver.IsAlive);
+            Contract.Requires(receiverThread != null);
+            Contract.Requires(receiverThread.IsAlive);
             Contract.Requires(buffer != null);
             String message;
-            try
+            lock (buffer)
             {
                 while (client.Connected)
                 {
-                    if (stream.CanRead)
+                    message = receiver.receive();
+                    if (message != null && message.Length > 0)
                     {
-                        message = "";
-                        byte[] data = new byte[client.Available];
-                        stream.Read(data, 0, data.Length);
-                        message = Encoding.UTF8.GetString(data);
-                        //StreamReader sr = new StreamReader(stream);
-                        //message = sr.ReadLine();
-                        if (message != null && message.Length > 0)
-                        {
-                            //for test cases only
-                            Console.WriteLine(message);
-                            buffer.put(message);
-                        }
+                        //for test cases only
+                        Console.WriteLine(message);
+                        buffer.put(message);
+                        buffer.splitAndStore();
                     }
                 }
             }
-            catch (Exception exeption)
-            {
-                Console.WriteLine(exeption.Message);
-            }
-            //Contract.Ensures(stream.DataAvailable);
-            //Contract.Ensures(!buffer.isEmpty());
+            Contract.Ensures(stream.DataAvailable);
+            Contract.Ensures(!buffer.isEmpty());
         }
 
         /// <summary>
@@ -212,14 +183,12 @@ namespace game.client
         /// <returns>network stream</returns>
         private NetworkStream getNetworkStream()
         {
+            stream = null;
             if (client != null && client.Connected)
             {
-                return client.GetStream();
+                stream = client.GetStream();
             }
-            else
-            {
-                return null;
-            }
+            return stream;
         }
 
         /// <summary>
@@ -255,7 +224,7 @@ namespace game.client
         /// <returns>the used receiver-thread</returns>
         public Thread getReceiver()
         {
-            return receiver;
+            return receiverThread;
         }
 
         [ContractInvariantMethod]
@@ -264,7 +233,7 @@ namespace game.client
             Contract.Invariant(this.buffer != null);
             Contract.Invariant(this.client != null);
             Contract.Invariant(this.stream != null);
-            Contract.Invariant(this.receiver != null);
+            Contract.Invariant(this.receiverThread != null);
         }
     }
 }
