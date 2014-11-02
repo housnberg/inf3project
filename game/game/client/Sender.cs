@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace game.client
 {
-    public class Sender
+    class Sender
     {
         private TcpClient client;
 
@@ -32,7 +32,26 @@ namespace game.client
         /// <param name="message">the message to be send</param>
         public void send(String message)
         {
-
+            try
+            {
+                if (message == null)
+                {
+                    throw new System.ArgumentNullException("parameter cannot be null");
+                }
+                else if (message.Length < 1)
+                {
+                    throw new System.ArgumentException("parameter length cannot be < 1");
+                }
+                else
+                {
+                    Byte[] data = Encoding.UTF8.GetBytes(message + "\r\n");
+                    client.GetStream().Write(data, 0, data.Length);
+                }
+            }
+            catch (Exception exeption)
+            {
+                Console.WriteLine(exeption.Message);
+            }
         }
     }
 }

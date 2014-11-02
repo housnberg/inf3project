@@ -8,7 +8,7 @@ using System.Net.Sockets;
 
 namespace game.client
 {
-    public class Receiver
+    class Receiver
     {
         private TcpClient client;
 
@@ -31,7 +31,17 @@ namespace game.client
         /// </summary>
         public String receive()
         {
-            return "";
+            try
+            {
+                byte[] data = new byte[client.Available];
+                client.GetStream().Read(data, 0, data.Length);
+                return (Encoding.UTF8.GetString(data));
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception.Message);
+                return null;
+            }
         }
     }
 }
