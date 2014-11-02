@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections;
 using System.Diagnostics.Contracts;
+using System.Text.RegularExpressions;
 
 namespace game.client
 {
@@ -13,7 +14,8 @@ namespace game.client
         private List<String> fifo;
         private const int MAX_SIZE = 49;
         private static ClientBuffer buffer = new ClientBuffer();
-       
+        private UInt16 messageCounter = 0;
+        private String fullServerMessage = String.Empty;
 
         private ClientBuffer()
         {
@@ -130,6 +132,25 @@ namespace game.client
         public static ClientBuffer getBufferInstance() 
         {
             return buffer;
+        }
+
+        /// <summary>
+        /// splits a full message before storing it in the buffer 
+        /// </summary>
+        public void splitAndStore()
+        {
+            //Regex r = new Regex("begin:" + messageCounter + "[a-zA-Z0-9]*end:" + messageCounter);
+            if (fullServerMessage.Contains("begin:" + messageCounter) && fullServerMessage.Contains("end:" + messageCounter))
+            {
+                String[] tmp = Regex.Split(fullServerMessage, "end:" + messageCounter);
+                fifo.Add(tmp[0]);
+                fullServerMessage = tmp[1] + "\r\n";
+                using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"C:\Users\Acer\Desktop\test_" + (messageCounter) + ".txt", true))
+                {
+                    file.WriteLine(getElement());
+                }
+                messageCounter++;
+            }
         }
 
         [ContractInvariantMethod]
