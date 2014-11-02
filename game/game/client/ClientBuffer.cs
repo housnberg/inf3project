@@ -146,7 +146,8 @@ namespace game.client
                 String[] tmp = Regex.Split(fullServerMessage, "end:" + messageCounter);
                 fifo.Add(tmp[0]);
                 fullServerMessage = tmp[1] + "\r\n";
-                using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"C:\Users\Acer\Desktop\test_" + (messageCounter) + ".txt", true))
+                //for test purposes only
+                using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"C:\Users\test_" + (messageCounter) + ".txt", true))
                 {
                     file.WriteLine(getElement());
                 }
