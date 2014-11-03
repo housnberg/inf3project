@@ -163,13 +163,23 @@ namespace game.client
             {
                 while (client.Connected)
                 {
-                    message = receiver.receive();
-                    if (message != null && message.Length > 0)
+                    if (buffer.isFull())
                     {
+                        Console.WriteLine("the buffer is currently full!");
                         //for test purposes only
-                        Console.WriteLine(message);
-                        buffer.put(message);
-                        buffer.splitAndStore();
+                        buffer.clear();
+                    }
+                    else
+                    {
+                        message = receiver.receive();
+                        if (message != null && message.Length > 0)
+                        {
+                            //for test purposes only
+                            Console.WriteLine(message);
+                            buffer.put(message);
+                            buffer.splitAndStore();
+                            Console.WriteLine("-----------------" + buffer.getSize());
+                        }
                     }
                 }
             }

@@ -140,18 +140,24 @@ namespace game.client
         /// </summary>
         public void splitAndStore()
         {
-            //Regex r = new Regex("begin:" + messageCounter + "[a-zA-Z0-9]*end:" + messageCounter);
-            if (fullServerMessage.Contains("begin:" + messageCounter) && fullServerMessage.Contains("end:" + messageCounter))
+            if (isFull())
             {
-                String[] tmp = Regex.Split(fullServerMessage, "end:" + messageCounter);
-                fifo.Add(tmp[0]);
-                fullServerMessage = tmp[1] + "\r\n";
-                //for test purposes only
-                using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"C:\Users\test_" + (messageCounter) + ".txt", true))
+                throw new SystemException("the buffer is currently full!");
+            }
+            else
+            {
+                //Regex r = new Regex("begin:" + messageCounter + "[a-zA-Z0-9]*end:" + messageCounter);
+                while (fullServerMessage.Contains("begin:" + messageCounter) && fullServerMessage.Contains("end:" + messageCounter))
                 {
-                    file.WriteLine(getElement());
+                    String[] tmp = Regex.Split(fullServerMessage, "end:" + messageCounter);
+                    fifo.Add(tmp[0].TrimStart());
+                    fullServerMessage = tmp[1] + "\r\n";
+                    using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"C:\Users\test_" + (messageCounter) + ".txt", true))
+                    {
+                        file.WriteLine(getElement());
+                    }
+                    messageCounter++;
                 }
-                messageCounter++;
             }
         }
 
