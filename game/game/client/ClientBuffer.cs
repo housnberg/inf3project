@@ -31,7 +31,14 @@ namespace game.client
         /// <param name="message">messages to add</param>
         public void put(String message)
         {
-            fullServerMessage += message;
+            if ((message == null) || (message.Length < 0) || (fifo == null))
+            {
+                throw new ArgumentException("The message is null or smaller 0, or the fifo is null");
+            }
+            else
+            {
+                fullServerMessage += message;    
+            }
             /*Contract.Requires(message != null);
             Contract.Requires(message.Length > 0);
             Contract.Requires(fifo != null);
