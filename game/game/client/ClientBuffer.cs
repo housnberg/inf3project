@@ -31,13 +31,13 @@ namespace game.client
         /// <param name="message">messages to add</param>
         public void put(String message)
         {
-            if ((message == null) || (message.Length < 0) || (fifo == null))
+            if ((message == null) || (message.Length < 0))
             {
                 throw new ArgumentException("The message is null or smaller 0, or the fifo is null");
             }
             else
             {
-                fullServerMessage += message;    
+                fullServerMessage += message + "\r\n";    
             }
             /*Contract.Requires(message != null);
             Contract.Requires(message.Length > 0);
@@ -63,18 +63,17 @@ namespace game.client
             Contract.Requires(fifo != null);
             Contract.Requires(fifo.ElementAt(0) != null);
             Contract.Requires(!(this.isEmpty()));
-            if ((fifo == null)||(this.isEmpty()))
+            if ((this.isEmpty()))
             {
-                throw new ArgumentException("Fifo is null or the Buffer is empty");
+                throw new ArgumentException("the buffer is empty");
             }
             else
             {
                 String message = fifo.ElementAt(0);
                 fifo.RemoveAt(0);
-              return message;
+                Contract.Ensures(!this.isFull());
+                return message;
             }
-            Contract.Ensures(!this.isFull());
-            return "";
         }
 
         /// <summary>
@@ -90,7 +89,6 @@ namespace game.client
                 isEmpty = true;
             }
             return isEmpty;
-            Contract.Ensures(isEmpty != null);
         }
 
         /// <summary>
@@ -106,7 +104,6 @@ namespace game.client
                 isFull = true;
             }
             return isFull;
-            Contract.Ensures(isFull != null);
         }
 
         /// <summary>
@@ -147,24 +144,31 @@ namespace game.client
         /// </summary>
         public void splitAndStore()
         {
-            if (isFull())
+            try
             {
-                throw new SystemException("the buffer is currently full!");
-            }
-            else
-            {
-                //Regex r = new Regex("begin:" + messageCounter + "[a-zA-Z0-9]*end:" + messageCounter);
-                while (fullServerMessage.Contains("begin:" + messageCounter) && fullServerMessage.Contains("end:" + messageCounter))
+                if (isFull())
                 {
-                    String[] tmp = Regex.Split(fullServerMessage, "end:" + messageCounter);
-                    fifo.Add(tmp[0].TrimStart());
-                    fullServerMessage = tmp[1] + "\r\n";
-                    using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"C:\Users\test_" + (messageCounter) + ".txt", true))
-                    {
-                        file.WriteLine(getElement());
-                    }
-                    messageCounter++;
+                    throw new SystemException("the buffer is currently full!");
                 }
+                else
+                {
+                    while (fullServerMessage.Contains("begin:" + messageCounter) && fullServerMessage.Contains("end:" + messageCounter))
+                    {
+                        String[] tmp = Regex.Split(fullServerMessage, "end:" + messageCounter);
+                        fifo.Add(tmp[0].Trim());
+                        fullServerMessage = tmp[1];
+                        //for test purposes only
+                        using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"C:\Users\test_" + (messageCounter) + ".txt", true))
+                        {
+                            file.WriteLine(getElement());
+                        }
+                        messageCounter++;
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception.Message);
             }
         }
 

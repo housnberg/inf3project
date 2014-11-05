@@ -163,6 +163,10 @@ namespace game.client
             {
                 while (client.Connected)
                 {
+                    //while (buffer.isFull)
+                    //{
+                    //    Thread.Sleep(50);
+                    //}
                     if (buffer.isFull())
                     {
                         Console.WriteLine("the buffer is currently full!");
