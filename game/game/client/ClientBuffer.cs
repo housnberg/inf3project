@@ -26,9 +26,9 @@ namespace game.client
         }
 
         /// <summary>
-        /// method for adding messages to the buffer
+        /// method which concatenate the fullServerMessage string with a new received strring message
         /// </summary>
-        /// <param name="message">messages to add</param>
+        /// <param name="message">messages to concatenate</param>
         public void put(String message)
         {
             if ((message == null) || (message.Length < 0))
@@ -39,19 +39,7 @@ namespace game.client
             {
                 fullServerMessage += message + "\r\n";    
             }
-            /*Contract.Requires(message != null);
-            Contract.Requires(message.Length > 0);
-            Contract.Requires(fifo != null);
-            Contract.Requires(!(this.isFull()));
-            if ((message == null)||(message.Length < 0)||(fifo == null))
-            {
-                throw new ArgumentException("The message is null or smaller 0, or the fifo is null");
-            }
-            else
-            {
-                fifo.Add(message);
-            }
-            Contract.Ensures(!this.isEmpty());*/
+            Contract.Ensures(!this.isEmpty());
         }
 
         /// <summary>
