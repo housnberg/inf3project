@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace game
 {
-    class Map
+    public class Map
     {
         private int width;
         private int height;

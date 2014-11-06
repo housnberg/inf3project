@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace game
 {
-    abstract class Token
+    public abstract class Token
     {
         private int id;
         private int xPos;

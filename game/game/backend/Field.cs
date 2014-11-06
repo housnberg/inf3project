@@ -9,7 +9,7 @@ namespace game
 {
     class Field
     {
-        public static enum fieldType { WALKABLE, HUNTABLE, FOREST, WATER, WALL};
+        public enum fieldType { WALKABLE, HUNTABLE, FOREST, WATER, WALL};
 
         private int row;
         private int column;

@@ -75,11 +75,8 @@ namespace game
         /// Removes a certain Player from the GameManager's ArrayList
         /// </summary>
         /// <param name="player">Player to be removed</param>
-        public void deletePlayer(Token token)
+        public void deletePlayer(Player player)
         {
-            Contract.Requires(token != null);
-            Contract.Requires(token is Player);
-            Player player = (Player)token;
             //Boolean isRemoved = false;
             //
             //foreach (Player p in players)
@@ -141,7 +138,7 @@ namespace game
         /// <param name="playerOne">Player One taking part in the minigame</param>
         /// <param name="playerTwo">Player Two taking part in the minigame</param>
         /// <param name="minigame">Ceratin Minigame to be started</param>
-        public void beginChallenge (Minigame minigame, Player playerOne, Player playerTwo)
+        public void beginChallenge(Minigame minigame, Player playerOne, Player playerTwo)
         {
             Contract.Requires(minigame != null);
             Contract.Requires(playerOne != null);
@@ -171,6 +168,7 @@ namespace game
         {
             return this.map;
         }
+      
 
         [ContractInvariantMethod]
         protected void ObjectInvariant()
