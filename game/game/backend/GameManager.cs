@@ -83,6 +83,7 @@ namespace game
                 {
                     players.Remove(player);
                     isRemoved = true;
+                    //break;
                 }
             }
             if (isRemoved == false)
@@ -108,6 +109,7 @@ namespace game
                 if (p.getID() == id)
                 {
                     players.Remove(p);
+                    //break;
                 }
             }
             if (isRemoved == false)

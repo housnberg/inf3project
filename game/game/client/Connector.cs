@@ -158,7 +158,7 @@ namespace game.client
             Contract.Requires(receiverThread.IsAlive);
             Contract.Requires(buffer != null);
             String message;
-            lock (buffer)
+            //lock (buffer)
             {
                 while (client.Connected)
                 {

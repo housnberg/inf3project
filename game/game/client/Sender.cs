@@ -19,11 +19,19 @@ namespace game.client
 
         private void setTcpClient(TcpClient client)
         {
-            if (client == null)
+            try
             {
-                throw new ArgumentNullException("the parameter cannot be null");
+                if (client == null)
+                {
+                    throw new ArgumentNullException("the parameter cannot be null");
+                }
+                this.client = client;
             }
-            this.client = client;
+            catch (Exception exception)
+            {
+                Console.Out.WriteLine(exception.Message);
+            }
+           
         }
 
         /// <summary>
