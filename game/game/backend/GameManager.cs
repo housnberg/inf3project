@@ -25,6 +25,7 @@ namespace game
 
         public GameManager(String ipAdress, UInt16 port)
         {
+
             //this.startGame(ipAdress, port);
         }
 
@@ -62,12 +63,9 @@ namespace game
         /// Adds a Player to the GameManager's ArrayList
         /// </summary>
         /// <param name="player">Player to be added</param>
-        public void storePlayer(Player token) // make player out of it
+        public void storePlayer(Player player) 
         {
-            Contract.Requires(token != null);
-            Contract.Requires(token is Player);
-            Player player = (Player)token;//throw da shit away
-
+            Contract.Requires(player != null);
             players.Add(player);
         }
 
@@ -77,22 +75,21 @@ namespace game
         /// <param name="player">Player to be removed</param>
         public void deletePlayer(Player player)
         {
-            //Boolean isRemoved = false;
-            //
-            //foreach (Player p in players)
-            //{
-            //    if (p.Equals(player))
-            //    {
-            //        players.Remove(player);
-            //        isRemoved = true;
-            //        break;
-            //    }
-            //}
-            //if (isRemoved == false)
-            //{
-            //    Console.Out.WriteLine("Der Spieler existiert nicht in dem Spiel und ist damit bereits gelöscht!");
-            //    isRemoved = true;
-            //}
+            Boolean isRemoved = false;
+
+            foreach (Player p in players)
+            {
+                if (p.Equals(player))
+                {
+                    players.Remove(player);
+                    isRemoved = true;
+                }
+            }
+            if (isRemoved == false)
+            {
+                Console.Out.WriteLine("Der Spieler existiert nicht in dem Spiel und ist damit bereits gelöscht!");
+                isRemoved = true;
+            }
         }
 
         /// <summary>
@@ -106,19 +103,18 @@ namespace game
             Contract.Requires( id < 100);
             Boolean isRemoved = false;
 
-            //foreach (Player p in players)
-            //{
-            //    if (p.getID() == id)
-            //    {
-            //        players.Remove(p);
-            //        break;
-            //    }
-            //}
-            //if (isRemoved == false)
-            //{
-            //    Console.Out.WriteLine("Der Spieler mit der ID '" + id + "'  existiert nicht in dem Spiel und ist damit bereits gelöscht!");
-            //    isRemoved = true;
-            //}
+            foreach (Player p in players)
+            {
+                if (p.getID() == id)
+                {
+                    players.Remove(p);
+                }
+            }
+            if (isRemoved == false)
+            {
+                Console.Out.WriteLine("Der Spieler mit der ID '" + id + "'  existiert nicht in dem Spiel und ist damit bereits gelöscht!");
+                isRemoved = true;
+            }
             Contract.Ensures(isRemoved);
         }
 
