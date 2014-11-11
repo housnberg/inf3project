@@ -27,7 +27,6 @@ namespace game
 
         private void setFieldType(int type)
         {
-            Contract.Requires(type != null);
             Contract.Requires(type >= 0);
             Contract.Requires(type <= 4);
             //try

@@ -210,7 +210,7 @@ namespace game.client
         /// <returns>the used buffer</returns>
         public ClientBuffer getBuffer()
         {
-            lock (buffer); // Is that right?
+            lock (buffer) // Is that right?
 
             return buffer;
         }

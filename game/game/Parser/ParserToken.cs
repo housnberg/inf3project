@@ -74,7 +74,7 @@ namespace game.Parser
         /// <param name="validity">Expresses the current state (true = valid, false = invalid) of the message in the parsing process.</param>
         private void setMessageIsValid(bool validity)
         {
-            if (validity != null)
+            
                 this.messageIsValid = validity;
         }
 

@@ -8,31 +8,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using game.Parser;
-using game.client;
 
 namespace game
 {
     public class GameManager
     {
-        private Map map;
-        private List <Player> players;
-        private List <Dragon> dragons;
         private int numberOfPlayers;
+        private Map map;
         private Connector connector;
-        private static GameManager gameManager;
-        private ParserGate parserGate;
+        private List <Player> players = new List<Player>();
+        private List <Dragon> dragons = new List<Dragon>();
         private ClientBuffer buffer;
-
-        public GameManager(String ipAdress, UInt16 port)
+        private static GameManager gameManager = new GameManager();
+   
+        public GameManager()
         {
-
-            //this.startGame(ipAdress, port);
+            this.startGame();
         }
 
-        private void startGame(String ipAdress, UInt16 port)
+        private void startGame()
         {
-            Contract.Requires(ipAdress != null);
-            Contract.Requires(port != null);
+            
 
             //players = new ArrayList();
             //dragons = new ArrayList();
@@ -48,15 +44,8 @@ namespace game
         public void sendCommand(String message){
 
             Contract.Requires(message != null);
+            Contract.Requires(connector != null);
             //connector.sendServerMessage(message);
-        }
-
-        /// <summary>
-        /// Method for creating the Parser object and starting it in a thread.
-        /// </summary>
-        public void createParser()
-        {
-            
         }
 
         /// <summary>
@@ -75,21 +64,13 @@ namespace game
         /// <param name="player">Player to be removed</param>
         public void deletePlayer(Player player)
         {
-            Boolean isRemoved = false;
-
-            foreach (Player p in players)
+            if (players.Contains(player))
             {
-                if (p.Equals(player))
-                {
-                    players.Remove(player);
-                    isRemoved = true;
-                    //break;
-                }
+                players.Remove(player);
             }
-            if (isRemoved == false)
+            else
             {
                 Console.Out.WriteLine("Der Spieler existiert nicht in dem Spiel und ist damit bereits gelöscht!");
-                isRemoved = true;
             }
         }
 
@@ -99,25 +80,46 @@ namespace game
         /// <param name="id">ID of the Player to be removed</param>
         public void deletePlayer(int id)
         {
-            Contract.Requires(id != null);
             Contract.Requires(id > 0);
-            Contract.Requires( id < 100);
-            Boolean isRemoved = false;
+            Boolean found = false;
+            int counter = 0;
+            Player player = null;
 
-            foreach (Player p in players)
-            {
-                if (p.getID() == id)
+            try{
+
+                if (id <= 0)
                 {
-                    players.Remove(p);
-                    //break;
+                    throw new ArgumentException("Die ID " + id + " ist nich gültig! Es sind nur IDs > 0 elaubt sein!");
+                }
+               
+                do
+                {
+                    player = players.ElementAt(counter);
+                    if (player.getID() == id)
+                    {
+                        found = true;
+                        players.Remove(player);
+                    }
+                    else
+                    {
+                        counter++;
+                    }
+                    
+
+                } while (found != true);
+
+                if (found == false)
+                {
+                    throw new ArgumentException("Der Spieler mit der ID '" + id + "'  existiert nicht in dem Spiel und ist damit bereits gelöscht!");
+
                 }
             }
-            if (isRemoved == false)
+            catch (Exception exception)
             {
-                Console.Out.WriteLine("Der Spieler mit der ID '" + id + "'  existiert nicht in dem Spiel und ist damit bereits gelöscht!");
-                isRemoved = true;
+                Console.Out.WriteLine(exception.Message);
             }
-            Contract.Ensures(isRemoved);
+           
+            
         }
 
         /// <summary>

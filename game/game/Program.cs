@@ -14,9 +14,15 @@ namespace game
             //Ip for localhost, port 1024 for local server via eclips
             Connector client = new Connector("127.0.0.1", 1024);
             Console.WriteLine("success!");
+            Console.ReadKey();
             client.sendServerMessage("get:map");
             client.sendServerMessage("get:time");
             Console.ReadKey();
+
+            //GameManager gm = new GameManager();
+            //Player p = new Player();
+            //gm.deletePlayer(null);
+
         }
     }
 }

@@ -12,8 +12,8 @@ namespace game
         private int id;
         private int xPos;
         private int yPos;
-        private String desc;
-        private String type;
+        //private String desc;
+        //private String type;
         private String name;
         private Boolean busy;
 
@@ -48,10 +48,10 @@ namespace game
             return this.xPos;
         }
 
-        public String getDesc()
-        {
-            return desc;
-        }
+        //public String getDesc()
+        //{
+        //    return desc;
+        //}
 
         /// <summary>
         /// Sets an ID for this Token
