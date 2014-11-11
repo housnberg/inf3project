@@ -62,30 +62,34 @@ namespace game.client
             Contract.Requires(ip.Length < 16);
             Contract.Requires(port >= 0);
             Contract.Requires(port <= 65535);
-            try
-            {
-                if (ip == null || ip.Length > 16 || ip.Length < 7)
+            lock (buffer)
+            
+                try
                 {
-                    throw new ArgumentException("parameter cannot be null and parameter length must be bigger 7 and smaller 16");
-                }
-                else
-                {
-                    if (client == null || !client.Connected)
+                    if (ip == null || ip.Length > 16 || ip.Length < 7)
                     {
-                        client = new TcpClient(ip, port);
-                        buffer.clear();
+                        throw new ArgumentException("parameter cannot be null and parameter length must be bigger 7 and smaller 16");
                     }
                     else
                     {
-                        throw new SystemException("the client is already connected!");
+                        if (client == null || !client.Connected)
+                        {
+                            client = new TcpClient(ip, port);
+                            buffer.clear();
+                        }
+                        else
+                        {
+                            throw new SystemException("the client is already connected!");
+                        }
+                        Console.WriteLine("client connected");
                     }
-                    Console.WriteLine("client connected");
                 }
-            }
-            catch (Exception exeption)
-            {
-                Console.WriteLine(exeption.Message);
-            }
+                catch (Exception exeption)
+                {
+                    Console.WriteLine(exeption.Message);
+                }
+            
+            
             Contract.Ensures(client != null);
             Contract.Ensures(client.Connected);
             Contract.Ensures(receiverThread.IsAlive);
@@ -158,19 +162,21 @@ namespace game.client
             Contract.Requires(receiverThread.IsAlive);
             Contract.Requires(buffer != null);
             String message;
-            //lock (buffer)
-            {
+            lock (buffer)
+            
                 while (client.Connected)
                 {
-                    //while (buffer.isFull)
-                    //{
-                    //    Thread.Sleep(50);
-                    //}
+                    if (buffer.isEmpty())
+                    {
+                        Thread.Sleep(50);
+                    }
+                    
                     if (buffer.isFull())
                     {
                         Console.WriteLine("the buffer is currently full!");
                         //for test purposes only
                         buffer.clear();
+                        Thread.Sleep(50);
                     }
                     else
                     {
@@ -184,7 +190,7 @@ namespace game.client
                         }
                     }
                 }
-            }
+            
             Contract.Ensures(client.GetStream().DataAvailable);
             Contract.Ensures(!buffer.isEmpty());
         }
@@ -204,6 +210,8 @@ namespace game.client
         /// <returns>the used buffer</returns>
         public ClientBuffer getBuffer()
         {
+            lock (buffer); // Is that right?
+
             return buffer;
         }
 

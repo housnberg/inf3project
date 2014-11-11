@@ -30,6 +30,7 @@ namespace game.Parser
         /// <returns>Returns the value of the buffer variable.</returns>
         ClientBuffer getBuffer()
         {
+            lock(buffer)
             return this.buffer;
         }
 
@@ -57,6 +58,7 @@ namespace game.Parser
         /// <param name="buffer">The ClientBuffer Object to which the parser will listen to.</param>
         private void setBuffer(ClientBuffer buffer)
         {
+            lock(buffer)
             if (buffer != null)
                 this.buffer = buffer;
         }
