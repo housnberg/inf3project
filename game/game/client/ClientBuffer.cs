@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 using System.Collections;
 using System.Diagnostics.Contracts;
 using System.Text.RegularExpressions;
@@ -12,7 +13,7 @@ namespace game.client
     public class ClientBuffer
     {
         private List<String> fifo;
-        private const int MAX_SIZE = 49;
+        private const int MAX_SIZE = 5;
         private static ClientBuffer buffer = new ClientBuffer();
         private UInt16 messageCounter = 0;
         private String fullServerMessage = String.Empty;
@@ -31,7 +32,7 @@ namespace game.client
         /// <param name="message">messages to concatenate</param>
         public void put(String message)
         {
-            if ((message == null) || (message.Length < 0))
+            /*if ((message == null) || (message.Length < 0))
             {
                 throw new ArgumentException("The message is null or smaller 0, or the fifo is null");
             }
@@ -39,7 +40,34 @@ namespace game.client
             {
                 fullServerMessage += message + "\r\n";    
             }
-            Contract.Ensures(!this.isEmpty());
+            Contract.Ensures(!this.isEmpty());*/
+            Monitor.Enter(buffer);
+            try
+            {
+                fullServerMessage += message + "\r\n";    
+                while (fullServerMessage.Contains("begin:" + messageCounter) && fullServerMessage.Contains("end:" + messageCounter))
+                {
+                    while (isFull())
+                    {
+                        Monitor.Wait(buffer);
+                    }
+                    String[] tmp = Regex.Split(fullServerMessage, "end:" + messageCounter);
+                    fifo.Add(tmp[0].Trim());
+                    fullServerMessage = tmp[1];
+                    //for test purposes only
+                    using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"C:\Users\test_" + (messageCounter) + ".txt", true))
+                    {
+                        file.WriteLine(tmp[0]);
+                    }
+                    messageCounter++;
+                    Monitor.PulseAll(buffer);
+                }
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception.Message);
+            }
+            Monitor.Exit(buffer);
         }
 
         /// <summary>
@@ -51,17 +79,17 @@ namespace game.client
             Contract.Requires(fifo != null);
             Contract.Requires(fifo.ElementAt(0) != null);
             Contract.Requires(!(this.isEmpty()));
-            if ((this.isEmpty()))
+            Monitor.Enter(buffer);
+            while ((this.isEmpty()))
             {
-                throw new ArgumentException("the buffer is empty");
+                Monitor.Wait(buffer);
             }
-            else
-            {
-                String message = fifo.ElementAt(0);
-                fifo.RemoveAt(0);
-                Contract.Ensures(!this.isFull());
-                return message;
-            }
+            String message = fifo.ElementAt(0);
+            fifo.RemoveAt(0);
+            Contract.Ensures(!this.isFull());
+            Monitor.PulseAll(buffer);
+            Monitor.Exit(buffer);
+            return message;
         }
 
         /// <summary>
