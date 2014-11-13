@@ -162,10 +162,17 @@ namespace game.client
             Contract.Requires(receiverThread.IsAlive);
             Contract.Requires(buffer != null);
             String message;
-            while (client.Connected)
+
+            try
             {
-                //lock (buffer)
-                //{
+                if (client == null)
+                {
+                    throw new ArgumentException("The client has no connection to the Server");
+                }
+                while (client.Connected)
+                {
+                    //lock (buffer)
+                    //{
                     /*if (buffer.isFull())
                     {
                         Console.WriteLine("the buffer is currently full!");
@@ -175,18 +182,23 @@ namespace game.client
                     }
                     else
                     {*/
-                        message = receiver.receive();
-                        if (message != null && message.Length > 0)
-                        {
-                            //for test purposes only
-                            Console.WriteLine(message);
-                            buffer.put(message);
-                            //buffer.splitAndStore();
-                        }
+                    message = receiver.receive();
+                    if (message != null && message.Length > 0)
+                    {
+                        //for test purposes only
+                        Console.WriteLine(message);
+                        buffer.put(message);
+                        //buffer.splitAndStore();
+                    }
                     //}
-                //}
+                    //}
+                }
             }
-            
+            catch (Exception exception)
+            {
+                Console.Out.WriteLine(exception.Message);
+            }
+
             Contract.Ensures(client.GetStream().DataAvailable);
             Contract.Ensures(!buffer.isEmpty());
         }

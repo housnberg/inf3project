@@ -60,6 +60,7 @@ namespace game.client
                         file.WriteLine(tmp[0]);
                     }
                     messageCounter++;
+                    Monitor.PulseAll(buffer);
                 }
             }
             catch (Exception exception)
@@ -68,7 +69,6 @@ namespace game.client
             }
             finally
             {
-                Monitor.PulseAll(buffer);
                 Monitor.Exit(buffer);
             }
             
@@ -94,11 +94,7 @@ namespace game.client
                 message = fifo.ElementAt(0);
                 fifo.RemoveAt(0);
                 Contract.Ensures(!(buffer.isFull()));
-
-                if (buffer.isFull())
-                {
-                    throw new ArgumentException("The Buffer is not suposed to be full after an element was taken out!");
-                }
+                Monitor.PulseAll(buffer);
             }
             catch (Exception exception)
             {
@@ -106,7 +102,6 @@ namespace game.client
             }
             finally
             {
-                Monitor.PulseAll(buffer);
                 Monitor.Exit(buffer);
             }
             return message;
@@ -173,39 +168,6 @@ namespace game.client
         public static ClientBuffer getBufferInstance() 
         {
             return buffer;
-        }
-
-        /// <summary>
-        /// splits a full message before storing it in the buffer 
-        /// </summary>
-        public void splitAndStore()
-        {
-            try
-            {
-                if (isFull())
-                {
-                    throw new SystemException("the buffer is currently full!");
-                }
-                else
-                {
-                    while (fullServerMessage.Contains("begin:" + messageCounter) && fullServerMessage.Contains("end:" + messageCounter))
-                    {
-                        String[] tmp = Regex.Split(fullServerMessage, "end:" + messageCounter);
-                        fifo.Add(tmp[0].Trim());
-                        fullServerMessage = tmp[1];
-                        //for test purposes only
-                        using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"C:\Users\test_" + (messageCounter) + ".txt", true))
-                        {
-                            file.WriteLine(getElement());
-                        }
-                        messageCounter++;
-                    }
-                }
-            }
-            catch (Exception exception)
-            {
-                Console.WriteLine(exception.Message);
-            }
         }
 
         [ContractInvariantMethod]

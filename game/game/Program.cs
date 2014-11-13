@@ -23,10 +23,6 @@ namespace game
             client.sendServerMessage("get:time");
             Console.ReadKey();
 
-            GameManager gm = new GameManager();
-            Player p = new Player();
-            gm.deletePlayer(null);
-
             }
         }
 
