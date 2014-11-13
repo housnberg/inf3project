@@ -32,19 +32,19 @@ namespace game.client
         /// <param name="message">messages to concatenate</param>
         public void put(String message)
         {
-            /*if ((message == null) || (message.Length < 0))
+            Contract.Requires(message != null);
+            Contract.Requires(message.Length > 0);
+            try
+            {
+            Monitor.Enter(buffer);
+            if ((message == null) || (message.Length < 0))
             {
                 throw new ArgumentException("The message is null or smaller 0, or the fifo is null");
             }
-            else
-            {
-                fullServerMessage += message + "\r\n";    
-            }
-            Contract.Ensures(!this.isEmpty());*/
-            Monitor.Enter(buffer);
-            try
-            {
-                fullServerMessage += message + "\r\n";    
+           
+                fullServerMessage += message + "\r\n";
+                Contract.Ensures(!buffer.isEmpty());
+
                 while (fullServerMessage.Contains("begin:" + messageCounter) && fullServerMessage.Contains("end:" + messageCounter))
                 {
                     while (isFull())
@@ -60,14 +60,18 @@ namespace game.client
                         file.WriteLine(tmp[0]);
                     }
                     messageCounter++;
-                    Monitor.PulseAll(buffer);
                 }
             }
             catch (Exception exception)
             {
                 Console.WriteLine(exception.Message);
             }
-            Monitor.Exit(buffer);
+            finally
+            {
+                Monitor.PulseAll(buffer);
+                Monitor.Exit(buffer);
+            }
+            
         }
 
         /// <summary>
@@ -79,16 +83,32 @@ namespace game.client
             Contract.Requires(fifo != null);
             Contract.Requires(fifo.ElementAt(0) != null);
             Contract.Requires(!(this.isEmpty()));
-            Monitor.Enter(buffer);
-            while ((this.isEmpty()))
+            String message = "";
+            try
             {
-                Monitor.Wait(buffer);
+                Monitor.Enter(buffer);
+                while (this.isEmpty())
+                {
+                    Monitor.Wait(buffer);
+                }
+                message = fifo.ElementAt(0);
+                fifo.RemoveAt(0);
+                Contract.Ensures(!(buffer.isFull()));
+
+                if (buffer.isFull())
+                {
+                    throw new ArgumentException("The Buffer is not suposed to be full after an element was taken out!");
+                }
             }
-            String message = fifo.ElementAt(0);
-            fifo.RemoveAt(0);
-            Contract.Ensures(!this.isFull());
-            Monitor.PulseAll(buffer);
-            Monitor.Exit(buffer);
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception.Message);
+            }
+            finally
+            {
+                Monitor.PulseAll(buffer);
+                Monitor.Exit(buffer);
+            }
             return message;
         }
 
