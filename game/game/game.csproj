@@ -48,6 +48,7 @@
     <Compile Include="backend\Map.cs" />
     <Compile Include="backend\Minigame.cs" />
     <Compile Include="backend\Player.cs" />
+    <Compile Include="client\FakeParser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="backend\Skirmish.cs" />
     <Compile Include="backend\Staghunt.cs" />
