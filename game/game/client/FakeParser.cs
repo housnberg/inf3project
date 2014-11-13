@@ -13,7 +13,9 @@ namespace game.client
         public void doWork() {
             while (true)
             {
-                Console.WriteLine("FakeParser processes --------------------- " + buffer.getElement());
+                Console.WriteLine("----- FAKE PARSER PROCESSES ----- \n" 
+                    + buffer.getElement() 
+                    + "----- FAKE PARSER PROCESS END ----- \n");
             }
         }
     }
