@@ -15,7 +15,7 @@ namespace game.client
             {
                 Console.WriteLine("----- FAKE PARSER PROCESSES ----- \n" 
                     + buffer.getElement() 
-                    + "----- FAKE PARSER PROCESS END ----- \n");
+                    + "\n----- FAKE PARSER PROCESS END ----- \n");
             }
         }
     }
