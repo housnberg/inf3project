@@ -60,7 +60,7 @@ namespace game.client
                         file.WriteLine(tmp[0]);
                     }
                     messageCounter++;
-                    Monitor.PulseAll(buffer);
+                    
                 }
             }
             catch (Exception exception)
@@ -69,6 +69,7 @@ namespace game.client
             }
             finally
             {
+                Monitor.PulseAll(buffer);
                 Monitor.Exit(buffer);
             }
             
@@ -94,7 +95,7 @@ namespace game.client
                 message = fifo.ElementAt(0);
                 fifo.RemoveAt(0);
                 Contract.Ensures(!(buffer.isFull()));
-                Monitor.PulseAll(buffer);
+               
             }
             catch (Exception exception)
             {
@@ -102,6 +103,7 @@ namespace game.client
             }
             finally
             {
+                Monitor.PulseAll(buffer);
                 Monitor.Exit(buffer);
             }
             return message;
