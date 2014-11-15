@@ -34,8 +34,8 @@ namespace game.client
         {
             Contract.Requires(message != null);
             Contract.Requires(message.Length > 0);
-            try
-            {
+            //try
+            //{
             Monitor.Enter(buffer);
             if ((message == null) || (message.Length < 0))
             {
@@ -62,16 +62,16 @@ namespace game.client
                     messageCounter++;
                     
                 }
-            }
-            catch (Exception exception)
-            {
-                Console.WriteLine(exception.Message);
-            }
-            finally
-            {
+            //}
+            //catch (Exception exception)
+            //{
+            //    Console.WriteLine(exception.Message);
+            //}
+            //finally
+            //{
                 Monitor.PulseAll(buffer);
                 Monitor.Exit(buffer);
-            }
+            //}
             
         }
 
@@ -85,8 +85,8 @@ namespace game.client
             Contract.Requires(fifo.ElementAt(0) != null);
             Contract.Requires(!(this.isEmpty()));
             String message = "";
-            try
-            {
+            //try
+            //{
                 Monitor.Enter(buffer);
                 while (this.isEmpty())
                 {
@@ -96,16 +96,16 @@ namespace game.client
                 fifo.RemoveAt(0);
                 Contract.Ensures(!(buffer.isFull()));
                
-            }
-            catch (Exception exception)
-            {
-                Console.WriteLine(exception.Message);
-            }
-            finally
-            {
+            //}
+            //catch (Exception exception)
+            //{
+            //    Console.WriteLine(exception.Message);
+            //}
+            //finally
+            //{
                 Monitor.PulseAll(buffer);
                 Monitor.Exit(buffer);
-            }
+            //}
             return message;
         }
 

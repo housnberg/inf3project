@@ -13,7 +13,7 @@ namespace game
         private Field[,] fields; //2Dimensional Array
 
 
-        public Map(int width, int height)
+        public Map(int height, int width)
         {
             this.setWidth(width);
             this.setHeight(height);

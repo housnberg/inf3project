@@ -20,7 +20,6 @@ namespace game
             this.setFieldAttributes(attributes);
             this.setRow(row);
             this.setColumn(column);
-            this.fieldAttributes.AddRange(attributes);
 
         }
 
@@ -34,91 +33,6 @@ namespace game
             {
                 fieldAttributes = attributes;
             }
-        }
-
-        private void setFieldType(int type)
-        {
-            Contract.Requires(type >= 0);
-            Contract.Requires(type <= 4);
-            //try
-            //{
-            //    if (type < 0 || type > 4)
-            //    {
-            //        throw new ArgumentException("The 'Type' Variable needs to have a value of 0 - 4!");
-            //    }
-
-            //    if (this.fieldTypeOne == null)
-            //    {
-            //        this.fieldTypeOne = type;
-            //    }
-            //    else
-            //    {
-            //        switch (type)
-            //        {
-            //            case Field.WALKABLE:
-            //                if (fieldTypeOne == Field.WATER || fieldTypeOne == Field.WALL || fieldTypeOne == Field.WALKABLE)
-            //                {
-            //                    throw new ArgumentException("Type not available in combination with type 'WALKABLE'");
-            //                }
-            //                else
-            //                {
-            //                    this.fieldTypeTwo = type;
-            //                }
-            //                break;
-
-            //            case Field.WALL:
-            //                 if (fieldTypeOne != Field.WALKABLE || fieldTypeOne == Field.WATER || fieldTypeOne == Field.HUNTABLE)
-            //                {
-            //                    throw new ArgumentException("Type not available in combination with type 'WALL'");
-            //                }
-            //                else
-            //                {
-            //                    this.fieldTypeTwo = type;
-            //                }
-            //                break;
-
-            //            case Field.FOREST:
-            //                 if (fieldTypeOne == Field.WALL || fieldTypeOne == Field.WATER || fieldTypeOne == Field.FOREST)
-            //                {
-            //                    throw new ArgumentException("Type not available in combination with type 'FOREST'");
-            //                }
-            //                else
-            //                {
-            //                    this.fieldTypeTwo = type;
-            //                }
-            //                break;
-
-            //            case Field.WATER:
-            //                if ( )
-            //                {
-            //                    throw new ArgumentException("Type not available in combination with type 'WATER'");
-            //                }
-            //                else
-            //                {
-            //                    this.fieldTypeTwo = type;
-            //                }
-            //                break;
-
-            //            case Field.HUNTABLE:
-            //                 if (fieldTypeOne == Field.WATER || fieldTypeOne == Field.WALL)
-            //                {
-            //                    throw new ArgumentException("Type not available in combination with type 'HUNTABLE'");
-            //                }
-            //                else
-            //                {
-            //                    this.fieldTypeTwo = type;
-            //                }
-            //                break;
-
-            //        }
-
-            //    }
-            //}
-            //catch (Exception exception)
-            //{
-            //    Console.Out.WriteLine(exception.Message);
-            //}
-
         }
 
         private void setRow(int row)

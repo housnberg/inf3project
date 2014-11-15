@@ -45,7 +45,7 @@ namespace game
 
         public int getYPos()
         {
-            return this.xPos;
+            return this.yPos;
         }
 
         //public String getDesc()
@@ -62,17 +62,17 @@ namespace game
             Contract.Requires(name != null);
             Contract.Requires(name.Length >= 2);
             Contract.Requires(name.Length <= 16);
-            try
-            {
+            //try
+            //{
                 if (name == null || name.Length < 2 || name.Length > 16)
                 {
                     throw new ArgumentException("The name of a Token needs to be a least 2 characters and at most 16 characters long!");
                 }
-            }
-            catch (Exception exception)
-            {
-                Console.Out.WriteLine(exception.Message);
-            }
+            //}
+            //catch (Exception exception)
+            //{
+            //    Console.Out.WriteLine(exception.Message);
+            //}
            
             this.name = name;
         }
@@ -86,18 +86,18 @@ namespace game
             Contract.Requires(id > 0);
             //Contract.Requires(id < 100);
 
-            try
-            {
+            //try
+            //{
                 if (id < 0)
                 {
                     throw new ArgumentException("The ID for a Token needs to be greater than 0!");
                 }
                 this.id = id;
-            }
-            catch (Exception exception)
-            {
-                Console.Out.WriteLine(exception.Message);
-            }
+            //}
+            //catch (Exception exception)
+            //{
+            //    Console.Out.WriteLine(exception.Message);
+            //}
            
         }
 
@@ -117,7 +117,7 @@ namespace game
 
                 if (this.busy == false && busy == false)
                 {
-                    throw new ArgumentException("The Token has already lfet busy mode!");
+                    throw new ArgumentException("The Token has already left busy mode!");
                 }
 
                 this.busy = busy;

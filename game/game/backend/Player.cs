@@ -9,7 +9,11 @@ namespace game
    
     public class Player : Token
     {
-        
+        public Player(int xPos, int yPos)
+        {
+            this.setXPos(xPos);
+            this.setYPos(yPos);
+        }
         //public Player(String name, int id)
         //{
         //    this.setName(name);

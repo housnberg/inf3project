@@ -9,10 +9,10 @@ namespace game
     public class Dragon : Token
     {
 
-        public Dragon(string name, int id)
+        public Dragon(int xPos, int yPos)
         {
-            this.setName(name);
-            this.setID(id);
+            this.setXPos(xPos);
+            this.setYPos(yPos);
         }
 
     }

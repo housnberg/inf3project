@@ -8,6 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using game.Parser;
+using game.gui;
+using System.Windows.Forms;
+using game.backend;
 
 namespace game
 {
@@ -30,31 +33,71 @@ namespace game
         {
             //try
             //{
-            //    if (gameManager != null)
-            //    {
-            //        throw new SystemException("there is already a game running");
-            //    }
-            //    else
-            //    {
-            //        startGame(ip, port);
-            //        GameManager.gameManager = this;
-            //        Console.WriteLine("worked");
-            //    }
+                if (gameManager != null)
+                {
+                    throw new SystemException("there is already a game running");
+                }
+                else
+                {
+                    startGame(ip, port);
+                    GameManager.gameManager = this;
+                    createDefaultGame();
+                    Gui gui = new Gui();
+                    Application.Run(gui);
+                }
             //}
             //catch (Exception e)
             //{
             //    Console.WriteLine(e.Message);
             //}
+ 
+        }
 
-            
+        private void createDefaultGame()
+        {
+            this.map = createDefaultMap();
+            createDefaultEntities();
+        }
+
+        private void createDefaultEntities()
+        {
+            Dragon dragon = new Dragon(3, 3);
+            Player player = new Player(5, 1);
+
+            dragons.Add(dragon);
+            players.Add(player);
+        }
+
+        private Map createDefaultMap()
+        {
+            Map map = new Map(10, 10);
+            this.map = map;
+            Field f;
+            List<FieldType> attributes = new List<FieldType>();
+            for (int i = 0; i < map.getHeight(); i++)
+            {
+                for (int j = 0; j < map.getWidth(); j++)
+                {
+                    attributes = new List<FieldType>();
+                    if (i == 0 || j == 0 || i == map.getHeight() - 1 || j == map.getWidth() - 1)
+                    {
+                        attributes.Add(FieldType.WALL);
+                        f = new Field(i, j, attributes);
+                        map.setField(f);
+                    }
+                    else
+                    {
+                        attributes.Add(FieldType.WATER);
+                        f = new Field(i, j, attributes);
+                        map.setField(f);
+                    }
+                }
+            }
+            return map;
         }
 
         private void startGame(String ip, UInt16 port)
         {
-            
-
-            //players = new ArrayList();
-            //dragons = new ArrayList();
             connector = new Connector(ip, port);
 
         }
@@ -108,7 +151,7 @@ namespace game
             int counter = 0;
             Player player = null;
 
-            try{
+            //try{
 
                 if (id <= 0)
                 {
@@ -136,11 +179,11 @@ namespace game
                     throw new ArgumentException("Der Spieler mit der ID '" + id + "'  existiert nicht in dem Spiel und ist damit bereits gelöscht!");
 
                 }
-            }
-            catch (Exception exception)
-            {
-                Console.Out.WriteLine(exception.Message);
-            }
+            //}
+            //catch (Exception exception)
+            //{
+            //    Console.Out.WriteLine(exception.Message);
+            //}
            
             
         }
@@ -192,36 +235,14 @@ namespace game
             return this.map;
         }
       
-
-        [ContractInvariantMethod]
-        protected void ObjectInvariant()
-        {
-            Contract.Invariant(this.players != null);
-            Contract.Invariant(this.connector != null);
-        }
-
         public int getMapHeight()
         {
-            if (this.map != null)
-            {
-                return this.map.getHeight();
-            }
-            else
-            {
-                return -1;
-            }
+            return this.map.getHeight();
         }
 
         public int getMapWidth()
         {
-            if (this.map != null)
-            {
-                return this.map.getWidth();
-            }
-            else
-            {
-                return -1;
-            }
+            return this.map.getWidth();
         }
 
         public static GameManager getGameManagerInstance()
@@ -238,6 +259,18 @@ namespace game
         public List<Dragon> getDragons()
         {
             return this.dragons;
+        }
+
+        public Connector getConnector()
+        {
+            return this.connector;
+        }
+
+        [ContractInvariantMethod]
+        protected void ObjectInvariant()
+        {
+            Contract.Invariant(this.players != null);
+            Contract.Invariant(this.connector != null);
         }
     }
 }

@@ -1,16 +1,16 @@
-﻿namespace Frontend
+﻿namespace game.gui
 {
-    partial class DefaultGui
+    partial class Gui
     {
         /// <summary>
-        /// Erforderliche Designervariable.
+        /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
         /// <summary>
-        /// Verwendete Ressourcen bereinigen.
+        /// Clean up any resources being used.
         /// </summary>
-        /// <param name="disposing">True, wenn verwaltete Ressourcen gelöscht werden sollen; andernfalls False.</param>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -20,58 +20,66 @@
             base.Dispose(disposing);
         }
 
-        #region Vom Windows Form-Designer generierter Code
+        #region Windows Form Designer generated code
 
         /// <summary>
-        /// Erforderliche Methode für die Designerunterstützung.
-        /// Der Inhalt der Methode darf nicht mit dem Code-Editor geändert werden.
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
         {
-            this.chatInput = new System.Windows.Forms.TextBox();
-            this.chatWindow = new System.Windows.Forms.RichTextBox();
             this.board = new System.Windows.Forms.Panel();
+            this.chatWindow = new System.Windows.Forms.RichTextBox();
+            this.chatInput = new System.Windows.Forms.TextBox();
+            this.Placeholder = new System.Windows.Forms.Label();
             this.SuspendLayout();
-            // 
-            // chatInput
-            // 
-            this.chatInput.BackColor = System.Drawing.SystemColors.Window;
-            this.chatInput.Location = new System.Drawing.Point(553, 492);
-            this.chatInput.Name = "chatInput";
-            this.chatInput.Size = new System.Drawing.Size(350, 20);
-            this.chatInput.TabIndex = 0;
-            // 
-            // chatWindow
-            // 
-            this.chatWindow.Location = new System.Drawing.Point(553, 12);
-            this.chatWindow.Name = "chatWindow";
-            this.chatWindow.ReadOnly = true;
-            this.chatWindow.Size = new System.Drawing.Size(350, 462);
-            this.chatWindow.TabIndex = 1;
-            this.chatWindow.Text = "";
             // 
             // board
             // 
-            this.board.Location = new System.Drawing.Point(23, 12);
+            this.board.Location = new System.Drawing.Point(17, 15);
             this.board.Name = "board";
-            this.board.Size = new System.Drawing.Size(500, 500);
-            this.board.TabIndex = 2;
+            this.board.Size = new System.Drawing.Size(400, 400);
+            this.board.TabIndex = 0;
             // 
-            // DefaultGui
+            // chatWindow
+            // 
+            this.chatWindow.Location = new System.Drawing.Point(17, 421);
+            this.chatWindow.Name = "chatWindow";
+            this.chatWindow.ReadOnly = true;
+            this.chatWindow.Size = new System.Drawing.Size(636, 117);
+            this.chatWindow.TabIndex = 1;
+            this.chatWindow.Text = "";
+            // 
+            // chatInput
+            // 
+            this.chatInput.Location = new System.Drawing.Point(17, 544);
+            this.chatInput.Name = "chatInput";
+            this.chatInput.Size = new System.Drawing.Size(636, 20);
+            this.chatInput.TabIndex = 2;
+            // 
+            // Placeholder
+            // 
+            this.Placeholder.AutoSize = true;
+            this.Placeholder.Location = new System.Drawing.Point(455, 200);
+            this.Placeholder.Name = "Placeholder";
+            this.Placeholder.Size = new System.Drawing.Size(176, 13);
+            this.Placeholder.TabIndex = 3;
+            this.Placeholder.Text = "This is a placeholder for the Buttons";
+            // 
+            // Gui
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.Window;
-            this.ClientSize = new System.Drawing.Size(915, 536);
-            this.Controls.Add(this.board);
-            this.Controls.Add(this.chatWindow);
+            this.ClientSize = new System.Drawing.Size(665, 575);
+            this.Controls.Add(this.Placeholder);
             this.Controls.Add(this.chatInput);
+            this.Controls.Add(this.chatWindow);
+            this.Controls.Add(this.board);
             this.DoubleBuffered = true;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
-            this.Name = "DefaultGui";
-            this.ShowIcon = false;
-            this.Text = "Default GUI";
+            this.Name = "Gui";
+            this.Text = "Game - Inf3 - Group 8";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -79,9 +87,9 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox chatInput;
-        private System.Windows.Forms.RichTextBox chatWindow;
         private System.Windows.Forms.Panel board;
+        private System.Windows.Forms.RichTextBox chatWindow;
+        private System.Windows.Forms.TextBox chatInput;
+        private System.Windows.Forms.Label Placeholder;
     }
 }
-

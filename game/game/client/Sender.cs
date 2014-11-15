@@ -19,18 +19,18 @@ namespace game.client
 
         private void setTcpClient(TcpClient client)
         {
-            try
-            {
+            //try
+            //{
                 if (client == null)
                 {
                     throw new ArgumentNullException("the parameter cannot be null");
                 }
                 this.client = client;
-            }
-            catch (Exception exception)
-            {
-                Console.Out.WriteLine(exception.Message);
-            }
+            //}
+            //catch (Exception exception)
+            //{
+            //    Console.Out.WriteLine(exception.Message);
+            //}
            
         }
 
@@ -40,8 +40,8 @@ namespace game.client
         /// <param name="message">the message to be send</param>
         public void send(String message)
         {
-            try
-            {
+            //try
+            //{
                 if (message == null)
                 {
                     throw new System.ArgumentNullException("parameter cannot be null");
@@ -55,11 +55,11 @@ namespace game.client
                     Byte[] data = Encoding.UTF8.GetBytes(message + "\r\n");
                     client.GetStream().Write(data, 0, data.Length);
                 }
-            }
-            catch (Exception exeption)
-            {
-                Console.WriteLine(exeption.Message);
-            }
+            //}
+            //catch (Exception exeption)
+            //{
+            //    Console.WriteLine(exeption.Message);
+            //}
         }
     }
 }
