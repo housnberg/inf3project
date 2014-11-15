@@ -54,20 +54,13 @@
     <Compile Include="backend\Minigame.cs" />
     <Compile Include="backend\Player.cs" />
     <Compile Include="client\FakeParser.cs" />
-    <Compile Include="default_gui\DefaultGui.cs">
+    <Compile Include="gui\Gui.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="default_gui\DefaultGui.designer.cs">
-      <DependentUpon>DefaultGui.cs</DependentUpon>
+    <Compile Include="gui\Gui.designer.cs">
+      <DependentUpon>Gui.cs</DependentUpon>
     </Compile>
-    <Compile Include="default_gui\Fields.cs" />
-    <Compile Include="default_gui\IBackend.cs" />
-    <Compile Include="default_gui\IPositionable.cs" />
-    <Compile Include="default_gui\ITile.cs" />
-    <Compile Include="default_gui\Program.cs" />
-    <Compile Include="default_gui\test\Backend.cs" />
-    <Compile Include="default_gui\test\Entity.cs" />
-    <Compile Include="default_gui\test\MapCell.cs" />
+    <Compile Include="gui\Program.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="backend\Skirmish.cs" />
     <Compile Include="backend\Staghunt.cs" />
@@ -81,7 +74,6 @@
     <Compile Include="parser\ParserMap.cs" />
     <Compile Include="parser\ParserToken.cs" />
     <Compile Include="parser\ParserUpdateDelete.cs" />
-    <Compile Include="gui\Gui.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -89,10 +81,11 @@
     <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="default_gui\DefaultGui.resx">
-      <DependentUpon>DefaultGui.cs</DependentUpon>
+    <EmbeddedResource Include="gui\Gui.resx">
+      <DependentUpon>Gui.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

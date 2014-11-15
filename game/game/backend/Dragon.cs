@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace game
 {
-    class Dragon : Token
+    public class Dragon : Token
     {
 
         public Dragon(string name, int id)

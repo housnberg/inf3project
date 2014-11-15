@@ -63,5 +63,10 @@ namespace game
         {
             return this.width;
         }
+
+        public Field[,] getFields()
+        {
+            return this.fields;
+        }
     }
 }

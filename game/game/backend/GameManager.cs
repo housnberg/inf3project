@@ -28,23 +28,25 @@ namespace game
         /// <param name="port">port number of the server</param>
         public GameManager(String ip, UInt16 port)
         {
-            try
-            {
-                if (gameManager != null)
-                {
-                    throw new SystemException("there is already a game running");
-                }
-                else
-                {
-                    startGame(ip, port);
-                    GameManager.gameManager = this;
-                    Console.WriteLine("worked");
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
+            //try
+            //{
+            //    if (gameManager != null)
+            //    {
+            //        throw new SystemException("there is already a game running");
+            //    }
+            //    else
+            //    {
+            //        startGame(ip, port);
+            //        GameManager.gameManager = this;
+            //        Console.WriteLine("worked");
+            //    }
+            //}
+            //catch (Exception e)
+            //{
+            //    Console.WriteLine(e.Message);
+            //}
+
+            
         }
 
         private void startGame(String ip, UInt16 port)
@@ -226,6 +228,16 @@ namespace game
         {
             return GameManager.gameManager;
         }
-       
+
+
+        public List<Player> getPlayers()
+        {
+            return this.players;
+        }
+
+        public List<Dragon> getDragons()
+        {
+            return this.dragons;
+        }
     }
 }

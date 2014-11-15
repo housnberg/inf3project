@@ -7,21 +7,19 @@ using System.Threading.Tasks;
 
 namespace game
 {
-    class Field
+    public class Field
     {
         public enum fieldType { WALKABLE, HUNTABLE, FOREST, WATER, WALL};
 
         private int row;
         private int column;
-        private int fieldTypeOne;
-        private int fieldTypeTwo;
+        private List<fieldType> fieldAttributes;
 
-        public Field(int row, int column, int typeOne, int typeTwo)
+        public Field(int row, int column, List<fieldType> attributes)
         {
             this.setRow(row);
             this.setColumn(column);
-            this.setFieldType(typeOne);
-            this.setFieldType(typeTwo);
+            this.fieldAttributes.AddRange(attributes);
 
         }
 
@@ -134,6 +132,30 @@ namespace game
 
         }
 
+        public Boolean isForest()
+        {
+            return this.fieldAttributes.Contains(fieldType.FOREST);
+        }
+
+        public Boolean isWater()
+        {
+            return this.fieldAttributes.Contains(fieldType.WATER);
+        }
+
+        public Boolean isWalkable()
+        {
+            return this.fieldAttributes.Contains(fieldType.WALKABLE);
+        }
+
+        public Boolean isHuntable()
+        {
+            return this.fieldAttributes.Contains(fieldType.HUNTABLE);
+        }
+
+        public Boolean isWall()
+        {
+            return this.fieldAttributes.Contains(fieldType.WALL);
+        }
 
     }
 }
