@@ -36,17 +36,17 @@
             // chatInput
             // 
             this.chatInput.BackColor = System.Drawing.SystemColors.Window;
-            this.chatInput.Location = new System.Drawing.Point(23, 455);
+            this.chatInput.Location = new System.Drawing.Point(553, 492);
             this.chatInput.Name = "chatInput";
             this.chatInput.Size = new System.Drawing.Size(350, 20);
             this.chatInput.TabIndex = 0;
             // 
             // chatWindow
             // 
-            this.chatWindow.Location = new System.Drawing.Point(23, 368);
+            this.chatWindow.Location = new System.Drawing.Point(553, 12);
             this.chatWindow.Name = "chatWindow";
             this.chatWindow.ReadOnly = true;
-            this.chatWindow.Size = new System.Drawing.Size(350, 81);
+            this.chatWindow.Size = new System.Drawing.Size(350, 462);
             this.chatWindow.TabIndex = 1;
             this.chatWindow.Text = "";
             // 
@@ -54,7 +54,7 @@
             // 
             this.board.Location = new System.Drawing.Point(23, 12);
             this.board.Name = "board";
-            this.board.Size = new System.Drawing.Size(350, 350);
+            this.board.Size = new System.Drawing.Size(500, 500);
             this.board.TabIndex = 2;
             // 
             // DefaultGui
@@ -62,7 +62,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
-            this.ClientSize = new System.Drawing.Size(398, 487);
+            this.ClientSize = new System.Drawing.Size(915, 536);
             this.Controls.Add(this.board);
             this.Controls.Add(this.chatWindow);
             this.Controls.Add(this.chatInput);

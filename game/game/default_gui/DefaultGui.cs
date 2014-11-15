@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
+using game;
 
 namespace Frontend
 {
@@ -26,17 +27,17 @@ namespace Frontend
     /// </summary>
     public partial class DefaultGui : Form
     {
-        private IBackend backend;
-        public DefaultGui(IBackend backend) : base()
+        private GameManager gameManager = GameManager.getGameManagerInstance();
+        public DefaultGui() : base()
         {
-            if (backend == null)
+            if (gameManager == null)
             {
                 throw new ArgumentNullException("invalid value for 'backend': null");
             }
-            this.backend = backend;
             InitializeComponent();
             // we usually don't have a console in a form-project. This enables us to see debug-output anyway
             AllocConsole();
+
             this.board.Paint += board_PaintMap;
             this.board.Paint += board_PaintEntities;
             this.chatInput.KeyPress += chat_KeyPress;
@@ -63,11 +64,11 @@ namespace Frontend
                         if (input.StartsWith("/"))
                         {
                             input = input.Substring(1, input.Length-1);
-                            this.backend.sendCommand(input);
+                            this.gameManager.sendCommand(input);
                         }
                         else
                         {
-                            this.backend.sendChat(input);
+                            //this.gameManager.sendChat(input); // Do we need it?
                         }
                     }
                     this.board.Focus();
@@ -96,19 +97,19 @@ namespace Frontend
                     break;
                 case 'a':
                 case 'A':
-                    this.backend.sendCommand("ask:mv:lft");
+                    this.gameManager.sendCommand("ask:mv:lft");
                     break;
                 case 'd':
                 case 'D':
-                    this.backend.sendCommand("ask:mv:rgt");
+                    this.gameManager.sendCommand("ask:mv:rgt");
                     break;
                 case 'w':
                 case 'W':
-                    this.backend.sendCommand("ask:mv:up");
+                    this.gameManager.sendCommand("ask:mv:up");
                     break;
                 case 's':
                 case 'S':
-                    this.backend.sendCommand("ask:mv:dwn");
+                    this.gameManager.sendCommand("ask:mv:dwn");
                     break;
             }
         }
@@ -119,18 +120,32 @@ namespace Frontend
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void board_PaintMap(object sender, System.Windows.Forms.PaintEventArgs e) {
-            Size tileSize = this.getTileSize();
-            ITile[][] cells = this.backend.getMap();
-            // validity checked beforehand in getTileSize
-            Debug.Assert(cells != null);
-            BufferedGraphics buffer = BufferedGraphicsManager.Current.Allocate(this.board.CreateGraphics(), this.board.DisplayRectangle);
-            Graphics g = this.CreateGraphics();
-            for(int x = 0; x < cells.Length; x++) {
-                for(int y = 0; y < cells[x].Length; y++) {
-                    this.drawMapTile(buffer.Graphics, cells[x][y], x * tileSize.Width, y * tileSize.Height, tileSize.Width, tileSize.Height);
+            try
+            {
+                Size tileSize = this.getTileSize();
+                Map map = gameManager.getMap();
+                if (map == null)
+                {
+                    throw new ArgumentException("Map is not allowed to be null");
                 }
+                Field[,]cells  =  map.getCells();
+                
+                BufferedGraphics buffer = BufferedGraphicsManager.Current.Allocate(this.board.CreateGraphics(), this.board.DisplayRectangle);
+                Graphics g = this.CreateGraphics();
+                for (int x = 0; x < cells.Length; x++)
+                {
+                    for (int y = 0; y < cells[x].Length; y++)
+                    {
+                        this.drawMapTile(buffer.Graphics, cells[x][y], x * tileSize.Width, y * tileSize.Height, tileSize.Width, tileSize.Height);
+                    }
+                }
+                buffer.Render();
             }
-            buffer.Render();
+            catch (Exception exception)
+            {
+                Console.Out.WriteLine(exception.Message);
+            }
+            
         }
 
         /// <summary>
@@ -140,12 +155,12 @@ namespace Frontend
         /// <param name="e"></param>
         private void board_PaintEntities(object sender, System.Windows.Forms.PaintEventArgs e)
         {
-            List<IPositionable> dragons = this.backend.getDragons();
+            List<Dragon> dragons = this.gameManager.getDragons();
             foreach (IPositionable dragon in dragons)
             {
                 this.drawDragon(e.Graphics, dragon);
             }
-            List<IPositionable> players = this.backend.getPlayers();
+            List<Player> players = this.gameManager.getPlayers();
             foreach (IPositionable player in players)
             {
                 this.drawPlayer(e.Graphics, player);
