@@ -19,20 +19,41 @@ namespace game
         private List <Player> players = new List<Player>();
         private List <Dragon> dragons = new List<Dragon>();
         private ClientBuffer buffer;
-        private static GameManager gameManager = new GameManager();
+        private static GameManager gameManager;
    
-        public GameManager()
+        /// <summary>
+        /// constructor creates only one game instance
+        /// </summary>
+        /// <param name="ip">ip address of the server</param>
+        /// <param name="port">port number of the server</param>
+        public GameManager(String ip, UInt16 port)
         {
-            this.startGame();
+            try
+            {
+                if (gameManager != null)
+                {
+                    throw new SystemException("there is already a game running");
+                }
+                else
+                {
+                    startGame(ip, port);
+                    GameManager.gameManager = this;
+                    Console.WriteLine("worked");
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
 
-        private void startGame()
+        private void startGame(String ip, UInt16 port)
         {
             
 
             //players = new ArrayList();
             //dragons = new ArrayList();
-            //connector = new Connector(ipAdress, port);
+            connector = new Connector(ip, port);
 
         }
 
