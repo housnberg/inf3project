@@ -68,5 +68,17 @@ namespace game
         {
             return this.fields;
         }
+
+        public void setField(Field field)
+        {
+            if (field.getColumn() < 0 || field.getRow() > width - 1 || field.getRow() < 0 || field.getColumn() > height - 1)
+            {
+                throw new Exception("you cannot place a field outside the map");
+            }
+            else
+            {
+                fields[field.getColumn(), field.getRow()] = field;
+            }
+        }
     }
 }

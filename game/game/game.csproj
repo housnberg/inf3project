@@ -32,7 +32,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>Frontend.Program</StartupObject>
+    <StartupObject>game.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -49,6 +49,7 @@
     <Compile Include="backend\Dragon.cs" />
     <Compile Include="backend\Dragonhunt.cs" />
     <Compile Include="backend\Field.cs" />
+    <Compile Include="backend\FieldType.cs" />
     <Compile Include="backend\GameManager.cs" />
     <Compile Include="backend\Map.cs" />
     <Compile Include="backend\Minigame.cs" />

@@ -4,23 +4,36 @@ using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using game.backend;
 
 namespace game
 {
     public class Field
     {
-        public enum fieldType { WALKABLE, HUNTABLE, FOREST, WATER, WALL};
 
         private int row;
         private int column;
-        private List<fieldType> fieldAttributes;
+        private List<FieldType> fieldAttributes = new List<FieldType>();
 
-        public Field(int row, int column, List<fieldType> attributes)
+        public Field(int row, int column, List<FieldType> attributes)
         {
+            this.setFieldAttributes(attributes);
             this.setRow(row);
             this.setColumn(column);
             this.fieldAttributes.AddRange(attributes);
 
+        }
+
+        public void setFieldAttributes(List<FieldType> attributes)
+        {
+            if (attributes == null)
+            {
+                throw new ArgumentNullException("the parameter cannot be null");
+            }
+            else
+            {
+                fieldAttributes = attributes;
+            }
         }
 
         private void setFieldType(int type)
@@ -132,29 +145,39 @@ namespace game
 
         }
 
+        public int getColumn()
+        {
+            return column;
+        }
+
+        public int getRow()
+        {
+            return row;
+        }
+
         public Boolean isForest()
         {
-            return this.fieldAttributes.Contains(fieldType.FOREST);
+            return this.fieldAttributes.Contains(FieldType.FOREST);
         }
 
         public Boolean isWater()
         {
-            return this.fieldAttributes.Contains(fieldType.WATER);
+            return this.fieldAttributes.Contains(FieldType.WATER);
         }
 
         public Boolean isWalkable()
         {
-            return this.fieldAttributes.Contains(fieldType.WALKABLE);
+            return this.fieldAttributes.Contains(FieldType.WALKABLE);
         }
 
         public Boolean isHuntable()
         {
-            return this.fieldAttributes.Contains(fieldType.HUNTABLE);
+            return this.fieldAttributes.Contains(FieldType.HUNTABLE);
         }
 
         public Boolean isWall()
         {
-            return this.fieldAttributes.Contains(fieldType.WALL);
+            return this.fieldAttributes.Contains(FieldType.WALL);
         }
 
     }
