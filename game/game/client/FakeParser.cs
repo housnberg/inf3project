@@ -10,12 +10,12 @@ namespace game.client
     {
 
         ClientBuffer buffer = ClientBuffer.getBufferInstance();
+        GameManager gm = GameManager.getGameManagerInstance();
         public void doWork() {
             while (true)
             {
-                Console.WriteLine("----- FAKE PARSER PROCESSES ----- \n" 
-                    + buffer.getElement() 
-                    + "\n----- FAKE PARSER PROCESS END ----- \n");
+                gm.updateChatMessage("TEST", buffer.getElement());
+                Console.WriteLine("------------------PROCESSES---------------");
             }
         }
     }

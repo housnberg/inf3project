@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using game.Parser;
 using game.gui;
 using System.Windows.Forms;
+using System.Threading;
 using game.backend;
 
 namespace game
@@ -21,8 +22,8 @@ namespace game
         private Connector connector;
         private List <Player> players = new List<Player>();
         private List <Dragon> dragons = new List<Dragon>();
-        private ClientBuffer buffer;
         private static GameManager gameManager;
+        private Gui gui;
    
         /// <summary>
         /// constructor creates only one game instance
@@ -42,8 +43,9 @@ namespace game
                     startGame(ip, port);
                     GameManager.gameManager = this;
                     createDefaultGame();
-                    Gui gui = new Gui();
+                    gui = new Gui();
                     Application.Run(gui);
+            
                 }
             //}
             //catch (Exception e)
@@ -99,7 +101,6 @@ namespace game
         private void startGame(String ip, UInt16 port)
         {
             connector = new Connector(ip, port);
-
         }
 
          /// <summary>
@@ -108,11 +109,28 @@ namespace game
          /// <param name="connector">The actual game connector</param>
          /// <param name="message">The message being sent to the server via the connector</param>
         public void sendCommand(String message){
-
             Contract.Requires(message != null);
             Contract.Requires(connector != null);
-            //connector.sendServerMessage(message);
+            try
+            {
+                connector.sendServerMessage(message);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
+
+        /// <summary>
+        /// this method can be invoked by the parser.
+        /// it appends newly received chat-messages to the gui
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="message"></param>
+        public void updateChatMessage(String source, String message)
+        {
+            gui.appendChatMessage(source, message);
+        } 
 
         /// <summary>
         /// Adds a Player to the GameManager's ArrayList

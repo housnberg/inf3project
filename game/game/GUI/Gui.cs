@@ -136,21 +136,29 @@ namespace game.gui
                 case (char)Keys.Enter:
                     this.chatInput.Focus();
                     break;
+                case (char)Keys.Left:
                 case 'a':
                 case 'A':
                     Console.Out.WriteLine("Command sent: 'ask:mv:lft'");//this.backend.sendCommand("ask:mv:lft");
+                    gameManager.sendCommand("ask:mv:lft");
                     break;
+                case (char)Keys.Right:
                 case 'd':
                 case 'D':
-                    Console.Out.WriteLine("Command sent: 'ask:mv:rgt'");//this.backend.sendCommand("ask:mv:rgt");
+                    Console.Out.WriteLine("Command sent: 'ask:mv:rgt'");;//this.backend.sendCommand("ask:mv:rgt");
+                    gameManager.sendCommand("ask:mv:rgt");
                     break;
+                case (char)Keys.Up:
                 case 'w':
                 case 'W':
                     Console.Out.WriteLine("Command sent: 'ask:mv:up'");//this.backend.sendCommand("ask:mv:up");
+                    gameManager.sendCommand("ask:mv:up");
                     break;
+                case (char)Keys.Down:
                 case 's':
                 case 'S':
                     Console.Out.WriteLine("Command sent: 'ask:mv:dwn'");//this.backend.sendCommand("ask:mv:dwn");
+                    gameManager.sendCommand("ask:mv:dwn");
                     break;
             }
         }
@@ -164,19 +172,33 @@ namespace game.gui
                 // ignore empty input
                 if (input != "")
                 {
-                    if (input.StartsWith("/"))
+                    if (input.StartsWith("/") || input.StartsWith("//"))
                     {
                         input = input.Substring(1, input.Length - 1);
                         Console.Out.WriteLine("Command sent: '/" + input +"'");//this.backend.sendCommand(input);
+                        gameManager.sendCommand(input);
                     }
                     else
                     {
                         Console.Out.WriteLine("Message sent: '" + input + "'");//this.backend.sendChat(input);
+                        gameManager.sendCommand("ask:say:" + input);
                     }
                 }
                 this.board.Focus();
             }
 
+        }
+
+        /// <summary>
+        /// Appends a chat-message to the chat-window as a new line. Can be called from the backend or other participants to display incoming chat-messages.
+        /// Messages will always be displays in the fasion of:
+        /// sender: message
+        /// </summary>
+        /// <param name="source">the source of the message</param>
+        /// <param name="message">the message itself</param>
+        public void appendChatMessage(string source, string message)
+        {
+            this.chatWindow.AppendText(source + ": " + message + "\r\n");
         }
  
     }
