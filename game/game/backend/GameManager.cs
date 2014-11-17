@@ -106,7 +106,6 @@ namespace game
          /// <summary>
          /// Sends a message to the Connector to perform a certain action
          /// </summary>
-         /// <param name="connector">The actual game connector</param>
          /// <param name="message">The message being sent to the server via the connector</param>
         public void sendCommand(String message){
             Contract.Requires(message != null);
@@ -114,6 +113,7 @@ namespace game
             try
             {
                 connector.sendServerMessage(message);
+                Console.WriteLine("------->Message Send: " + message);
             }
             catch (Exception e)
             {

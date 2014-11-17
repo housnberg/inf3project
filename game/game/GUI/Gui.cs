@@ -172,7 +172,7 @@ namespace game.gui
                 // ignore empty input
                 if (input != "")
                 {
-                    if (input.StartsWith("/") || input.StartsWith("//"))
+                    if (input.StartsWith("/"))
                     {
                         input = input.Substring(1, input.Length - 1);
                         Console.Out.WriteLine("Command sent: '/" + input +"'");//this.backend.sendCommand(input);
@@ -183,8 +183,12 @@ namespace game.gui
                         Console.Out.WriteLine("Message sent: '" + input + "'");//this.backend.sendChat(input);
                         gameManager.sendCommand("ask:say:" + input);
                     }
+                    this.chatInput.Focus();
                 }
-                this.board.Focus();
+                else
+                {
+                    this.board.Focus();
+                }
             }
 
         }

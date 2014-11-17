@@ -39,17 +39,17 @@ namespace game.client
         /// </summary>
         public String receive()
         {
-            //try
-            //{
+            try
+            {
                 byte[] data = new byte[client.Available];
                 client.GetStream().Read(data, 0, data.Length);
                 return (Encoding.UTF8.GetString(data).Trim());
-            //}
-            //catch (Exception exception)
-            //{
-            //    Console.WriteLine(exception.Message);
-            //    return null;
-            //}
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception.Message);
+                return null;
+            }
         }
     }
 }
