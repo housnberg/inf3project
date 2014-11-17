@@ -64,8 +64,8 @@ namespace game.client
             Contract.Requires(port <= 65535);
             lock (buffer)
             
-                //try
-                //{
+                try
+                {
                     if (ip == null || ip.Length > 16 || ip.Length < 7)
                     {
                         throw new ArgumentException("parameter cannot be null and parameter length must be bigger 7 and smaller 16");
@@ -83,11 +83,11 @@ namespace game.client
                         }
                         Console.WriteLine("client connected");
                     }
-                //}
-                //catch (Exception exeption)
-                //{
-                //    Console.WriteLine(exeption.Message);
-                //}
+                }
+                catch (Exception exeption)
+                {
+                    Console.WriteLine(exeption.Message);
+                }
             
             
             Contract.Ensures(client != null);
@@ -105,8 +105,8 @@ namespace game.client
             Contract.Requires(client.GetStream() != null);
             Contract.Requires(receiverThread != null);
             Contract.Requires(receiverThread.IsAlive);
-            //try
-            //{
+            try
+            {
                 if (client == null || receiverThread == null)
                 {
                     throw new System.ArgumentNullException("Parameter cannot be null");
@@ -122,11 +122,11 @@ namespace game.client
                 {
                     throw new SystemException("the client is already disconnected!");
                 }
-            //}
-            //catch (Exception exeption)
-            //{
-            //    Console.WriteLine(exeption.Message);
-            //}
+            }
+            catch (Exception exeption)
+            {
+                Console.WriteLine(exeption.Message);
+            }
             Contract.Ensures(!client.Connected);
             Contract.Ensures(!receiverThread.IsAlive);
             Contract.Ensures(!client.GetStream().CanRead);
@@ -163,8 +163,8 @@ namespace game.client
             Contract.Requires(buffer != null);
             String message;
 
-            //try
-            //{
+            try
+            {
                 if (client == null)
                 {
                     throw new ArgumentException("The client has no connection to the Server");
@@ -179,11 +179,11 @@ namespace game.client
                         buffer.put(message);
                     }
                 }
-            //}
-            //catch (Exception exception)
-            //{
-            //    Console.Out.WriteLine(exception.Message);
-            //}
+            }
+            catch (Exception exception)
+            {
+                Console.Out.WriteLine(exception.Message);
+            }
 
             Contract.Ensures(client.GetStream().DataAvailable);
             Contract.Ensures(!buffer.isEmpty());
