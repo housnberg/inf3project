@@ -167,21 +167,23 @@ namespace game.gui
         {
             if (e.KeyChar == (char)Keys.Enter)
             {
-                string input = this.chatInput.Text.Trim();
+                string message = this.chatInput.Text.Trim();
                 this.chatInput.Text = "";
                 // ignore empty input
-                if (input != "")
+                if (message != "")
                 {
-                    if (input.StartsWith("/"))
+                    if (message.StartsWith("/"))
                     {
-                        input = input.Substring(1, input.Length - 1);
-                        Console.Out.WriteLine("Command sent: '/" + input +"'");//this.backend.sendCommand(input);
-                        gameManager.sendCommand(input);
+                        message = message.Substring(1, message.Length - 1);
+                        Console.Out.WriteLine("Command sent: '/" + message + "'");//this.backend.sendCommand(input);
+                        gameManager.sendCommand(message);
+                        this.chatWindow.AppendText(message +"\r\n");
                     }
                     else
                     {
-                        Console.Out.WriteLine("Message sent: '" + input + "'");//this.backend.sendChat(input);
-                        gameManager.sendCommand("ask:say:" + input);
+                        Console.Out.WriteLine("Message sent: '" + message + "'");//this.backend.sendChat(input);
+                        gameManager.sendCommand("ask:say:" + message);
+                        this.chatWindow.AppendText(message + "\r\n");
                     }
                     this.chatInput.Focus();
                 }

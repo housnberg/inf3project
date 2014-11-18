@@ -23,11 +23,7 @@ namespace game
             //client.sendServerMessage("get:map");
             //client.sendServerMessage("get:time");
             //Console.ReadKey();
-            GameManager g1 = new GameManager("127.0.0.1", 1024);
-            Connector client = g1.getConnector();
-            Console.ReadKey();
-            client.sendServerMessage("get:map");
-            client.sendServerMessage("get:time");
+            new GameManager("127.0.0.1", 1024);
 
         }
     }

@@ -13,12 +13,8 @@ namespace game
         {
             this.setXPos(xPos);
             this.setYPos(yPos);
+           
         }
-        //public Player(String name, int id)
-        //{
-        //    this.setName(name);
-        //    this.setID(id);
-        //}
 
     }
 

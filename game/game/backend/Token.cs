@@ -28,6 +28,11 @@ namespace game
             this.setID(id);
         }
 
+        public String getName()
+        {
+            return this.name;
+        }
+
         public int getID()
         {
             return this.id;
