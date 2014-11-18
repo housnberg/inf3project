@@ -56,7 +56,7 @@ namespace game.client
                     fifo.Add(tmp[0].Trim());
                     fullServerMessage = tmp[1];
                     //for test purposes only
-                    using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"C:\Users\test_" + (messageCounter) + ".txt", true))
+                    using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"C:\Users\Acer\Desktop\test_" + (messageCounter) + ".txt", true))
                     {
                         file.WriteLine(tmp[0]);
                     }
