@@ -55,12 +55,18 @@ namespace game
  
         }
 
+        /// <summary>
+        /// Creates a default Game with a default Map and default Entities
+        /// </summary>
         private void createDefaultGame()
         {
             this.map = createDefaultMap();
             createDefaultEntities();
         }
 
+        /// <summary>
+        /// Creates default entities, called by createDefaultGame()
+        /// </summary>
         private void createDefaultEntities()
         {
             Dragon dragon = new Dragon(3, 3);
@@ -75,6 +81,10 @@ namespace game
             players.Add(playerTwo);
         }
 
+        /// <summary>
+        /// Creates default Map with a WALL-Border and WALKABLE-Fields in the middle
+        /// </summary>
+        /// <returns>Default Map to illustrate on the Frontend</returns>
         private Map createDefaultMap()
         {
             Map map = new Map(10, 10);
@@ -103,6 +113,11 @@ namespace game
             return map;
         }
 
+        /// <summary>
+        /// Starts the Game by creating a new Connector
+        /// </summary>
+        /// <param name="ip">IP-Adress the Client wannts to connect to</param>
+        /// <param name="port">Port Number of the IP-Adress</param>
         private void startGame(String ip, UInt16 port)
         {
             connector = new Connector(ip, port);
@@ -159,7 +174,7 @@ namespace game
             }
             else
             {
-                Console.Out.WriteLine("Der Spieler existiert nicht in dem Spiel und ist damit bereits gelöscht!");
+                Console.Out.WriteLine("The Player does not exist, probably he has already been deleted!");
             }
         }
 
@@ -178,7 +193,7 @@ namespace game
 
                 if (id <= 0)
                 {
-                    throw new ArgumentException("Die ID " + id + " ist nich gültig! Es sind nur IDs > 0 elaubt sein!");
+                    throw new ArgumentException("The ID " + id + " is not valid! Only IDs > 0 are allowed!");
                 }
                
                 do
@@ -199,7 +214,7 @@ namespace game
 
                 if (found == false)
                 {
-                    throw new ArgumentException("Der Spieler mit der ID '" + id + "'  existiert nicht in dem Spiel und ist damit bereits gelöscht!");
+                    throw new ArgumentException("The Player with the ID '" + id + "'  does not exist in this game, for he may have been already deleted!");
 
                 }
             //}
@@ -289,6 +304,9 @@ namespace game
             return this.connector;
         }
 
+        /// <summary>
+        /// Forces the GUI to repaint
+        /// </summary>
         public void refreshGui()
         {
             gui.Refresh();

@@ -34,7 +34,7 @@ namespace game.gui
         {
             Map map = this.gameManager.getMap();
             Field[,] fields = map.getFields();
-            Size tileSize = this.getTileSize();
+            Size tileSize = this.getFieldSize();
             BufferedGraphics buffer = BufferedGraphicsManager.Current.Allocate(this.board.CreateGraphics(), this.board.DisplayRectangle);
             Graphics graphics = this.CreateGraphics();
             for (int i = 0; i < map.getHeight(); i++)
@@ -106,9 +106,14 @@ namespace game.gui
             }
         }
 
+        /// <summary>
+        /// Draws a dragon on the panel, illustrated as a Dark Red Rectangle
+        /// </summary>
+        /// <param name="graphics">Graphics to be drawn on GUI</param>
+        /// <param name="dragon">Dragon to be illustrated on GUI</param>
         private void drawDragon(Graphics graphics, Dragon dragon)
         {
-            Size tileSize = this.getTileSize();
+            Size tileSize = this.getFieldSize();
             graphics.FillRectangle(new SolidBrush(Color.DarkRed),
                 dragon.getXPos() *tileSize.Width + tileSize.Width / 2 - tileSize.Width / 4,
                 dragon.getYPos() *tileSize.Height + tileSize.Height / 2 - tileSize.Height / 4,
@@ -116,9 +121,14 @@ namespace game.gui
                 tileSize.Height / 2);
         }
 
-        protected void drawPlayer(Graphics graphics, Player player)//Always new Color created
+        /// <summary>
+        /// Draws a Player on the panel, illustrated by the Player's ID
+        /// </summary>
+        /// <param name="graphics">Graphics to be drawn on GUI</param>
+        /// <param name="dragon">Player to be illustrated on GUI</param>
+        protected void drawPlayer(Graphics graphics, Player player)
         {
-            Size tileSize = this.getTileSize();
+            Size tileSize = this.getFieldSize();
             String drawString = "P"+player.getID();
             Font drawFont = new Font("Arial", 16);
             SolidBrush drawBrush = new SolidBrush(Color.Black);
@@ -127,7 +137,11 @@ namespace game.gui
             Console.Out.WriteLine("Player" + player.getID() + " X:" + player.getXPos() + " Y:" + player.getYPos());
         }
 
-        private Size getTileSize() 
+        /// <summary>
+        /// Calculates the physical Size of a Field on the Panel
+        /// </summary>
+        /// <returns>Size of a Field on a Panel</returns>
+        private Size getFieldSize() 
         {
             Field[,] fields = this.gameManager.getMap().getFields();
             if (fields == null)
@@ -147,6 +161,11 @@ namespace game.gui
             return new Size(cellWidth, cellHeight);
         }
 
+        /// <summary>
+        /// Listens to KeyStrokes executed on the Game Board and sends on executing an event a command to the Server
+        /// </summary>
+        /// <param name="sender">Sender that made an action for an event to happen</param>
+        /// <param name="e">Event triggered by the Sender</param>
         private void board_KeyPress(object sender, System.Windows.Forms.KeyPressEventArgs e)
         {
             // fall-through-cases for capital letters
@@ -182,6 +201,11 @@ namespace game.gui
             }
         }
 
+        /// <summary>
+        /// Listens to the Key "Enter" executed on the Game Chat and sends on triggering the event, the text written in this field, as a command to the Server
+        /// </summary>
+        /// <param name="sender">Sender that made an action for an event to happen</param>
+        /// <param name="e">Event triggered by the Sender</param>
         private void chat_KeyPress(object sender, System.Windows.Forms.KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)Keys.Enter)
@@ -194,15 +218,15 @@ namespace game.gui
                     if (message.StartsWith("/"))
                     {
                         message = message.Substring(1, message.Length - 1);
-                        Console.Out.WriteLine("Command sent: '/" + message + "'");
+                        Console.Out.WriteLine("Command sent: '/" + message + "'");//For Test Purposes only!
                         gameManager.sendCommand(message);
-                        this.chatWindow.AppendText(message +"\r\n");
+                        this.chatWindow.AppendText(message +"\r\n");//For Test Purposes only!
                     }
                     else
                     {
-                        Console.Out.WriteLine("Message sent: '" + message + "'");
+                        Console.Out.WriteLine("Message sent: '" + message + "'");//For Test Purposes only!
                         gameManager.sendCommand("ask:say:" + message);
-                        this.chatWindow.AppendText(message + "\r\n");
+                        this.chatWindow.AppendText(message + "\r\n");//For Test Purposes only!
                     }
                     this.chatInput.Focus();
                 }
