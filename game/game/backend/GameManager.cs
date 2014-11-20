@@ -64,10 +64,15 @@ namespace game
         private void createDefaultEntities()
         {
             Dragon dragon = new Dragon(3, 3);
-            Player player = new Player(5, 1);
+            Player playerOne = new Player(5, 1);
+            Player playerTwo = new Player(4, 1);
+
+            playerOne.setID(1);
+            playerTwo.setID(2);
 
             dragons.Add(dragon);
-            players.Add(player);
+            players.Add(playerOne);
+            players.Add(playerTwo);
         }
 
         private Map createDefaultMap()
@@ -89,7 +94,7 @@ namespace game
                     }
                     else
                     {
-                        attributes.Add(FieldType.WATER);
+                        attributes.Add(FieldType.WALKABLE);
                         f = new Field(i, j, attributes);
                         map.setField(f);
                     }

@@ -14,6 +14,7 @@ namespace game.gui
     public partial class Gui : Form
     {
         private GameManager gameManager = GameManager.getGameManagerInstance();
+        private List<Color> playerColors = new List<Color>();
         public Gui() : base()
         {
             //Application.EnableVisualStyles();
@@ -25,6 +26,11 @@ namespace game.gui
             this.chatInput.KeyPress += chat_KeyPress;
         }
 
+        /// <summary>
+        /// Painting the Map by creating a GraphicsBuffer, filling it an executing in the end
+        /// </summary>
+        /// <param name="sender">Sender that made an action for an event to happen</param>
+        /// <param name="e">Event triggered by the Sender</param>
         private void board_PaintMap(object sender, PaintEventArgs e)
         {
             Map map = this.gameManager.getMap();
@@ -42,6 +48,15 @@ namespace game.gui
             buffer.Render();
         }
 
+        /// <summary>
+        /// Fills a certain Rectangle Game-Field with a certain colour depening on what type of Field it is
+        /// </summary>
+        /// <param name="graphics">Graphics by the Graphic Buffer</param>
+        /// <param name="field">Certain Field to be filled with a colour</param>
+        /// <param name="absX">Physical X-Position of the Field on the GUI</param>
+        /// <param name="absY">Physical Y-Position of the Field on the GUI</param>
+        /// <param name="width">Physical Width of the Field on the GUI</param>
+        /// <param name="height">Physical Width of the Field on the GUI</param>
         protected void drawMapField(Graphics graphics, Field field, int absX, int absY, int width, int height)
         {
             Color colour = Color.BurlyWood;
@@ -69,6 +84,11 @@ namespace game.gui
             graphics.DrawRectangle(new Pen(new SolidBrush(Color.Black)), new Rectangle(absX, absY, width, height));
         }
 
+        /// <summary>
+        /// Paints the Entites to the board, illustrated by small rectangles
+        /// </summary>
+        /// <param name="sender">Sender that made an action for an event to happen</param>
+        /// <param name="e">Event triggered by the Sender</param>
         private void board_PaintEntities(object sender, PaintEventArgs e)
         {
             //List<Dragon> dragons = this.gameManager.getDragons();
@@ -96,30 +116,28 @@ namespace game.gui
                 tileSize.Height / 2);
         }
 
-        protected void drawPlayer(Graphics graphics, Player player)
+        protected void drawPlayer(Graphics graphics, Player player)//Always new Color created
         {
             Size tileSize = this.getTileSize();
-            graphics.FillRectangle(new SolidBrush(Color.DarkGoldenrod),
-               player.getXPos() * tileSize.Width + tileSize.Width / 2 - tileSize.Width / 4,
-               player.getYPos() * tileSize.Height + tileSize.Height / 2 - tileSize.Height / 4,
-               tileSize.Width / 2,
-               tileSize.Height / 2);
+            String drawString = "P"+player.getID();
+            Font drawFont = new Font("Arial", 16);
+            SolidBrush drawBrush = new SolidBrush(Color.Black);
+            PointF drawPoint = new PointF( player.getXPos() * tileSize.Width, player.getYPos() * tileSize.Height + tileSize.Height / 2 - tileSize.Height / 4);
+            graphics.DrawString(drawString, drawFont, drawBrush, drawPoint);
         }
 
         private Size getTileSize()
         {
-            int width = 10;
-            int height = 10;
             Field[,] fields = this.gameManager.getMap().getFields();
             if (fields == null)
             {
                 throw new ArgumentNullException("backend returned null as map");
             }
-            if (fields.Length == 0)
+            if (fields.GetLength(0) == 0)
             {
                 throw new IndexOutOfRangeException("outer dimension of the retrieved map has length 0");
             }
-            if (fields.GetLength(0) == 0)
+            if (fields.GetLength(1) == 0)
             {
                 throw new IndexOutOfRangeException("inner dimension of the retrieved map has length 0");
             }
