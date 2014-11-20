@@ -123,9 +123,10 @@ namespace game.gui
             SolidBrush drawBrush = new SolidBrush(Color.Black);
             PointF drawPoint = new PointF( player.getXPos() * tileSize.Width, player.getYPos() * tileSize.Height + tileSize.Height / 2 - tileSize.Height / 4);
             graphics.DrawString(drawString, drawFont, drawBrush, drawPoint);
+            Console.Out.WriteLine("Player" + player.getID() + " X:" + player.getXPos() + " Y:" + player.getYPos());
         }
 
-        private Size getTileSize()
+        private Size getTileSize() 
         {
             Field[,] fields = this.gameManager.getMap().getFields();
             if (fields == null)
