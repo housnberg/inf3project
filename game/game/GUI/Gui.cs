@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Drawing;
 
 namespace game.gui
 {
@@ -193,13 +192,13 @@ namespace game.gui
                     if (message.StartsWith("/"))
                     {
                         message = message.Substring(1, message.Length - 1);
-                        Console.Out.WriteLine("Command sent: '/" + message + "'");//this.backend.sendCommand(input);
+                        Console.Out.WriteLine("Command sent: '/" + message + "'");
                         gameManager.sendCommand(message);
                         this.chatWindow.AppendText(message +"\r\n");
                     }
                     else
                     {
-                        Console.Out.WriteLine("Message sent: '" + message + "'");//this.backend.sendChat(input);
+                        Console.Out.WriteLine("Message sent: '" + message + "'");
                         gameManager.sendCommand("ask:say:" + message);
                         this.chatWindow.AppendText(message + "\r\n");
                     }

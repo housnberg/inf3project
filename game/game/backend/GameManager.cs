@@ -289,6 +289,11 @@ namespace game
             return this.connector;
         }
 
+        public void refreshGui()
+        {
+            gui.Refresh();
+        }
+
         [ContractInvariantMethod]
         protected void ObjectInvariant()
         {
