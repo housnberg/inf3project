@@ -60,11 +60,11 @@
             // Placeholder
             // 
             this.Placeholder.AutoSize = true;
-            this.Placeholder.Location = new System.Drawing.Point(455, 200);
+            this.Placeholder.Location = new System.Drawing.Point(445, 199);
             this.Placeholder.Name = "Placeholder";
-            this.Placeholder.Size = new System.Drawing.Size(176, 13);
+            this.Placeholder.Size = new System.Drawing.Size(195, 13);
             this.Placeholder.TabIndex = 3;
-            this.Placeholder.Text = "This is a placeholder for the Buttons";
+            this.Placeholder.Text = "This is a placeholder for the Game Stats";
             // 
             // Gui
             // 

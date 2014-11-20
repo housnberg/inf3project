@@ -73,6 +73,7 @@ namespace game.gui
             else if (field.isWater())
             {
                 colour = Color.Blue;
+
             }
             else if (!field.isWalkable())
             {

@@ -11,7 +11,8 @@ namespace game.client
 
         ClientBuffer buffer = ClientBuffer.getBufferInstance();
         GameManager gm = GameManager.getGameManagerInstance();
-        public void doWork() {
+        public void doWork()
+        {
             while (true)
             {
                 gm.updateChatMessage("TEST", buffer.getElement());
