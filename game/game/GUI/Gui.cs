@@ -177,26 +177,26 @@ namespace game.gui
                 case (char)Keys.Left:
                 case 'a':
                 case 'A':
-                    Console.Out.WriteLine("Command sent: 'ask:mv:lft'");//this.backend.sendCommand("ask:mv:lft");
-                    gameManager.sendCommand("ask:mv:lft");
+                    //Console.Out.WriteLine("Command sent: 'ask:mv:lft'");//this.backend.sendCommand("ask:mv:lft");
+                    gameManager.sendCommand("lft");
                     break;
                 case (char)Keys.Right:
                 case 'd':
                 case 'D':
-                    Console.Out.WriteLine("Command sent: 'ask:mv:rgt'");;//this.backend.sendCommand("ask:mv:rgt");
-                    gameManager.sendCommand("ask:mv:rgt");
+                    //Console.Out.WriteLine("Command sent: 'ask:mv:rgt'");;//this.backend.sendCommand("ask:mv:rgt");
+                    gameManager.sendCommand("rgt");
                     break;
                 case (char)Keys.Up:
                 case 'w':
                 case 'W':
-                    Console.Out.WriteLine("Command sent: 'ask:mv:up'");//this.backend.sendCommand("ask:mv:up");
-                    gameManager.sendCommand("ask:mv:up");
+                    //Console.Out.WriteLine("Command sent: 'ask:mv:up'");//this.backend.sendCommand("ask:mv:up");
+                    gameManager.sendCommand("up");
                     break;
                 case (char)Keys.Down:
                 case 's':
                 case 'S':
-                    Console.Out.WriteLine("Command sent: 'ask:mv:dwn'");//this.backend.sendCommand("ask:mv:dwn");
-                    gameManager.sendCommand("ask:mv:dwn");
+                    //Console.Out.WriteLine("Command sent: 'ask:mv:dwn'");//this.backend.sendCommand("ask:mv:dwn");
+                    gameManager.sendCommand("dwn");
                     break;
             }
         }
@@ -225,7 +225,7 @@ namespace game.gui
                     else
                     {
                         Console.Out.WriteLine("Message sent: '" + message + "'");//For Test Purposes only!
-                        gameManager.sendCommand("ask:say:" + message);
+                        gameManager.sendMessage(message);
                         this.chatWindow.AppendText(message + "\r\n");//For Test Purposes only!
                     }
                     this.chatInput.Focus();

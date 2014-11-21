@@ -132,8 +132,43 @@ namespace game
             Contract.Requires(connector != null);
             try
             {
-                connector.sendServerMessage(message);
-                Console.WriteLine("------->Message Send: " + message);
+                switch (message)
+                {
+                    case "lft":
+                        connector.sendServerMessage("ask:mv:lft");
+                        break;
+                    case "rgt":
+                        connector.sendServerMessage("ask:mv:rgt");
+                        break;
+                    case "up":
+                        connector.sendServerMessage("ask:mv:up");
+                        break;
+                    case "dwn":
+                        connector.sendServerMessage("ask:mv:dwn");
+                        break;
+                    default:
+                        connector.sendServerMessage(message);
+                        Console.WriteLine("------->Message Send: " + message);
+                        break;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+
+        /// <summary>
+        /// Sends a message to the Connector to perform a certain action
+        /// </summary>
+        /// <param name="message">The message being sent to the server via the connector</param>
+        public void sendMessage(String message)
+        {
+            Contract.Requires(message != null);
+            Contract.Requires(connector != null);
+            try
+            {
+                connector.sendServerMessage("ask:say:" + message);
             }
             catch (Exception e)
             {

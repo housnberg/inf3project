@@ -53,14 +53,14 @@ namespace game.client
                         Monitor.Wait(buffer);
                     }
                     String[] tmp = Regex.Split(fullServerMessage, "end:" + messageCounter);
-                    fifo.Add(tmp[0].Trim());
+                    fifo.Add(tmp[0].Trim() + "\r\nend:" + messageCounter);
                     fullServerMessage = tmp[1];
                     //for test purposes only
                     //using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"C:\Users\test_" + (messageCounter) + ".txt", true))
                     //{
-                    //    file.WriteLine(tmp[0]);
+                    //    file.WriteLine(buffer.getElement());
                     //}
-                    messageCounter++;
+                    //messageCounter++;
                     
                 }
             }
