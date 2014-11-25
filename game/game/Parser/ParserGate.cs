@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Diagnostics.Contracts;
+using System.Text.RegularExpressions;
 using game.client;
 
 namespace game.Parser
@@ -13,15 +14,16 @@ namespace game.Parser
         private ClientBuffer buffer;
         private String message;
         private bool messageIsValid;
+        private UInt16 messageCounter = 0;
 
         /// <summary>
         /// Receives incoming messages from the buffer.
         /// Ensures that incoming messages from the server contain valid information.
         /// The information is then extracted and passed down to the GameManager
         /// </summary>
-        public ParserGate(ClientBuffer buffer)
+        public ParserGate()
         {
-
+            buffer = ClientBuffer.getBufferInstance();
         }
 
         /// <summary>
@@ -78,7 +80,7 @@ namespace game.Parser
         /// </summary>
         private void extractMessage()
         {
-            // Contract.Requires(messageIsAvailable);
+            this.message = buffer.getElement();
             Contract.Ensures(message != null);
         }
 
@@ -87,7 +89,71 @@ namespace game.Parser
         /// </summary>
         private void listenToBuffer()
         {
+            
+        }
 
+        private String deleteLines(String line0, String line1, String message)
+        {
+            String toReturn;
+            toReturn = message.TrimStart(line0.ToCharArray());
+            toReturn = toReturn.TrimEnd(line1.ToCharArray());
+            return toReturn;
+        }
+
+        private void chooseParser(String message)
+        {
+            if (message.Contains("begin:upd") && message.Contains("end:upd"))
+            {
+
+            }
+            if (message.Contains("begin:del") && message.Contains("end:del"))
+            {
+
+            }
+            if (message.Contains("begin:map") && message.Contains("end:map"))
+            {
+
+            }
+            if (message.Contains("begin:msg") && message.Contains("end:msg"))
+            {
+                this.parseMessage(message);
+            }
+            if (message.Contains("begin:result") && message.Contains("end:result"))
+            {
+
+            }
+            if (message.Contains("begin:challenge") && message.Contains("end:challenge"))
+            {
+
+            }
+            if (message.Contains("begin:player") && message.Contains("end:player"))
+            {
+
+            }
+            if (message.Contains("begin:yourid") && message.Contains("end:yourid"))
+            {
+
+            }
+            if (message.Contains("begin:time") && message.Contains("end:time"))
+            {
+
+            }
+            if (message.Contains("begin:online") && message.Contains("end:online"))
+            {
+
+            }
+            if (message.Contains("begin:ents") && message.Contains("end:ents"))
+            {
+
+            }
+            if (message.Contains("begin:players") && message.Contains("end:players"))
+            {
+
+            }
+            if (message.Contains("begin:server") && message.Contains("end:server"))
+            {
+
+            }
         }
 
 
@@ -95,9 +161,15 @@ namespace game.Parser
         /// Parses the message and extracts information from it. Will call other methods, choosing based on message content.
         /// </summary>
         /// <param name="message">The message extracted from the buffer.</param>
-        private void parse(String message)
+        private void parse()
         {
             Contract.Requires(message != null);
+            if (this.message != null)
+            {
+                if(this.message.Contains("begin:" + this.messageCounter) && this.message.Contains("end:" + this.messageCounter)){
+                    this.message = this.deleteLines("begin:" + this.messageCounter, "end:" + this.messageCounter, this.message);
+                }
+            }
             Contract.Ensures(messageIsValid);
         }
 
@@ -108,6 +180,8 @@ namespace game.Parser
         private void parseMessage(String partOfMessage)
         {
             Contract.Requires(partOfMessage != null && messageIsValid);
+            partOfMessage = this.deleteLines("begin:mes", "end:mes", partOfMessage);
+            
             Contract.Ensures(messageIsValid);
         }
 
