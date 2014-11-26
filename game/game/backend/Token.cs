@@ -22,6 +22,16 @@ namespace game
 
         }
 
+        public Token(int id, Boolean isBusy, String desc, int x, int y, int points)
+        {
+
+        }
+
+        public Token(int id, int isbusy, String desc, int x, int y)
+        {
+
+        }
+
         public Token(String name, int id)
         {
             this.setName(name);
