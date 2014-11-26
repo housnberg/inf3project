@@ -182,8 +182,7 @@ namespace game.Parser
             Contract.Requires(partOfMessage != null && messageIsValid);
             if (partOfMessage != null && messageIsValid)
             {
-                if (partOfMessage.Contains("begin:mes") && partOfMessage.Contains("end:mes"))
-                {
+                
                     partOfMessage = this.deleteLines("begin:mes", "end:mes", partOfMessage);
                     String[] messageArray = Regex.Split(partOfMessage, "\n");
                     for (int i = 0; i < messageArray.Length; i++)
@@ -194,11 +193,7 @@ namespace game.Parser
                     int srcid = Convert.ToInt32(messageArray[0]);
                     String src = messageArray[1];
                     String txt = messageArray[2];
-                }
-                else
-                {
-                    this.messageIsValid = false;
-                }
+                
             }
             Contract.Ensures(messageIsValid);
         }
@@ -212,11 +207,10 @@ namespace game.Parser
             Contract.Requires(partOfMessage != null && messageIsValid);
             if (partOfMessage != null && messageIsValid)
             {
-                if (partOfMessage.Contains("ans:"))
-                {
+               
                     partOfMessage = partOfMessage.Substring(partOfMessage.IndexOf(":") + 1);
                     String answer = partOfMessage;
-                }
+                
             }
             Contract.Ensures(messageIsValid);
         }
@@ -228,6 +222,10 @@ namespace game.Parser
         private void parseYourId(String partOfMessage)
         {
             Contract.Requires(partOfMessage != null && messageIsValid);
+            if (partOfMessage != null && messageIsValid)
+            {
+
+            }
             Contract.Ensures(messageIsValid);
         }
 
