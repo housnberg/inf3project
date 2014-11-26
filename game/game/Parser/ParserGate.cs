@@ -277,6 +277,14 @@ namespace game.Parser
         private void parsePlayers(String partOfMessage)
         {
             Contract.Requires(partOfMessage != null && messageIsValid);
+            if (partOfMessage != null && messageIsValid)
+            {
+                partOfMessage = this.deleteLines("begin:ents", "end:ents", partOfMessage);
+                while (partOfMessage.Contains("begin:player") || partOfMessage.Contains("begin:dragon"))
+                {
+
+                }
+            }
             Contract.Ensures(messageIsValid);
         }
 
