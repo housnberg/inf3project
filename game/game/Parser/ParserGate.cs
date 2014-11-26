@@ -237,6 +237,11 @@ namespace game.Parser
         private void parseTime(String partOfMessage)
         {
             Contract.Requires(partOfMessage != null && messageIsValid);
+            if (partOfMessage != null && messageIsValid)
+            {
+                partOfMessage = this.deleteLines("begin:time", "end:time", partOfMessage);
+                long time = Convert.ToInt64(partOfMessage);
+            }
             Contract.Ensures(messageIsValid);
         }
 
