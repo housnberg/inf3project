@@ -252,6 +252,11 @@ namespace game.Parser
         private void parseOnline(String partOfMessage)
         {
             Contract.Requires(partOfMessage != null && messageIsValid);
+            if (partOfMessage != null && messageIsValid)
+            {
+                partOfMessage = this.deleteLines("begin:online", "end:online", partOfMessage);
+                int online = Convert.ToInt32(partOfMessage);
+            }
             Contract.Ensures(messageIsValid);
         }
 
