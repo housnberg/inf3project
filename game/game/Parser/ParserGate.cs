@@ -224,7 +224,8 @@ namespace game.Parser
             Contract.Requires(partOfMessage != null && messageIsValid);
             if (partOfMessage != null && messageIsValid)
             {
-
+                partOfMessage = this.deleteLines("begin:yourid", "end:yourid", partOfMessage);
+                int id = Convert.ToInt32(partOfMessage);
             }
             Contract.Ensures(messageIsValid);
         }
