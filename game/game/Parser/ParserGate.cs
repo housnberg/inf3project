@@ -174,6 +174,11 @@ namespace game.Parser
 
                 }
             }
+            else
+            {
+                messageIsValid = false;
+                throw new SystemException("Message is invalid. ParserGate, parse");
+            }
             Contract.Ensures(messageIsValid);
         }
 
@@ -200,6 +205,11 @@ namespace game.Parser
                     String txt = messageArray[2];
                 
             }
+            else
+            {
+                messageIsValid = false;
+                throw new SystemException("Message is invalid. ParserGate, parseMessage");
+            }
             Contract.Ensures(messageIsValid);
         }
 
@@ -216,6 +226,11 @@ namespace game.Parser
                 partOfMessage = partOfMessage.Trim();
                 String answer = partOfMessage;                
             }
+            else
+            {
+                messageIsValid = false;
+                throw new SystemException("Message is invalid. ParserGate, parseAnswer");
+            }
             Contract.Ensures(messageIsValid);
         }
 
@@ -231,6 +246,11 @@ namespace game.Parser
                 partOfMessage = this.deleteLines("begin:yourid", "end:yourid", partOfMessage);
                 partOfMessage = partOfMessage.Trim();
                 int id = Convert.ToInt32(partOfMessage);
+            }
+            else
+            {
+                messageIsValid = false;
+                throw new SystemException("Message is invalid. ParserGate, parseYourId");
             }
             Contract.Ensures(messageIsValid);
         }
@@ -263,6 +283,11 @@ namespace game.Parser
                 partOfMessage = this.deleteLines("begin:online", "end:online", partOfMessage);
                 partOfMessage = partOfMessage.Trim();
                 int online = Convert.ToInt32(partOfMessage);
+            }
+            else
+            {
+                messageIsValid = false;
+                throw new SystemException("Message is invalid. ParserGate, parseOnline");
             }
             Contract.Ensures(messageIsValid);
         }
@@ -306,6 +331,11 @@ namespace game.Parser
                 }
                 
             }
+            else
+            {
+                messageIsValid = false;
+                throw new SystemException("Message is invalid. ParserGate, parseEntities");
+            }
             Contract.Ensures(messageIsValid);
         }
 
@@ -337,6 +367,16 @@ namespace game.Parser
                         }
                     }
                 }
+                else
+                {
+                    messageIsValid = false;
+                    throw new SystemException("Message is invalid. the partOfMessage contain no begin:player and end:player. ParserGate, parsePlayer");
+                }
+            }
+            else
+            {
+                messageIsValid = false;
+                throw new SystemException("Message is invalid. ParserGate, parsePlayer");
             }
             Contract.Ensures(messageIsValid);
         }
