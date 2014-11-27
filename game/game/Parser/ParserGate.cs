@@ -106,7 +106,8 @@ namespace game.Parser
         {
             if (message.Contains("begin:upd") && message.Contains("end:upd"))
             {
-
+                ParserUpdateDelete parserUpdateDelete = new ParserUpdateDelete(this, message, this.messageIsValid);
+                parserUpdateDelete.parseUpdate(message);
             }
             if (message.Contains("begin:del") && message.Contains("end:del"))
             {
