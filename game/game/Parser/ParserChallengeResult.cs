@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics.Contracts;
+using System.Text.RegularExpressions;
 
 namespace game.Parser
 {
@@ -13,7 +14,7 @@ namespace game.Parser
         private String message;
         private bool messageIsValid;
 
-        ParserChallengeResult(ParserGate parserGate, String message, bool messageIsValid)
+        public ParserChallengeResult(ParserGate parserGate, String message, bool messageIsValid)
         {
             setParserGate(parserGate);
             setMessage(message);
@@ -81,9 +82,21 @@ namespace game.Parser
         /// Parses the message applying the "CHALLENGE" rule.
         /// </summary>
         /// <param name="message">Part of original message, is expected to fit the "CHALLANGE" rule.</param>
-        private void parseChallenge(String message)
+        public void parseChallenge(String message)
         {
             Contract.Requires(message != null && messageIsValid);
+            if (message != null && messageIsValid)
+            {
+                message = this.parserGate.deleteLines("begin:challenge", "end:challenge", message);
+                String[] data = Regex.Split(message, "\n");
+                for (int i = 0; i < data.Length; i++)
+                {
+                    data[i] = data[i].Substring(data[i].IndexOf(":") + 1);
+                }
+                int id = Convert.ToInt32(data[0]);
+                String minigame = data[1];
+                bool accepted = Convert.ToBoolean(data[2]);
+            }
             Contract.Ensures(messageIsValid);
         }
 
@@ -91,7 +104,7 @@ namespace game.Parser
         /// Parses the message applying the "RESULT" rule. Will eventually call the parseOpp(String message) method.
         /// </summary>
         /// <param name="message">Part of original message, is expected to fit the "RESULT" rule.</param>
-        private void parseResult(String message)
+        public void parseResult(String message)
         {
             Contract.Requires(message != null && messageIsValid);
             Contract.Ensures(messageIsValid);

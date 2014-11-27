@@ -99,6 +99,7 @@ namespace game.Parser
             String toReturn;
             toReturn = message.TrimStart(line0.ToCharArray());
             toReturn = toReturn.TrimEnd(line1.ToCharArray());
+            toReturn = toReturn.Trim();
             return toReturn;
         }
 
@@ -135,7 +136,8 @@ namespace game.Parser
             }
             if (message.Contains("begin:challenge") && message.Contains("end:challenge"))
             {
-
+                ParserChallengeResult parserChallengeResult = new ParserChallengeResult(this, message, this.messageIsValid);
+                parserChallengeResult.parseChallenge(message);
             }
             if (message.Contains("begin:player") && message.Contains("end:player"))
             {
