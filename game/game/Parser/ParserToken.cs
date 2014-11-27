@@ -95,7 +95,7 @@ namespace game.Parser
         /// Parses the message applying the "PLAYER" rule.
         /// </summary>
         /// <param name="partOfMessage">Part of original message, is expected to fit the "PLAYER" rule:</param>
-        private void parsePlayer(String partOfMessage, bool messageIsCut)
+        private Player parsePlayer(String partOfMessage, bool messageIsCut)
         {
             Contract.Requires(partOfMessage != null && messageIsValid);
             if (partOfMessage != null && messageIsValid)
@@ -104,19 +104,53 @@ namespace game.Parser
                 {
                     partOfMessage = parserGate.deleteLines("begin:player", "end:player", partOfMessage);
                 }
-                String[] dataPlayer = Regex.
+                String[] dataPlayer = Regex.Split(partOfMessage, "\n");
+                int id = Convert.ToInt32(dataPlayer[0]);
+                bool busy = Convert.ToBoolean(dataPlayer[2]);
+                String desc = dataPlayer[3];
+                int x = Convert.ToInt32(dataPlayer[4]);
+                int y = Convert.ToInt32(dataPlayer[5]);
+                int points = Convert.ToInt32(dataPlayer[6]);
+
+                Contract.Ensures(messageIsValid);
+                return new Player(id, busy, desc, x, y, points);
+                
             }
-            Contract.Ensures(messageIsValid);
+            else
+            {
+                throw new ArgumentNullException();
+            }
+            
         }
 
         /// <summary>
         /// Parses the message applying the "DRAGON" rule.
         /// </summary>
         /// <param name="partOfMessage">Part of original message, is expected to fit the "DRAGON" rule:</param>
-        private void parseDragon(String partOfMessage)
+        private Dragon parseDragon(String partOfMessage)
         {
             Contract.Requires(partOfMessage != null && messageIsValid);
-            Contract.Ensures(messageIsValid);
+            if (partOfMessage != null && messageIsValid)
+            {
+                if (!messageIsCut)
+                {
+                    partOfMessage = parserGate.deleteLines("begin:dragon", "end:dragon", partOfMessage);
+                }
+                String[] dataPlayer = Regex.Split(partOfMessage, "\n");
+                int id = Convert.ToInt32(dataPlayer[0]);
+                bool busy = Convert.ToBoolean(dataPlayer[2]);
+                String desc = dataPlayer[3];
+                int x = Convert.ToInt32(dataPlayer[4]);
+                int y = Convert.ToInt32(dataPlayer[5]);
+
+                Contract.Ensures(messageIsValid);
+                return new Dragon(id, busy, desc, x, y);
+
+            }
+            else
+            {
+                throw new ArgumentNullException();
+            }
         }
 
         [ContractInvariantMethod]

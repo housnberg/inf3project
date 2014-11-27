@@ -25,29 +25,15 @@ namespace game
             //client.sendServerMessage("get:map");
             //client.sendServerMessage("get:time");
             //Console.ReadKey();
-            String test = "begin:player\nid:123\ntype:Player\nbusy:false\ndesc:blah\nx:1\ny:1\npoints9001\nend:player\nbegin:dragon\nid:123\ntype:Player\nbusy:false\ndesc:blah\nx:1\ny:1\npoints9001\nend:dragon\nbegin:player\nid:123\ntype:Player\nbusy:false\ndesc:blah\nx:1\ny:1\npoints9001\nend:player";
-            while (test.Contains("begin:player") || test.Contains("begin:dragon"))
+            String id = "id:123a";
+            if (Regex.IsMatch(id,"id:\\d+[^a-z]"))
             {
-                if (test.Contains("begin:player"))
-                {
-                    test = test.Replace("begin:player\n", "splitHere");
-                    test = test.Replace("end:player\n", "splitHere");
-                    Console.WriteLine("replaced player");
-                }
-                if (test.Contains("begin:dragon"))
-                {
-                    test = test.Replace("begin:dragon\n", "splitHere");
-                    test = test.Replace("end:dragon\n", "splitHere");
-                    Console.WriteLine("replaced dragon");
-                }
+                Console.WriteLine("Yes!");
             }
-            String[] test1 = Regex.Split(test, "splitHere");
-            String test2 = "";
-            for (int i = 0; i < test1.Length; i++)
+            else
             {
-                test2 += test1[i];
+                Console.WriteLine("No!");
             }
-            Console.WriteLine(test2);
 
                 Console.ReadKey();
             //new GameManager("127.0.0.1", 1024);
