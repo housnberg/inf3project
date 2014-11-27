@@ -14,7 +14,7 @@ namespace game.Parser
         private String message;
         private bool messageIsValid;
 
-        ParserMap(ParserGate parserGate, String message, bool validity)
+        public ParserMap(ParserGate parserGate, String message, bool validity)
         {
             setParserGate(parserGate);
             setMessage(message);
@@ -92,9 +92,13 @@ namespace game.Parser
         /// Parses the message applying the "MAPCELL" rule.
         /// </summary>
         /// <param name="partOfMessage">Part of original message, is expected to fit the "MAPCELL" rule.</param>
-        private void parseMapcell(String partOfMessage)
+        public Field parseMapcell(String partOfMessage)
         {
             Contract.Requires(partOfMessage != null && messageIsValid);
+            if (partOfMessage != null && messageIsValid)
+            {
+                partOfMessage = this.parserGate.deleteLines("begin:cell", "end:cell", partOfMessage);
+            }
             Contract.Ensures(messageIsValid);
         }
 

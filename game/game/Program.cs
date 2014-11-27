@@ -25,17 +25,13 @@ namespace game
             //client.sendServerMessage("get:map");
             //client.sendServerMessage("get:time");
             //Console.ReadKey();
-            String id = "id:123a";
-            if (Regex.IsMatch(id,"id:\\d+[^a-z]"))
-            {
-                Console.WriteLine("Yes!");
-            }
+            String blah;
+            int test = 1;
+            if (test == 1)
+                blah = "blah";
             else
-            {
-                Console.WriteLine("No!");
-            }
-
-                Console.ReadKey();
+                blah = "blub";
+            Console.ReadKey();
             //new GameManager("127.0.0.1", 1024);
 
         }

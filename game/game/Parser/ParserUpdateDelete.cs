@@ -82,7 +82,7 @@ namespace game.Parser
         /// Parses the message applying the "UPDATE" rule. Will eventually call the ParserToken or ParserMap class.
         /// </summary>
         /// <param name="message">Part of original message, is expected to fit the "UPDATE" rule</param>
-        public Player parseUpdate(String message)
+        public Token parseUpdate(String message)
         {
             Contract.Requires(message != null && messageIsValid);
             if (message != null && messageIsValid)
@@ -90,9 +90,29 @@ namespace game.Parser
                 message = parserGate.deleteLines("begin:upd", "end:upd", message);
                 if (message.StartsWith("begin:dragon") && message.EndsWith("end:dragon") || message.StartsWith("begin:player") && message.EndsWith("end:player"))
                 {
-                    ParserToken parserToken = new ParserToken(this.parserGate, message, this.messageIsValid, false);
-                    Player player = parserToken.parsePlayer(message, false);
-                    return player;
+                    Token token = null;
+                    ParserToken parserToken = new ParserToken(this.parserGate, message, this.messageIsValid, true);
+                    if (message.Contains("type:Dragon"))
+                    {
+                        token = parserToken.parseDragon(message, false);
+                    }
+                    else if (message.Contains("type:Player"))
+                    {
+                        token = parserToken.parsePlayer(message, false);
+                    }
+                    
+                    Contract.Ensures(messageIsValid);
+                    return token;
+                }
+                else if (message.StartsWith("begin:cell") && message.EndsWith("end:cell"))
+                {
+                    ParserMap parserMap = new ParserMap(this.parserGate, message, this.messageIsValid);
+                    Field cell = parserMap.parseMapcell(message);
+                }
+                else
+                {
+                    this.messageIsValid = false;
+                    throw new ArgumentException("Message is invalid. ParserUpdateDelete, parseUpdate");
                 }
             }
             else
@@ -100,7 +120,7 @@ namespace game.Parser
                 this.messageIsValid = false;
                 throw new ArgumentException("Message is invalid. ParserUpdateDelte, parseUpdate.");
             }
-            Contract.Ensures(messageIsValid);
+            
         }
 
         /// <summary>
