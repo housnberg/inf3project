@@ -14,7 +14,7 @@ namespace game.Parser
         private String message;
         private bool messageIsValid;
 
-        ParserUpdateDelete(ParserGate parserGate, String message, bool validity)
+        public ParserUpdateDelete(ParserGate parserGate, String message, bool validity)
         {
             setParserGate(parserGate);
             setMessage(message);
@@ -82,9 +82,24 @@ namespace game.Parser
         /// Parses the message applying the "UPDATE" rule. Will eventually call the ParserToken or ParserMap class.
         /// </summary>
         /// <param name="message">Part of original message, is expected to fit the "UPDATE" rule</param>
-        private void parseUpdate(String message)
+        public Player parseUpdate(String message)
         {
             Contract.Requires(message != null && messageIsValid);
+            if (message != null && messageIsValid)
+            {
+                message = parserGate.deleteLines("begin:upd", "end:upd", message);
+                if (message.StartsWith("begin:dragon") && message.EndsWith("end:dragon") || message.StartsWith("begin:player") && message.EndsWith("end:player"))
+                {
+                    ParserToken parserToken = new ParserToken(this.parserGate, message, this.messageIsValid, false);
+                    Player player = parserToken.parsePlayer(message, false);
+                    return player;
+                }
+            }
+            else
+            {
+                this.messageIsValid = false;
+                throw new ArgumentException("Message is invalid. ParserUpdateDelte, parseUpdate.");
+            }
             Contract.Ensures(messageIsValid);
         }
 
