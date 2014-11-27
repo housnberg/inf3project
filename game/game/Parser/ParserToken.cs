@@ -13,12 +13,14 @@ namespace game.Parser
         private ParserGate parserGate;
         private String message;
         private bool messageIsValid;
+        private bool messageIsCut;
 
-        ParserToken(ParserGate parserGate, String message, bool validity)
+        public ParserToken(ParserGate parserGate, String message, bool validity, bool messageIsCut)
         {
             setParserGate(parserGate);
             setMessage(message);
             setMessageIsValid(validity);
+            setMessageIsCut(messageIsCut);
         }
 
         /// <summary>
@@ -46,6 +48,11 @@ namespace game.Parser
         private bool getMessageIsValid()
         {
             return this.messageIsValid;
+        }
+
+        private bool getMessageIsCut()
+        {
+            return this.messageIsCut;
         }
 
         /// <summary>
@@ -76,6 +83,11 @@ namespace game.Parser
         {
             
                 this.messageIsValid = validity;
+        }
+
+        private void setMessageIsCut(bool messageIsCut)
+        {
+            this.messageIsCut = messageIsCut;
         }
 
         /// <summary>

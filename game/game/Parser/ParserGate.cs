@@ -6,6 +6,7 @@ using System.Threading;
 using System.Diagnostics.Contracts;
 using System.Text.RegularExpressions;
 using game.client;
+using System.Collections;
 
 namespace game.Parser
 {
@@ -168,6 +169,8 @@ namespace game.Parser
             {
                 if(this.message.Contains("begin:" + this.messageCounter) && this.message.Contains("end:" + this.messageCounter)){
                     this.message = this.deleteLines("begin:" + this.messageCounter, "end:" + this.messageCounter, this.message);
+                    this.chooseParser(message);
+
                 }
             }
             Contract.Ensures(messageIsValid);
@@ -267,6 +270,26 @@ namespace game.Parser
         private void parseEntities(String partOfMessage)
         {
             Contract.Requires(partOfMessage != null && messageIsValid);
+            if (partOfMessage != null && messageIsValid)
+            {
+                ArrayList entities = new ArrayList();
+                partOfMessage = this.deleteLines("begin:ents", "end:ents", partOfMessage);
+                while (partOfMessage.Contains("begin:player") && partOfMessage.Contains("end:player") || partOfMessage.Contains("begin:dragon") && partOfMessage.Contains("end:dragon"))
+                {
+                    if (partOfMessage.Contains("begin:player") && partOfMessage.Contains("end:player"))
+                    {
+                        partOfMessage = partOfMessage.Replace("begin:player", "#");
+                        partOfMessage = partOfMessage.Replace("end:player", "#");
+                    }
+                    else if (partOfMessage.Contains("begin:dragon") && partOfMessage.Contains("end:dragon"))
+                    {
+                        partOfMessage = partOfMessage.Replace("begin:dragon", "#");
+                        partOfMessage = partOfMessage.Replace("end:dragon", "#");
+                    }
+                }
+                ParserToken parserToken = new ParserToken(this, partOfMessage, this.messageIsValid, true);
+                
+            }
             Contract.Ensures(messageIsValid);
         }
 
@@ -277,14 +300,6 @@ namespace game.Parser
         private void parsePlayers(String partOfMessage)
         {
             Contract.Requires(partOfMessage != null && messageIsValid);
-            if (partOfMessage != null && messageIsValid)
-            {
-                partOfMessage = this.deleteLines("begin:ents", "end:ents", partOfMessage);
-                while (partOfMessage.Contains("begin:player") || partOfMessage.Contains("begin:dragon"))
-                {
-
-                }
-            }
             Contract.Ensures(messageIsValid);
         }
 
