@@ -95,7 +95,7 @@ namespace game.Parser
         /// Parses the message applying the "PLAYER" rule.
         /// </summary>
         /// <param name="partOfMessage">Part of original message, is expected to fit the "PLAYER" rule:</param>
-        private Player parsePlayer(String partOfMessage, bool messageIsCut)
+        public Player parsePlayer(String partOfMessage, bool messageIsCut)
         {
             Contract.Requires(partOfMessage != null && messageIsValid);
             if (partOfMessage != null && messageIsValid)
@@ -127,7 +127,7 @@ namespace game.Parser
         /// Parses the message applying the "DRAGON" rule.
         /// </summary>
         /// <param name="partOfMessage">Part of original message, is expected to fit the "DRAGON" rule:</param>
-        private Dragon parseDragon(String partOfMessage)
+        public Dragon parseDragon(String partOfMessage)
         {
             Contract.Requires(partOfMessage != null && messageIsValid);
             if (partOfMessage != null && messageIsValid)
@@ -145,7 +145,6 @@ namespace game.Parser
 
                 Contract.Ensures(messageIsValid);
                 return new Dragon(id, busy, desc, x, y);
-
             }
             else
             {

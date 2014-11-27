@@ -293,11 +293,11 @@ namespace game.Parser
                 {
                     if (s.Contains("type:Player"))
                     {
-
+                        tokenList.Add(parserToken.parsePlayer(s, true));
                     }
                     else if (s.Contains("type:Dragon"))
                     {
-
+                        tokenList.Add(parserToken.parseDragon(s, true));
                     }
                 }
                 
