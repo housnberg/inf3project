@@ -6,6 +6,7 @@ using System.Threading;
 using System.Diagnostics.Contracts;
 using System.Text.RegularExpressions;
 using game.client;
+using game.backend;
 using System.Collections;
 
 namespace game.Parser
@@ -191,6 +192,7 @@ namespace game.Parser
                     for (int i = 0; i < messageArray.Length; i++)
                     {
                         messageArray[i] = messageArray[i].Substring(messageArray[i].IndexOf(":") + 1);
+                        messageArray[i] = messageArray[i].Trim();
                     }
 
                     int srcid = Convert.ToInt32(messageArray[0]);
@@ -209,11 +211,10 @@ namespace game.Parser
         {
             Contract.Requires(partOfMessage != null && messageIsValid);
             if (partOfMessage != null && messageIsValid)
-            {
-               
-                    partOfMessage = partOfMessage.Substring(partOfMessage.IndexOf(":") + 1);
-                    String answer = partOfMessage;
-                
+            {               
+                partOfMessage = partOfMessage.Substring(partOfMessage.IndexOf(":") + 1);
+                partOfMessage = partOfMessage.Trim();
+                String answer = partOfMessage;                
             }
             Contract.Ensures(messageIsValid);
         }
@@ -228,6 +229,7 @@ namespace game.Parser
             if (partOfMessage != null && messageIsValid)
             {
                 partOfMessage = this.deleteLines("begin:yourid", "end:yourid", partOfMessage);
+                partOfMessage = partOfMessage.Trim();
                 int id = Convert.ToInt32(partOfMessage);
             }
             Contract.Ensures(messageIsValid);
@@ -243,6 +245,7 @@ namespace game.Parser
             if (partOfMessage != null && messageIsValid)
             {
                 partOfMessage = this.deleteLines("begin:time", "end:time", partOfMessage);
+                partOfMessage = partOfMessage.Trim();
                 long time = Convert.ToInt64(partOfMessage);
             }
             Contract.Ensures(messageIsValid);
@@ -258,6 +261,7 @@ namespace game.Parser
             if (partOfMessage != null && messageIsValid)
             {
                 partOfMessage = this.deleteLines("begin:online", "end:online", partOfMessage);
+                partOfMessage = partOfMessage.Trim();
                 int online = Convert.ToInt32(partOfMessage);
             }
             Contract.Ensures(messageIsValid);
@@ -272,7 +276,7 @@ namespace game.Parser
             Contract.Requires(partOfMessage != null && messageIsValid);
             if (partOfMessage != null && messageIsValid)
             {
-                ArrayList tokenList = new ArrayList();
+                List<Token> tokenList = new List<Token>();
                 partOfMessage = this.deleteLines("begin:ents", "end:ents", partOfMessage);
                 while (partOfMessage.Contains("begin:player") && partOfMessage.Contains("end:player") || partOfMessage.Contains("begin:dragon") && partOfMessage.Contains("end:dragon"))
                 {
@@ -312,6 +316,28 @@ namespace game.Parser
         private void parsePlayers(String partOfMessage)
         {
             Contract.Requires(partOfMessage != null && messageIsValid);
+            if (partOfMessage != null && messageIsValid)
+            {
+                if (partOfMessage.Contains("begin:players") && partOfMessage.Contains("end:players"))
+                {
+                    partOfMessage = this.deleteLines("begin:players", "end:players", partOfMessage);
+                    if (partOfMessage.Contains("begin:player") && partOfMessage.Contains("end:player"))
+                    {
+                        partOfMessage = partOfMessage.Replace("begin:player", "#");
+                        partOfMessage = partOfMessage.Replace("end:player", "#");
+                        String[] players = Regex.Split(partOfMessage, "#");
+                        List<Player> playersList = new List<Player>();
+                        ParserToken parserToken = new ParserToken(this, partOfMessage, this.messageIsValid, true);
+                        foreach (String s in players)
+                        {
+                            if (s.Contains("type:Player"))
+                            {
+                                playersList.Add(parserToken.parsePlayer(s, true));
+                            }
+                        }
+                    }
+                }
+            }
             Contract.Ensures(messageIsValid);
         }
 
