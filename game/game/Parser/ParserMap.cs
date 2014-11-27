@@ -121,9 +121,41 @@ namespace game.Parser
             Contract.Requires(partOfMessage != null && messageIsValid);
             if (partOfMessage != null && messageIsValid)
             {
+                partOfMessage = this.parserGate.deleteLines("begin:props", "end:props", partOfMessage);
+                partOfMessage = partOfMessage.Trim();
+                String[] fieldTypes = Regex.Split(partOfMessage, "\n");
+                List<FieldType> properties = new List<FieldType>();
+                foreach (String s in fieldTypes)
+                {
+                    switch (s)
+                    {
+                        case "WALKABLE":
+                            properties.Add(FieldType.WALKABLE);
+                            break;
+                        case "WALL":
+                            properties.Add(FieldType.WALL);
+                            break;
+                        case "FOREST":
+                            properties.Add(FieldType.FOREST);
+                            break;
+                        case "WATER":
+                            properties.Add(FieldType.WATER);
+                            break;
+                        case "HUNTABLE":
+                            properties.Add(FieldType.HUNTABLE);
+                            break;
 
+                    }
+                }
+                Contract.Ensures(messageIsValid);
+                return properties;
             }
-            Contract.Ensures(messageIsValid);
+            else
+            {
+                this.messageIsValid = false;
+                throw new ArgumentException("Message is invalid. ParserMap, parseProperties.");
+            }
+            
         }
 
         [ContractInvariantMethod]
