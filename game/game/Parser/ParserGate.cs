@@ -107,11 +107,19 @@ namespace game.Parser
             if (message.Contains("begin:upd") && message.Contains("end:upd"))
             {
                 ParserUpdateDelete parserUpdateDelete = new ParserUpdateDelete(this, message, this.messageIsValid);
-                parserUpdateDelete.parseUpdate(message);
+                if (message.Contains("begin:dragon") || message.Contains("begin:player"))
+                {
+                    Token token = parserUpdateDelete.parseUpdateToken(message);
+                }
+                else if (message.Contains("begin:mapcell"))
+                {
+                    Field mapCell = parserUpdateDelete.parseUpdateMapcell(message);
+                }
             }
             if (message.Contains("begin:del") && message.Contains("end:del"))
             {
-
+                ParserUpdateDelete parserUpdateDelete = new ParserUpdateDelete(this, message, this.messageIsValid);
+                Token token = parserUpdateDelete.parseDelete(message);
             }
             if (message.Contains("begin:map") && message.Contains("end:map"))
             {

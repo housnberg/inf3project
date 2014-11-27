@@ -94,7 +94,7 @@ namespace game.Parser
         /// Parses the message applying the "MAPCELL" rule.
         /// </summary>
         /// <param name="partOfMessage">Part of original message, is expected to fit the "MAPCELL" rule.</param>
-        public void parseMapcell(String partOfMessage)
+        public Field parseMapcell(String partOfMessage)
         {
             Contract.Requires(partOfMessage != null && messageIsValid);
             if (partOfMessage != null && messageIsValid)
@@ -107,9 +107,17 @@ namespace game.Parser
                 int row = Convert.ToInt32(rowsAndColumns[0]);
                 int column = Convert.ToInt32(rowsAndColumns[1]);
                 List<FieldType> fieldTypes = this.parseProperty(properties);
+                Field mapCell = new Field(row, column, fieldTypes);
+                Contract.Ensures(messageIsValid);
+                return mapCell;
 
             }
-            Contract.Ensures(messageIsValid);
+            else
+            {
+                this.messageIsValid = false;
+                throw new ArgumentException("Message is invalid. ParserMap, parseMapcell.");
+            }
+            
         }
 
         /// <summary>

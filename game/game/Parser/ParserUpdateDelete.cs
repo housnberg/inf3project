@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics.Contracts;
+using game.backend;
 
 namespace game.Parser
 {
@@ -82,14 +83,13 @@ namespace game.Parser
         /// Parses the message applying the "UPDATE" rule. Will eventually call the ParserToken or ParserMap class.
         /// </summary>
         /// <param name="message">Part of original message, is expected to fit the "UPDATE" rule</param>
-        public Token parseUpdate(String message)
+        public Token parseUpdateToken(String message)
         {
             Contract.Requires(message != null && messageIsValid);
             if (message != null && messageIsValid)
             {
                 message = parserGate.deleteLines("begin:upd", "end:upd", message);
-                if (message.StartsWith("begin:dragon") && message.EndsWith("end:dragon") || message.StartsWith("begin:player") && message.EndsWith("end:player"))
-                {
+                
                     Token token = null;
                     ParserToken parserToken = new ParserToken(this.parserGate, message, this.messageIsValid, true);
                     if (message.Contains("type:Dragon"))
@@ -103,12 +103,7 @@ namespace game.Parser
                     
                     Contract.Ensures(messageIsValid);
                     return token;
-                }
-                else
-                {
-                    this.messageIsValid = false;
-                    throw new ArgumentException("Message is invalid. ParserUpdateDelete, parseUpdate");
-                }
+                
             }
             else
             {
@@ -118,14 +113,54 @@ namespace game.Parser
             
         }
 
+        public Field parseUpdateMapcell(String partOfMessage)
+        {
+            Contract.Requires(message != null && messageIsValid);
+            if (message != null && messageIsValid)
+            {
+                partOfMessage = this.parserGate.deleteLines("begin:upd", "end:upd", partOfMessage);
+                ParserMap parserMap = new ParserMap(this.parserGate, partOfMessage, this.messageIsValid);
+                Field mapCell = parserMap.parseMapcell(partOfMessage);
+                Contract.Ensures(messageIsValid);
+                return mapCell;
+            }
+            else
+            {
+                this.messageIsValid = false;
+                throw new ArgumentException("Message is invalid. ParserUpdateDelete, parseUpdateMapcell.");
+            }
+            
+        }
+
         /// <summary>
         /// Parses the message applying the "DELETE" rule. Will eventually call the ParserToken class.
         /// </summary>
         /// <param name="message">Part of original message, is expected to fit the "DELETE" rule</param>
-        private void parseDelete(String message)
+        public Token parseDelete(String message)
         {
             Contract.Requires(message != null && messageIsValid);
-            Contract.Ensures(messageIsValid);
+            if (message != null && messageIsValid)
+            {
+                message = this.parserGate.deleteLines("begin:del", "end:del", message);
+                Token token = null;
+                ParserToken parserToken = new ParserToken(this.parserGate, message, messageIsValid, false);
+                if (message.Contains("type:Dragon"))
+                {
+                    token = parserToken.parseDragon(message, false);
+                }
+                else if (message.Contains("type:Player"))
+                {
+                    token = parserToken.parsePlayer(message, false);
+                }
+                Contract.Ensures(messageIsValid);
+                return token;
+            }
+            else
+            {
+                messageIsValid = false;
+                throw new ArgumentException("Message is invalid. ParserUpdateDelete, parseDelete.");
+            }
+            
         }
 
         [ContractInvariantMethod]
