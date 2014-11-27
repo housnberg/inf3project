@@ -27,7 +27,7 @@ namespace game
 
         }
 
-        public Token(int id, int isbusy, String desc, int x, int y)
+        public Token(int id, Boolean isbusy, String desc, int x, int y)
         {
 
         }
