@@ -104,11 +104,6 @@ namespace game.Parser
                     Contract.Ensures(messageIsValid);
                     return token;
                 }
-                else if (message.StartsWith("begin:cell") && message.EndsWith("end:cell"))
-                {
-                    ParserMap parserMap = new ParserMap(this.parserGate, message, this.messageIsValid);
-                    Field cell = parserMap.parseMapcell(message);
-                }
                 else
                 {
                     this.messageIsValid = false;

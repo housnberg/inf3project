@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics.Contracts;
+using System.Text.RegularExpressions;
+using game.backend;
 
 namespace game.Parser
 {
@@ -92,12 +94,20 @@ namespace game.Parser
         /// Parses the message applying the "MAPCELL" rule.
         /// </summary>
         /// <param name="partOfMessage">Part of original message, is expected to fit the "MAPCELL" rule.</param>
-        public Field parseMapcell(String partOfMessage)
+        public void parseMapcell(String partOfMessage)
         {
             Contract.Requires(partOfMessage != null && messageIsValid);
             if (partOfMessage != null && messageIsValid)
             {
                 partOfMessage = this.parserGate.deleteLines("begin:cell", "end:cell", partOfMessage);
+                String properties = partOfMessage.Substring(partOfMessage.IndexOf("begin:props"));
+                partOfMessage = partOfMessage.Remove(partOfMessage.IndexOf("begin:props"));
+                partOfMessage = partOfMessage.Trim();
+                String[] rowsAndColumns = Regex.Split(partOfMessage, "\n");
+                int row = Convert.ToInt32(rowsAndColumns[0]);
+                int column = Convert.ToInt32(rowsAndColumns[1]);
+                List<FieldType> fieldTypes = this.parseProperty(properties);
+
             }
             Contract.Ensures(messageIsValid);
         }
@@ -106,9 +116,13 @@ namespace game.Parser
         /// Parses the message applying the "PROPERTY" rule.
         /// </summary>
         /// <param name="partOfMessage">Part of original message, is expected to fit the "PROPERTY" rule.</param>
-        private void parseProperty(String partOfMessage)
+        private List<FieldType> parseProperty(String partOfMessage)
         {
             Contract.Requires(partOfMessage != null && messageIsValid);
+            if (partOfMessage != null && messageIsValid)
+            {
+
+            }
             Contract.Ensures(messageIsValid);
         }
 

@@ -25,13 +25,13 @@ namespace game
             //client.sendServerMessage("get:map");
             //client.sendServerMessage("get:time");
             //Console.ReadKey();
-            String blah;
-            int test = 1;
-            if (test == 1)
-                blah = "blah";
-            else
-                blah = "blub";
+
+            String test = "0123\n456\n";
+            test = test.Trim();
+            String[] test2 = Regex.Split(test, "\n");
+            Console.WriteLine(test2.Length);
             Console.ReadKey();
+
             //new GameManager("127.0.0.1", 1024);
 
         }
