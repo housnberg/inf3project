@@ -93,7 +93,7 @@ namespace game.Parser
             
         }
 
-        private String deleteLines(String line0, String line1, String message)
+        public String deleteLines(String line0, String line1, String message)
         {
             String toReturn;
             toReturn = message.TrimStart(line0.ToCharArray());
@@ -272,7 +272,7 @@ namespace game.Parser
             Contract.Requires(partOfMessage != null && messageIsValid);
             if (partOfMessage != null && messageIsValid)
             {
-                ArrayList entities = new ArrayList();
+                ArrayList tokenList = new ArrayList();
                 partOfMessage = this.deleteLines("begin:ents", "end:ents", partOfMessage);
                 while (partOfMessage.Contains("begin:player") && partOfMessage.Contains("end:player") || partOfMessage.Contains("begin:dragon") && partOfMessage.Contains("end:dragon"))
                 {
@@ -287,7 +287,19 @@ namespace game.Parser
                         partOfMessage = partOfMessage.Replace("end:dragon", "#");
                     }
                 }
+                String[] entities = Regex.Split(partOfMessage, "#");
                 ParserToken parserToken = new ParserToken(this, partOfMessage, this.messageIsValid, true);
+                foreach (String s in entities)
+                {
+                    if (s.Contains("type:Player"))
+                    {
+
+                    }
+                    else if (s.Contains("type:Dragon"))
+                    {
+
+                    }
+                }
                 
             }
             Contract.Ensures(messageIsValid);

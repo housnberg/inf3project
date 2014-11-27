@@ -42,11 +42,12 @@ namespace game
                 }
             }
             String[] test1 = Regex.Split(test, "splitHere");
+            String test2 = "";
             for (int i = 0; i < test1.Length; i++)
             {
-                test1[i] = test1[i].Trim();
-                Console.WriteLine(test1[i]);
+                test2 += test1[i];
             }
+            Console.WriteLine(test2);
 
                 Console.ReadKey();
             //new GameManager("127.0.0.1", 1024);

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics.Contracts;
+using System.Text.RegularExpressions;
 
 namespace game.Parser
 {
@@ -94,9 +95,17 @@ namespace game.Parser
         /// Parses the message applying the "PLAYER" rule.
         /// </summary>
         /// <param name="partOfMessage">Part of original message, is expected to fit the "PLAYER" rule:</param>
-        private void parsePlayer(String partOfMessage)
+        private void parsePlayer(String partOfMessage, bool messageIsCut)
         {
             Contract.Requires(partOfMessage != null && messageIsValid);
+            if (partOfMessage != null && messageIsValid)
+            {
+                if (!messageIsCut)
+                {
+                    partOfMessage = parserGate.deleteLines("begin:player", "end:player", partOfMessage);
+                }
+                String[] dataPlayer = Regex.
+            }
             Contract.Ensures(messageIsValid);
         }
 
