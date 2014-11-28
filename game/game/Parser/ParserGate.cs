@@ -16,7 +16,8 @@ namespace game.Parser
         private ClientBuffer buffer;
         private String message;
         private bool messageIsValid;
-        private UInt16 messageCounter = 0;
+        private static UInt16 messageCounter = 0;
+        private static GameManager gameManager = GameManager.getGameManagerInstance();
 
         /// <summary>
         /// Receives incoming messages from the buffer.
@@ -80,11 +81,25 @@ namespace game.Parser
         /// <summary>
         /// Gets one full message from the buffer, if one is available, and stores it in the message variable.
         /// </summary>
-        private void extractMessage()
+        public void extractMessage()
         {
-            this.message = buffer.getElement();
-            Contract.Ensures(message != null);
-        }
+            while (true)
+            {
+                this.message = buffer.getElement();
+                try
+                {
+                    Console.WriteLine("Begin parsing!");
+                    this.parse();
+                }
+                catch (ArgumentException)
+                {
+                    //Proper handling to be implemented
+                }
+
+                Contract.Ensures(message != null);
+        
+            }
+           }
 
         /// <summary>
         /// This method will be constantly asking the buffer is a message is available. If there is one, it will call extractMessage().
@@ -111,64 +126,75 @@ namespace game.Parser
                 if (message.Contains("begin:dragon") || message.Contains("begin:player"))
                 {
                     Token token = parserUpdateDelete.parseUpdateToken(message);
+                    this.passInformation("Update", token);
                 }
                 else if (message.Contains("begin:mapcell"))
                 {
                     Field mapCell = parserUpdateDelete.parseUpdateMapcell(message);
+                    this.passInformation("Update", mapCell);
                 }
             }
-            if (message.Contains("begin:del") && message.Contains("end:del"))
+            else if (message.Contains("begin:del") && message.Contains("end:del"))
             {
                 ParserUpdateDelete parserUpdateDelete = new ParserUpdateDelete(this, message, this.messageIsValid);
                 Token token = parserUpdateDelete.parseDelete(message);
+                this.passInformation("Delete", token);
             }
-            if (message.Contains("begin:map") && message.Contains("end:map"))
+            else if (message.Contains("begin:map") && message.Contains("end:map"))
             {
                 ParserMap parserMap = new ParserMap(this, message, this.messageIsValid);
                 Map map = parserMap.parseMap(message);
+                this.passInformation("CreateMap", map);
             }
-            if (message.Contains("begin:msg") && message.Contains("end:msg"))
+            else if (message.Contains("begin:msg") && message.Contains("end:msg"))
             {
                 this.parseMessage(message);
             }
-            if (message.Contains("begin:result") && message.Contains("end:result"))
+            else if (message.Contains("begin:result") && message.Contains("end:result"))
             {
                 ParserChallengeResult parserChallengeResult = new ParserChallengeResult(this, message, this.messageIsValid);
                 parserChallengeResult.parseResult(message);
             }
-            if (message.Contains("begin:challenge") && message.Contains("end:challenge"))
+            else if (message.Contains("begin:challenge") && message.Contains("end:challenge"))
             {
                 ParserChallengeResult parserChallengeResult = new ParserChallengeResult(this, message, this.messageIsValid);
                 parserChallengeResult.parseChallenge(message);
             }
-            if (message.Contains("begin:player") && message.Contains("end:player"))
+            else if (message.Contains("begin:player") && message.Contains("end:player"))
             {
                 ParserToken parserToken = new ParserToken(this, message, this.messageIsValid, false);
                 Player player = parserToken.parsePlayer(message, false);
+                this.passInformation("Player", player);
             }
-            if (message.Contains("begin:yourid") && message.Contains("end:yourid"))
+            else if (message.Contains("begin:yourid") && message.Contains("end:yourid"))
             {
                 this.parseYourId(message);
             }
-            if (message.Contains("begin:time") && message.Contains("end:time"))
+            else if (message.Contains("begin:time") && message.Contains("end:time"))
             {
                 this.parseTime(message);
             }
-            if (message.Contains("begin:online") && message.Contains("end:online"))
+            else if (message.Contains("begin:online") && message.Contains("end:online"))
             {
                 this.parseOnline(message);
             }
-            if (message.Contains("begin:ents") && message.Contains("end:ents"))
+            else if (message.Contains("begin:ents") && message.Contains("end:ents"))
             {
                 List<Token> tokenList = this.parseEntities(message);
+                this.passInformation("Entities", tokenList);
             }
-            if (message.Contains("begin:players") && message.Contains("end:players"))
+            else if (message.Contains("begin:players") && message.Contains("end:players"))
             {
                 List<Player> playerList = this.parsePlayers(message);
+                this.passInformation("Players", playerList);
             }
-            if (message.Contains("begin:server") && message.Contains("end:server"))
+            else if (message.Contains("begin:server") && message.Contains("end:server"))
             {
                 this.parseServer(message);
+            }
+            else
+            {
+                Console.WriteLine("No parser chosen");
             }
         }
 
@@ -182,8 +208,9 @@ namespace game.Parser
             Contract.Requires(message != null);
             if (this.message != null)
             {
-                if(this.message.Contains("begin:" + this.messageCounter) && this.message.Contains("end:" + this.messageCounter)){
-                    this.message = this.deleteLines("begin:" + this.messageCounter, "end:" + this.messageCounter, this.message);
+                if(this.message.Contains("begin:" + messageCounter) && this.message.Contains("end:" + messageCounter)){
+                    this.message = this.deleteLines("begin:" + messageCounter, "end:" + messageCounter, this.message);
+                    messageCounter++;
                     this.chooseParser(message);
 
                 }
@@ -420,10 +447,93 @@ namespace game.Parser
         /// <summary>
         /// After parsing the message, this method passes the extracted information on to methods required to process the information.
         /// </summary>
-        private void passInformation()
+        /// <param name="toDo">Describes what the backend is supposed to do with the given object</param>
+        /// <param name="value">An object creating from parsing buffer messages</param>
+        private void passInformation(String toDo, Object value)
         {
             Contract.Requires(messageIsValid);
-            Contract.Ensures(message == null);
+            Contract.Requires(toDo != null);
+            Console.WriteLine("Object arrived!");
+            if (this.messageIsValid)
+            {
+                if (toDo.Equals("Players")&& value != null)
+                {
+                    if (value != null && value is List<Player>)
+                    {
+                        List<Player> players = (List<Player>)value;
+                        foreach(Player p in players){
+                            gameManager.storePlayer(p);
+                        }
+                    }
+                }
+                else if (toDo.Equals("Update" )&& value!=null)
+                {
+                    if (value is Token)
+                    {
+                        Token tok = (Token)value;
+                        Token t = gameManager.findToken(tok);
+                        if (t != null)
+                        {
+                            t = tok;
+                        }
+                    }
+                    else
+                    {
+
+                    }
+                }
+                else if(toDo.Equals("Delete") && value != null){
+                    if (value is Token)
+                    {
+                        if (value != null)
+                        {
+                        Token tok = (Token)value;
+                        
+                            gameManager.deleteToken(tok);
+                        }
+                    }
+                    else
+                    {
+                        if (value != null)
+                        {
+                            gameManager.deleteMap();
+                        }
+                    }
+                }
+                else if (value != null && toDo.Equals("Player"))
+                {
+                    if (value is Player)
+                    {
+                        Player player = (Player)value;
+                        gameManager.storePlayer(player);
+                    }
+                }
+                else if (toDo.Equals("Entities") && value != null)
+                {
+                    if (value is List<Token>)
+                    {
+                        List<Token> tokenList = (List<Token>)value;
+                        foreach (Token t in tokenList)
+                        {
+                            if (t is Player)
+                            {
+                                Player p = (Player)t;
+                                gameManager.storePlayer(p);
+                            }
+                            else
+                            {
+                                Dragon d = (Dragon)t;
+                                gameManager.storeDragon(d);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    Console.Out.WriteLine("String was not recognized!");
+                }
+            }
+            
         }
 
         [ContractInvariantMethod]

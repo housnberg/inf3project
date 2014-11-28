@@ -213,6 +213,40 @@ namespace game
             }
         }
 
+        public Token findToken(Token token)
+        {
+            Token wanted = null;
+            if (token is Player)
+            {
+                foreach (Player p in players)
+                {
+                    if (p.getID() == token.getID())
+                    {
+                        wanted = p;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                foreach (Dragon d in dragons)
+                {
+                    if (d.getID() == token.getID())
+                    {
+                        wanted = d;
+                        break;
+                    }
+                }
+            }
+            return wanted;
+            
+        }
+
+        public void storeDragon(Dragon d)
+        {
+            dragons.Add(d);
+        }
+
         /// <summary>
         /// Removes a certain Player from the GameManager's ArrayList by searching for a Player's ID
         /// </summary>
@@ -295,6 +329,11 @@ namespace game
             Contract.Requires(map != null);
         }
 
+        public void deleteMap()
+        {
+            this.map = null;
+        }
+
         /// <summary>
         /// Returns the number of Players participating in the game
         /// </summary>
@@ -353,5 +392,6 @@ namespace game
             Contract.Invariant(this.players != null);
             Contract.Invariant(this.connector != null);
         }
+
     }
 }
