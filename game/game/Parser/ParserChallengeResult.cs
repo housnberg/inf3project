@@ -111,6 +111,20 @@ namespace game.Parser
             {
                 message = this.parserGate.deleteLines("begin:result", "end:result", message);
                 String opponents = message.Substring(message.IndexOf("begin:opponents"));
+                opponents = this.parserGate.deleteLines("begin:opponents", "end:opponents", message);
+                opponents = message.Replace("begin:opponent", "#");
+                opponents = message.Replace("end:opponent", "#");
+                opponents = message.Trim();
+                String[] opponentsArray = Regex.Split(opponents, "#");
+                List<String> opponentList = new List<String>();
+                for (int i = 0; i < opponentsArray.Length; i++ )
+                {
+                    if (opponentsArray[i].Contains("id:"))
+                    {
+                        opponentList.Add(this.parseOpponent(opponentsArray[i]));
+                    }
+                }
+
                 opponents = opponents.Trim();
                 String resultData = message.Remove(message.IndexOf("begin:opponents"));
                 resultData = resultData.Trim();
@@ -136,16 +150,21 @@ namespace game.Parser
         /// Parses the message applying the "OPPONENT" rule. Will eventually call the ParserToken or ParserMap class.
         /// </summary>
         /// <param name="message">Part of original message, is expected to fit the "OPPONENT" rule.</param>
-        private void parseOpponent(String message)
+        private String parseOpponent(String message)
         {
             Contract.Requires(message != null && messageIsValid);
             if (message != null && messageIsValid)
             {
-                message = this.parserGate.deleteLines("begin:opponents", "end:opponents", message);
-                message = message.Replace("begin:opponent", "#");
-                message = message.Replace("end:opponent", "#");
                 message = message.Trim();
-                String[] opponents = Regex.Split(message, "#");
+                String[] opponentData = Regex.Split(message, "\n");
+                for (int i = 0; i < opponentData.Length; i++)
+                {
+                    opponentData[i] = opponentData[i].Substring(opponentData[i].IndexOf(":") + 1);
+                }
+                int id = Convert.ToInt32(opponentData[0]);
+                String decision = opponentData[1];
+                int points = Convert.ToInt32(opponentData[2]);
+                int total = Convert.ToInt32(opponentData[3]);
             }
             else
             {
