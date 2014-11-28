@@ -35,7 +35,7 @@ namespace game.Parser
         /// <returns>Returns the value of the buffer variable.</returns>
         ClientBuffer getBuffer()
         {
-            lock(buffer)
+            
             return this.buffer;
         }
 
@@ -83,7 +83,7 @@ namespace game.Parser
         /// </summary>
         public void extractMessage()
         {
-            while (true)
+            while (true)//while client.connected()
             {
                 this.message = buffer.getElement();
                 try

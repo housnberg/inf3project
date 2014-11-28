@@ -57,7 +57,10 @@ namespace game.Parser
         private void setParserGate(ParserGate parserGate)
         {
             if (parserGate != null)
+            {
                 this.parserGate = parserGate;
+            }
+                
         }
 
         /// <summary>
@@ -67,7 +70,10 @@ namespace game.Parser
         private void setMessage(String message)
         {
             if (message != null)
+            {
                 this.message = message;
+            }
+                
         }
 
         /// <summary>
