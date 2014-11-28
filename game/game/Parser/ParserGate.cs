@@ -124,7 +124,8 @@ namespace game.Parser
             }
             if (message.Contains("begin:map") && message.Contains("end:map"))
             {
-
+                ParserMap parserMap = new ParserMap(this, message, this.messageIsValid);
+                Map map = parserMap.parseMap(message);
             }
             if (message.Contains("begin:msg") && message.Contains("end:msg"))
             {

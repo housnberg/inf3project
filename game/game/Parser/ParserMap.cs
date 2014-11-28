@@ -84,10 +84,47 @@ namespace game.Parser
         /// Parses the message applying the "MAP" rule.
         /// </summary>
         /// <param name="partOfMessage">Part of original message, is expected to fit the "MAP" rule.</param>
-        private void parseMap(String partOfMessage)
+        public Map parseMap(String partOfMessage)
         {
             Contract.Requires(partOfMessage != null && messageIsValid);
-            Contract.Ensures(messageIsValid);
+            if (message != null && messageIsValid)
+            {
+                message = this.parserGate.deleteLines("begin:map", "end:map", message);
+                String cells = message.Substring(message.IndexOf("begin:cells"));
+                cells = cells.Trim();
+                cells = this.parserGate.deleteLines("begin:cells", "end:cells", cells);
+                cells = cells.Trim();
+                cells = cells.Replace("begin:cell", "#");
+                cells = cells.Replace("end:cell", "#");
+                String[] cellArray = Regex.Split(cells, "#");
+
+                String mapData = message.Remove(message.IndexOf("begin:cells"));
+                mapData = mapData.Trim();
+                String[] mapDataArray = Regex.Split(mapData, "\n");
+                for (int i = 0; i < mapDataArray.Length; i++)
+                {
+                    mapDataArray[i] = mapDataArray[i].Substring(mapDataArray[i].IndexOf(":") + 1);
+                }
+                int width = Convert.ToInt32(mapDataArray[0]);
+                int height = Convert.ToInt32(mapDataArray[1]);
+                Map map = new Map(height, width);
+
+                foreach (String s in cellArray)
+                {
+                    if(s.Contains("row:") && s.Contains("col:"))
+                    {
+                        map.setField(this.parseMapcell(s));
+                    }
+                }
+                Contract.Ensures(messageIsValid);
+                return map;
+            }
+            else
+            {
+                this.messageIsValid = false;
+                throw new ArgumentException("Message is invalid. ParserMap, parseMap.");
+            }
+            
         }
 
         /// <summary>

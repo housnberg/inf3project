@@ -165,13 +165,15 @@ namespace game.Parser
                 String decision = opponentData[1];
                 int points = Convert.ToInt32(opponentData[2]);
                 int total = Convert.ToInt32(opponentData[3]);
+                Contract.Ensures(messageIsValid);
+                return decision; //this is only to avoid compiler errors. will be changed later on.
             }
             else
             {
                 this.messageIsValid = false;
                 throw new ArgumentException("Message is invalid. ParserChallengeResult, parseOpponent.");
             }
-            Contract.Ensures(messageIsValid);
+            
         }
 
         [ContractInvariantMethod]
