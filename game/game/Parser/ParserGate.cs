@@ -143,31 +143,32 @@ namespace game.Parser
             }
             if (message.Contains("begin:player") && message.Contains("end:player"))
             {
-
+                ParserToken parserToken = new ParserToken(this, message, this.messageIsValid, false);
+                Player player = parserToken.parsePlayer(message, false);
             }
             if (message.Contains("begin:yourid") && message.Contains("end:yourid"))
             {
-
+                this.parseYourId(message);
             }
             if (message.Contains("begin:time") && message.Contains("end:time"))
             {
-
+                this.parseTime(message);
             }
             if (message.Contains("begin:online") && message.Contains("end:online"))
             {
-
+                this.parseOnline(message);
             }
             if (message.Contains("begin:ents") && message.Contains("end:ents"))
             {
-
+                List<Token> tokenList = this.parseEntities(message);
             }
             if (message.Contains("begin:players") && message.Contains("end:players"))
             {
-
+                List<Player> playerList = this.parsePlayers(message);
             }
             if (message.Contains("begin:server") && message.Contains("end:server"))
             {
-
+                this.parseServer(message);
             }
         }
 
@@ -309,7 +310,7 @@ namespace game.Parser
         /// Parses the message applying the "ENTITIES" rule.
         /// </summary>
         /// <param name="partOfMessage">Part of original message, is expected to fit the "ENTITIES" rule.</param>
-        private void parseEntities(String partOfMessage)
+        private List<Token> parseEntities(String partOfMessage)
         {
             Contract.Requires(partOfMessage != null && messageIsValid);
             if (partOfMessage != null && messageIsValid)
@@ -342,6 +343,9 @@ namespace game.Parser
                         tokenList.Add(parserToken.parseDragon(s, true));
                     }
                 }
+
+                Contract.Ensures(messageIsValid);
+                return tokenList;
                 
             }
             else
@@ -349,14 +353,14 @@ namespace game.Parser
                 messageIsValid = false;
                 throw new SystemException("Message is invalid. ParserGate, parseEntities");
             }
-            Contract.Ensures(messageIsValid);
+            
         }
 
         /// <summary>
         /// Parses the message applying the "PLAYERS" rule.
         /// </summary>
         /// <param name="partOfMessage">Part of original message, is expected to fit the "PLAYERS" rule.</param>
-        private void parsePlayers(String partOfMessage)
+        private List<Player> parsePlayers(String partOfMessage)
         {
             Contract.Requires(partOfMessage != null && messageIsValid);
             if (partOfMessage != null && messageIsValid)
@@ -378,6 +382,13 @@ namespace game.Parser
                                 playersList.Add(parserToken.parsePlayer(s, true));
                             }
                         }
+                        Contract.Ensures(messageIsValid);
+                        return playersList;
+                    }
+                    else
+                    {
+                        messageIsValid = false;
+                        throw new SystemException("Message is invalid. the partOfMessage contain no begin:player and end:player. ParserGate, parsePlayer");
                     }
                 }
                 else
@@ -390,6 +401,17 @@ namespace game.Parser
             {
                 messageIsValid = false;
                 throw new SystemException("Message is invalid. ParserGate, parsePlayer");
+            }
+            
+        }
+
+        private void parseServer(String message)
+        {
+            Contract.Requires(message != null && messageIsValid);
+            if (message != null && messageIsValid)
+            {
+                message = this.deleteLines("begin:server", "end:server", message);
+                int ver = Convert.ToInt32(message.Substring(message.IndexOf(":") + 1));
             }
             Contract.Ensures(messageIsValid);
         }
