@@ -132,7 +132,8 @@ namespace game.Parser
             }
             if (message.Contains("begin:result") && message.Contains("end:result"))
             {
-
+                ParserChallengeResult parserChallengeResult = new ParserChallengeResult(this, message, this.messageIsValid);
+                parserChallengeResult.parseResult(message);
             }
             if (message.Contains("begin:challenge") && message.Contains("end:challenge"))
             {

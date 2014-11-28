@@ -107,6 +107,28 @@ namespace game.Parser
         public void parseResult(String message)
         {
             Contract.Requires(message != null && messageIsValid);
+            if (message != null && messageIsValid)
+            {
+                message = this.parserGate.deleteLines("begin:result", "end:result", message);
+                String opponents = message.Substring(message.IndexOf("begin:opponents"));
+                opponents = opponents.Trim();
+                String resultData = message.Remove(message.IndexOf("begin:opponents"));
+                resultData = resultData.Trim();
+                String[] resultDataArray = Regex.Split(resultData, "\n");
+                for (int i = 0; i < resultDataArray.Length; i++)
+                {
+                    resultDataArray[i] = resultDataArray[i].Substring(resultDataArray[i].IndexOf(":") + 1);
+                }
+
+                int round = Convert.ToInt32(resultDataArray[0]);
+                bool running = Convert.ToBoolean(resultDataArray[1]);
+                int delay = Convert.ToInt32(resultDataArray[2]);
+            }
+            else
+            {
+                this.messageIsValid = false;
+                throw new ArgumentException("Message is invalid. ParserChallengeResult, parseResult.");
+            }
             Contract.Ensures(messageIsValid);
         }
 
@@ -117,6 +139,19 @@ namespace game.Parser
         private void parseOpponent(String message)
         {
             Contract.Requires(message != null && messageIsValid);
+            if (message != null && messageIsValid)
+            {
+                message = this.parserGate.deleteLines("begin:opponents", "end:opponents", message);
+                message = message.Replace("begin:opponent", "#");
+                message = message.Replace("end:opponent", "#");
+                message = message.Trim();
+                String[] opponents = Regex.Split(message, "#");
+            }
+            else
+            {
+                this.messageIsValid = false;
+                throw new ArgumentException("Message is invalid. ParserChallengeResult, parseOpponent.");
+            }
             Contract.Ensures(messageIsValid);
         }
 
