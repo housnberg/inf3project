@@ -32,9 +32,6 @@ namespace game
         /// <param name="port">port number of the server</param>
         public GameManager(String ip, UInt16 port)
         {
-            ParserGate parser = new ParserGate();
-            Thread parserThread = new Thread(parser.extractMessage);
-            parserThread.Start();
             //try
             //{
                 if (gameManager != null)
@@ -47,8 +44,10 @@ namespace game
                     GameManager.gameManager = this;
                     createDefaultGame();
                     gui = new Gui();
-                    Application.Run(gui);
-            
+                    Thread guiStart = new Thread(gui.start);
+                    ParserGate parser = new ParserGate();
+                    Thread parserThread = new Thread(parser.extractMessage);
+                    parserThread.Start();
                 }
             //}
             //catch (Exception e)
@@ -198,6 +197,7 @@ namespace game
         {
             Contract.Requires(player != null);
             players.Add(player);
+            numberOfPlayers++;
         }
 
         /// <summary>

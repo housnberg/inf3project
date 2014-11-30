@@ -17,7 +17,7 @@ namespace game.Parser
         private String message;
         private bool messageIsValid;
         private static UInt16 messageCounter = 0;
-        private static GameManager gameManager = GameManager.getGameManagerInstance();
+        private static GameManager gameManager;
 
         /// <summary>
         /// Receives incoming messages from the buffer.
@@ -26,6 +26,7 @@ namespace game.Parser
         /// </summary>
         public ParserGate()
         {
+            gameManager = GameManager.getGameManagerInstance();
             buffer = ClientBuffer.getBufferInstance();
         }
 
@@ -489,25 +490,23 @@ namespace game.Parser
                 {
                     if (value is Token)
                     {
-                         bool isNull=false;
-                        if (value == null)
-                        {
-                            isNull= true;
-                        }
-                       
-                       
-                        Console.WriteLine("Token null?: " + isNull);
+
                         Token tok = (Token)value;
                         Token t = gameManager.findToken(tok);
                         if (t != null)
                         {
                             t = tok;
                         }
+                        else
+                        {
+                            gameManager.storePlayer((Player)tok);
+                        }
                     }
                     else
                     {
-
+                        //TODO
                     }
+                   
                 }
                 else if(toDo.Equals("Delete") && value != null){
                     if (value is Token)

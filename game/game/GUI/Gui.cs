@@ -47,6 +47,11 @@ namespace game.gui
             buffer.Render();
         }
 
+        public void start()
+        {
+            Application.Run(this);
+        }
+
         /// <summary>
         /// Fills a certain Rectangle Game-Field with a certain colour depening on what type of Field it is
         /// </summary>
