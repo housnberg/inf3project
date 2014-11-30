@@ -12,8 +12,9 @@ namespace game
         private int id;
         private int xPos;
         private int yPos;
-        //private String desc;
-        //private String type;
+        private int points;
+        private String desc;
+        private String type;
         private String name;
         private Boolean busy;
 
@@ -24,18 +25,39 @@ namespace game
 
         public Token(int id, Boolean isBusy, String desc, int x, int y, int points)
         {
-
+            this.setID(id);
+            this.setBusy(isBusy);
+            this.setName(desc);
+            this.setXPos(xPos);
+            this.setYPos(yPos);
+            this.setPoints(points);
         }
 
-        public Token(int id, Boolean isbusy, String desc, int x, int y)
+        public Token(int id, Boolean isBusy, String desc, int x, int y)
         {
+            this.setID(id);
+            this.setBusy(isBusy);
+            this.setName(desc);
+            this.setXPos(xPos);
+            this.setYPos(yPos);
+        }
 
+        public String ToString()
+        {
+            String data = "";
+            data+= desc + " " +  ", X: " + xPos + ", Y: " + yPos + ", ID: " + id;
+            return data;
         }
 
         public Token(String name, int id)
         {
             this.setName(name);
             this.setID(id);
+        }
+
+        public void setPoints(int points)
+        {
+            this.points = points;
         }
 
         public String getName()
@@ -63,10 +85,10 @@ namespace game
             return this.yPos;
         }
 
-        //public String getDesc()
-        //{
-        //    return desc;
-        //}
+        public String getDesc()
+        {
+            return desc;
+        }
 
         /// <summary>
         /// Sets an ID for this Token
@@ -79,10 +101,10 @@ namespace game
             Contract.Requires(name.Length <= 16);
             //try
             //{
-                if (name == null || name.Length < 2 || name.Length > 16)
-                {
-                    throw new ArgumentException("The name of a Token needs to be a least 2 characters and at most 16 characters long!");
-                }
+                //if (name == null || name.Length < 2 || name.Length > 16)
+                //{
+                //    throw new ArgumentException("The name of a Token needs to be a least 2 characters and at most 16 characters long!");
+                //}
             //}
             //catch (Exception exception)
             //{
@@ -103,11 +125,7 @@ namespace game
 
             //try
             //{
-                if (id < 0)
-                {
-                    throw new ArgumentException("The ID for a Token needs to be greater than 0!");
-                }
-                this.id = id;
+                 this.id = id;
             //}
             //catch (Exception exception)
             //{
@@ -125,15 +143,15 @@ namespace game
         {
             try
             {
-                if (this.busy == true && busy == true)
-                {
-                    throw new ArgumentException("The Token is already in busy mode!");
-                }
+                //if (this.busy == true && busy == true)
+                //{
+                //    throw new ArgumentException("The Token is already in busy mode!");
+                //}
 
-                if (this.busy == false && busy == false)
-                {
-                    throw new ArgumentException("The Token has already left busy mode!");
-                }
+                //if (this.busy == false && busy == false)
+                //{
+                //    throw new ArgumentException("The Token has already left busy mode!");
+                //}
 
                 this.busy = busy;
             }

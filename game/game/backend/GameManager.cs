@@ -32,6 +32,9 @@ namespace game
         /// <param name="port">port number of the server</param>
         public GameManager(String ip, UInt16 port)
         {
+            ParserGate parser = new ParserGate();
+            Thread parserThread = new Thread(parser.extractMessage);
+            parserThread.Start();
             //try
             //{
                 if (gameManager != null)

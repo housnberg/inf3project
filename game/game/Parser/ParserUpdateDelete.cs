@@ -85,6 +85,7 @@ namespace game.Parser
         /// <param name="message">Part of original message, is expected to fit the "UPDATE" rule</param>
         public Token parseUpdateToken(String message)
         {
+            Console.WriteLine("parseUpdateToken IN ParserUpdateDelete entered");
             Contract.Requires(message != null && messageIsValid);
             if (message != null && messageIsValid)
             {
@@ -102,6 +103,7 @@ namespace game.Parser
                     }
                     
                     Contract.Ensures(messageIsValid);
+                    Console.WriteLine(token.ToString() + "; IN ParserUpdateDelete");
                     return token;
                 
             }

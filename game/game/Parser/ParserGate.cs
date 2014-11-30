@@ -91,9 +91,9 @@ namespace game.Parser
                     Console.WriteLine("Begin parsing!");
                     this.parse();
                 }
-                catch (ArgumentException)
+                catch (ArgumentException e)
                 {
-                    //Proper handling to be implemented
+                    Console.WriteLine(e.Message);
                 }
 
                 Contract.Ensures(message != null);
@@ -120,76 +120,95 @@ namespace game.Parser
 
         private void chooseParser(String message)
         {
+            Console.WriteLine("Choosing Parser!(l.123)");
             if (message.Contains("begin:upd") && message.Contains("end:upd"))
             {
+                Console.WriteLine("Update Parser chosen!");
                 ParserUpdateDelete parserUpdateDelete = new ParserUpdateDelete(this, message, this.messageIsValid);
                 if (message.Contains("begin:dragon") || message.Contains("begin:player"))
                 {
+                    Console.WriteLine("Token Parser in Update Parser!");
                     Token token = parserUpdateDelete.parseUpdateToken(message);
+
+                    Console.WriteLine(token.ToString());
+
                     this.passInformation("Update", token);
                 }
                 else if (message.Contains("begin:mapcell"))
                 {
+                    Console.WriteLine("Map Cell Parser in Update Parser!");
                     Field mapCell = parserUpdateDelete.parseUpdateMapcell(message);
                     this.passInformation("Update", mapCell);
                 }
             }
             else if (message.Contains("begin:del") && message.Contains("end:del"))
             {
+                Console.WriteLine("Deletion Parser chosen!");
                 ParserUpdateDelete parserUpdateDelete = new ParserUpdateDelete(this, message, this.messageIsValid);
                 Token token = parserUpdateDelete.parseDelete(message);
                 this.passInformation("Delete", token);
             }
             else if (message.Contains("begin:map") && message.Contains("end:map"))
             {
+                Console.WriteLine("Map Parser chosen!");
                 ParserMap parserMap = new ParserMap(this, message, this.messageIsValid);
                 Map map = parserMap.parseMap(message);
                 this.passInformation("CreateMap", map);
             }
             else if (message.Contains("begin:msg") && message.Contains("end:msg"))
             {
+                Console.WriteLine("Message Parser chosen!");
                 this.parseMessage(message);
             }
             else if (message.Contains("begin:result") && message.Contains("end:result"))
             {
+                Console.WriteLine("Result Parser chosen!");
                 ParserChallengeResult parserChallengeResult = new ParserChallengeResult(this, message, this.messageIsValid);
                 parserChallengeResult.parseResult(message);
             }
             else if (message.Contains("begin:challenge") && message.Contains("end:challenge"))
             {
+                Console.WriteLine("Challenge Parser chosen!");
                 ParserChallengeResult parserChallengeResult = new ParserChallengeResult(this, message, this.messageIsValid);
                 parserChallengeResult.parseChallenge(message);
             }
             else if (message.Contains("begin:player") && message.Contains("end:player"))
             {
+                Console.WriteLine("Player Parser chosen!");
                 ParserToken parserToken = new ParserToken(this, message, this.messageIsValid, false);
                 Player player = parserToken.parsePlayer(message, false);
                 this.passInformation("Player", player);
             }
             else if (message.Contains("begin:yourid") && message.Contains("end:yourid"))
             {
+                Console.WriteLine("ID chosen!");
                 this.parseYourId(message);
             }
             else if (message.Contains("begin:time") && message.Contains("end:time"))
             {
+                Console.WriteLine("Time Parser chosen!");
                 this.parseTime(message);
             }
             else if (message.Contains("begin:online") && message.Contains("end:online"))
             {
+                Console.WriteLine("Online Parser chosen!");
                 this.parseOnline(message);
             }
             else if (message.Contains("begin:ents") && message.Contains("end:ents"))
             {
+                Console.WriteLine("Entities Parser chosen!");
                 List<Token> tokenList = this.parseEntities(message);
                 this.passInformation("Entities", tokenList);
             }
             else if (message.Contains("begin:players") && message.Contains("end:players"))
             {
+                Console.WriteLine("PlayerS Parser chosen!");
                 List<Player> playerList = this.parsePlayers(message);
                 this.passInformation("Players", playerList);
             }
             else if (message.Contains("begin:server") && message.Contains("end:server"))
             {
+                Console.WriteLine("Server Parser chosen!");
                 this.parseServer(message);
             }
             else
@@ -211,8 +230,8 @@ namespace game.Parser
                 if(this.message.Contains("begin:" + messageCounter) && this.message.Contains("end:" + messageCounter)){
                     this.message = this.deleteLines("begin:" + messageCounter, "end:" + messageCounter, this.message);
                     messageCounter++;
+                    messageIsValid = true;
                     this.chooseParser(message);
-
                 }
             }
             else
@@ -453,7 +472,7 @@ namespace game.Parser
         {
             Contract.Requires(messageIsValid);
             Contract.Requires(toDo != null);
-            Console.WriteLine("Object arrived!");
+            Console.WriteLine("Object arrived in pass Information!");
             if (this.messageIsValid)
             {
                 if (toDo.Equals("Players")&& value != null)
@@ -470,6 +489,14 @@ namespace game.Parser
                 {
                     if (value is Token)
                     {
+                         bool isNull=false;
+                        if (value == null)
+                        {
+                            isNull= true;
+                        }
+                       
+                       
+                        Console.WriteLine("Token null?: " + isNull);
                         Token tok = (Token)value;
                         Token t = gameManager.findToken(tok);
                         if (t != null)
