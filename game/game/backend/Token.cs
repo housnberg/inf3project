@@ -15,7 +15,6 @@ namespace game
         private int points;
         private String desc;
         private String type;
-        private String name;
         private Boolean busy;
 
         public Token()
@@ -27,7 +26,7 @@ namespace game
         {
             this.setID(id);
             this.setBusy(isBusy);
-            this.setName(desc);
+            this.setDesc(desc);
             this.setXPos(xPos);
             this.setYPos(yPos);
             this.setPoints(points);
@@ -37,12 +36,12 @@ namespace game
         {
             this.setID(id);
             this.setBusy(isBusy);
-            this.setName(desc);
+            this.setDesc(desc);
             this.setXPos(xPos);
             this.setYPos(yPos);
         }
 
-        public String ToString()
+        public override String ToString()
         {
             String data = "";
             data+= desc + " " +  ", X: " + xPos + ", Y: " + yPos + ", ID: " + id;
@@ -51,8 +50,13 @@ namespace game
 
         public Token(String name, int id)
         {
-            this.setName(name);
+            this.setDesc(desc);
             this.setID(id);
+        }
+
+        public void setType(String type)
+        {
+            this.type = type;
         }
 
         public void setPoints(int points)
@@ -60,9 +64,9 @@ namespace game
             this.points = points;
         }
 
-        public String getName()
+        public String getDesc()
         {
-            return this.name;
+            return this.desc;
         }
 
         public int getID()
@@ -85,20 +89,15 @@ namespace game
             return this.yPos;
         }
 
-        public String getDesc()
-        {
-            return desc;
-        }
-
         /// <summary>
         /// Sets an ID for this Token
         /// </summary>
         /// <param name="id">The ID of the Token</param>
-        public void setName(String name)
+        public void setDesc(String desc)
         {
-            Contract.Requires(name != null);
-            Contract.Requires(name.Length >= 2);
-            Contract.Requires(name.Length <= 16);
+            Contract.Requires(desc != null);
+            Contract.Requires(desc.Length >= 2);
+            Contract.Requires(desc.Length <= 16);
             //try
             //{
                 //if (name == null || name.Length < 2 || name.Length > 16)
@@ -110,8 +109,8 @@ namespace game
             //{
             //    Console.Out.WriteLine(exception.Message);
             //}
-           
-            this.name = name;
+
+            this.desc = desc;
         }
 
         /// <summary>

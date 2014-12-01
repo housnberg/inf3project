@@ -13,7 +13,7 @@ namespace game
         public Player(int id, Boolean isBusy, String desc, int x, int y, int points)
             : base(id, isBusy, desc, x, y, points)
         {
-
+            this.setType("Player");
         }
 
         public Player(int xPos, int yPos) 

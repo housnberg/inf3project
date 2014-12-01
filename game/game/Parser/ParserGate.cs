@@ -231,13 +231,13 @@ namespace game.Parser
                 if(this.message.Contains("begin:" + messageCounter) && this.message.Contains("end:" + messageCounter)){
                     this.message = this.deleteLines("begin:" + messageCounter, "end:" + messageCounter, this.message);
                     messageCounter++;
-                    messageIsValid = true;
+                    this.setMessageIsValid(true);
                     this.chooseParser(message);
                 }
             }
             else
             {
-                messageIsValid = false;
+                this.setMessageIsValid(false);
                 throw new SystemException("Message is invalid. ParserGate, parse");
             }
             Contract.Ensures(messageIsValid);
@@ -434,19 +434,19 @@ namespace game.Parser
                     }
                     else
                     {
-                        messageIsValid = false;
+                        this.setMessageIsValid(false);
                         throw new SystemException("Message is invalid. the partOfMessage contain no begin:player and end:player. ParserGate, parsePlayer");
                     }
                 }
                 else
                 {
-                    messageIsValid = false;
+                    this.setMessageIsValid(false);
                     throw new SystemException("Message is invalid. the partOfMessage contain no begin:player and end:player. ParserGate, parsePlayer");
                 }
             }
             else
             {
-                messageIsValid = false;
+                this.setMessageIsValid(false);
                 throw new SystemException("Message is invalid. ParserGate, parsePlayer");
             }
             
@@ -484,6 +484,15 @@ namespace game.Parser
                         foreach(Player p in players){
                             gameManager.storePlayer(p);
                         }
+                    }
+                }
+                else if (toDo.Equals("CreateMap") && value != null)
+                {
+                    Console.Out.WriteLine("Is in Create Map");
+                    if (value is Map)
+                    {
+                        Map map = (Map)value;
+                        gameManager.setMap(map);
                     }
                 }
                 else if (toDo.Equals("Update" )&& value!=null)

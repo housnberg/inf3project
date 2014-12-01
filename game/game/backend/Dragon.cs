@@ -12,7 +12,7 @@ namespace game
         public Dragon(int id, Boolean isbusy, String desc, int x, int y)
             : base(id, isbusy, desc, x, y)
         {
-
+            this.setType("Dragon");
         }
 
         public Dragon(int xPos, int yPos)

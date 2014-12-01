@@ -44,7 +44,8 @@ namespace game
                     GameManager.gameManager = this;
                     createDefaultGame();
                     gui = new Gui();
-                    Thread guiStart = new Thread(gui.start);
+                    //Thread guiStart = new Thread(gui.start);
+                    gui.start();
                     ParserGate parser = new ParserGate();
                     Thread parserThread = new Thread(parser.extractMessage);
                     parserThread.Start();
@@ -55,6 +56,18 @@ namespace game
             //    Console.WriteLine(e.Message);
             //}
  
+        }
+
+        public void setMap(Map map)
+        {
+            if (map != null)
+            {
+                this.map = map;
+            }
+            else
+            {
+                throw new ArgumentException("Passed Map is null(GameManager.SetMap)");
+            }
         }
 
         /// <summary>

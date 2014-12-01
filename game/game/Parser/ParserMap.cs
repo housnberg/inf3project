@@ -153,7 +153,6 @@ namespace game.Parser
                 Field mapCell = new Field(row, column, fieldTypes);
                 Contract.Ensures(messageIsValid);
                 return mapCell;
-
             }
             else
             {
