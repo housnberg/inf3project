@@ -34,8 +34,8 @@ namespace game.client
         {
             Contract.Requires(message != null);
             Contract.Requires(message.Length > 0);
-            try
-            {
+            //try
+            //{
             Monitor.Enter(buffer);
             if ((message == null) || (message.Length < 0))
             {
@@ -55,24 +55,19 @@ namespace game.client
                     String[] tmp = Regex.Split(fullServerMessage, "end:" + messageCounter);
                     fifo.Add(tmp[0].Trim() + "\r\nend:" + messageCounter);
                     fullServerMessage = tmp[1];
-                    //for test purposes only
-                    //using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"C:\Users\test_" + (messageCounter) + ".txt", true))
-                    //{
-                    //    file.WriteLine(buffer.getElement());
-                    //}
-                    //messageCounter++;
+                    messageCounter++;
                     
                 }
-            }
-            catch (Exception exception)
-            {
-                Console.WriteLine(exception.Message);
-            }
-            finally
-            {
+            //}
+            //catch (Exception exception)
+            //{
+            //    Console.WriteLine(exception.Message);
+            //}
+            //finally
+            //{
                 Monitor.PulseAll(buffer);
                 Monitor.Exit(buffer);
-            }
+            //}
         }
 
         /// <summary>
@@ -85,8 +80,8 @@ namespace game.client
             Contract.Requires(fifo.ElementAt(0) != null);
             Contract.Requires(!(this.isEmpty()));
             String message = "";
-            try
-            {
+            //try
+            //{
                 Monitor.Enter(buffer);
                 while (this.isEmpty())
                 {
@@ -96,16 +91,16 @@ namespace game.client
                 fifo.RemoveAt(0);
                 Contract.Ensures(!(buffer.isFull()));
                
-            }
-            catch (Exception exception)
-            {
-                Console.WriteLine(exception.Message);
-            }
-            finally
-            {
+            //}
+            //catch (Exception exception)
+            //{
+            //    Console.WriteLine(exception.Message);
+            //}
+            //finally
+            //{
                 Monitor.PulseAll(buffer);
                 Monitor.Exit(buffer);
-            }
+            //}
             return message;
         }
 

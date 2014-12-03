@@ -24,6 +24,8 @@ namespace game
         private List <Dragon> dragons = new List<Dragon>();
         private static GameManager gameManager;
         private Gui gui;
+        private String ip;
+        private UInt16 port;
    
         /// <summary>
         /// constructor creates only one game instance
@@ -40,15 +42,12 @@ namespace game
                 }
                 else
                 {
-                    startGame(ip, port);
+                    this.ip = ip;
+                    this.port = port;
                     GameManager.gameManager = this;
                     createDefaultGame();
-                    gui = new Gui();
+                    
                     //Thread guiStart = new Thread(gui.start);
-                    gui.start();
-                    ParserGate parser = new ParserGate();
-                    Thread parserThread = new Thread(parser.extractMessage);
-                    parserThread.Start();
                 }
             //}
             //catch (Exception e)
@@ -75,7 +74,9 @@ namespace game
         /// </summary>
         private void createDefaultGame()
         {
-            this.map = createDefaultMap();
+            //this.map = createDefaultMap();
+            Map m = new Map(20, 20);
+            this.map = m;
             createDefaultEntities();
         }
 
@@ -84,16 +85,16 @@ namespace game
         /// </summary>
         private void createDefaultEntities()
         {
-            Dragon dragon = new Dragon(3, 3);
-            Player playerOne = new Player(5, 1);
-            Player playerTwo = new Player(4, 1);
+            Dragon dragon = new Dragon(3, false, "Dragon 3", 5, 5);
+            //Player playerOne = new Player(5, 1);
+            //Player playerTwo = new Player(4, 1);
 
-            playerOne.setID(1);
-            playerTwo.setID(2);
+            //playerOne.setID(1);
+            //playerTwo.setID(2);
 
             dragons.Add(dragon);
-            players.Add(playerOne);
-            players.Add(playerTwo);
+            //players.Add(playerOne);
+            //players.Add(playerTwo);
         }
 
         /// <summary>
@@ -133,9 +134,13 @@ namespace game
         /// </summary>
         /// <param name="ip">IP-Adress the Client wannts to connect to</param>
         /// <param name="port">Port Number of the IP-Adress</param>
-        private void startGame(String ip, UInt16 port)
+        public void startGame()
         {
-            connector = new Connector(ip, port);
+            connector = new Connector(this.ip, this.port);
+            ParserGate parser = new ParserGate();
+            Thread parserThread = new Thread(parser.extractMessage);
+            parserThread.Start();
+            this.sendCommand("get:map");
         }
 
          /// <summary>
@@ -392,6 +397,11 @@ namespace game
         public Connector getConnector()
         {
             return this.connector;
+        }
+
+        public Gui getGui()
+        {
+            return gui;
         }
 
         /// <summary>

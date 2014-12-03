@@ -49,10 +49,10 @@ namespace game.gui
 
         public void start()
         {
-            //while (true)
-            //{
+            while (true)
+            {
                 Application.Run(this);
-            //}
+            }
             
         }
 

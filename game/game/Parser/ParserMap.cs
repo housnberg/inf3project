@@ -147,6 +147,10 @@ namespace game.Parser
                 partOfMessage = partOfMessage.Remove(partOfMessage.IndexOf("begin:props"));
                 partOfMessage = partOfMessage.Trim();
                 String[] rowsAndColumns = Regex.Split(partOfMessage, "\n");
+                for (int i = 0; i < rowsAndColumns.Length; i++)
+                {
+                    rowsAndColumns[i] = rowsAndColumns[i].Substring(rowsAndColumns[i].IndexOf(":") + 1);
+                }
                 int row = Convert.ToInt32(rowsAndColumns[0]);
                 int column = Convert.ToInt32(rowsAndColumns[1]);
                 List<FieldType> fieldTypes = this.parseProperty(properties);

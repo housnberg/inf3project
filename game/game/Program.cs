@@ -22,7 +22,8 @@ namespace game
             
            
 
-            new GameManager("127.0.0.1", 1024);
+            GameManager gm = new GameManager("127.0.0.1", 1024);
+            gm.startGame();
             //Console.ReadKey();
             //client.sendServerMessage("get:map");
             //client.sendServerMessage("get:time");

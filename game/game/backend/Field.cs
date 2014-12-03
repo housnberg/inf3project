@@ -39,10 +39,10 @@ namespace game
         {
             int mapHeight = GameManager.getGameManagerInstance().getMapHeight();
             Contract.Requires(row >= 0 && row < mapHeight);
-            if (row < 0 || row > mapHeight)
-            {
-                throw new ArgumentException("The height of this Field is not allowed to be smaller than 0 or greater than the Map-Height!");
-            }
+            //if (row < 0 || row > mapHeight)
+            //{
+                //throw new ArgumentException("The height of this Field is not allowed to be smaller than 0 or greater than the Map-Height!");
+            //}
             this.row = row;
 
         }
@@ -51,10 +51,10 @@ namespace game
         {
             int mapWidth = GameManager.getGameManagerInstance().getMapWidth();
             Contract.Requires(column >= 0 && row < mapWidth);
-            if (column < 0 || column > mapWidth)
-            {
-                throw new ArgumentException("The width of this field is not allowed to be smaller than 0 or greater than the Map-Height!");
-            }
+            //if (column < 0 || column > mapWidth)
+            //{
+                //throw new ArgumentException("The width of this field is not allowed to be smaller than 0 or greater than the Map-Height!");
+            //}
             this.column = column;
 
         }

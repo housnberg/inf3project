@@ -17,18 +17,13 @@ namespace game
         private String type;
         private Boolean busy;
 
-        public Token()
-        {
-
-        }
-
         public Token(int id, Boolean isBusy, String desc, int x, int y, int points)
         {
             this.setID(id);
             this.setBusy(isBusy);
             this.setDesc(desc);
-            this.setXPos(xPos);
-            this.setYPos(yPos);
+            this.setXPos(x);
+            this.setYPos(y);
             this.setPoints(points);
         }
 
@@ -46,12 +41,6 @@ namespace game
             String data = "";
             data+= desc + " " +  ", X: " + xPos + ", Y: " + yPos + ", ID: " + id;
             return data;
-        }
-
-        public Token(String name, int id)
-        {
-            this.setDesc(desc);
-            this.setID(id);
         }
 
         public void setType(String type)
@@ -87,6 +76,11 @@ namespace game
         public int getYPos()
         {
             return this.yPos;
+        }
+
+        public String getType()
+        {
+            return this.type;
         }
 
         /// <summary>

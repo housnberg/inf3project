@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using game.client;
 using game.backend;
 using System.Collections;
+using game.gui;
 
 namespace game.Parser
 {
@@ -87,15 +88,15 @@ namespace game.Parser
             while (true)//while client.connected()
             {
                 this.message = buffer.getElement();
-                try
-                {
+                //try
+                //{
                     Console.WriteLine("Begin parsing!");
                     this.parse();
-                }
-                catch (ArgumentException e)
-                {
-                    Console.WriteLine(e.Message);
-                }
+                //}
+                //catch (ArgumentException e)
+                //{
+                //    Console.WriteLine(e.Message);
+                //}
 
                 Contract.Ensures(message != null);
         
@@ -435,7 +436,7 @@ namespace game.Parser
                     else
                     {
                         this.setMessageIsValid(false);
-                        throw new SystemException("Message is invalid. the partOfMessage contain no begin:player and end:player. ParserGate, parsePlayer");
+                        throw new SystemException("Message is invalid.0 the partOfMessage contain no begin:player and end:player. ParserGate, parsePlayer");
                     }
                 }
                 else
@@ -473,7 +474,7 @@ namespace game.Parser
         {
             Contract.Requires(messageIsValid);
             Contract.Requires(toDo != null);
-            Console.WriteLine("Object arrived in pass Information!");
+            Console.WriteLine("Object arrived in pass Information! - " + toDo);
             if (this.messageIsValid)
             {
                 if (toDo.Equals("Players")&& value != null)
@@ -493,23 +494,33 @@ namespace game.Parser
                     {
                         Map map = (Map)value;
                         gameManager.setMap(map);
+                        Gui gui = gameManager.getGui();
+                        gui = new Gui();
+                        gui.start();
                     }
                 }
-                else if (toDo.Equals("Update" )&& value!=null)
+                else if (toDo.Equals("Update")&& value!=null)
                 {
                     if (value is Token)
                     {
-
                         Token tok = (Token)value;
                         Token t = gameManager.findToken(tok);
-                        if (t != null)
+                        
                         {
-                            t = tok;
-                        }
-                        else
-                        {
-                            gameManager.storePlayer((Player)tok);
-                        }
+                            if (t != null)
+                            {
+                                t = tok;
+                            }
+                            else
+                            {
+                                if (tok.getType().Equals("Player")){
+                                    gameManager.storePlayer((Player)tok);
+                                }else{
+                                    gameManager.storeDragon((Dragon)tok);
+                                } 
+                            }
+                        }      
+                        
                     }
                     else
                     {
