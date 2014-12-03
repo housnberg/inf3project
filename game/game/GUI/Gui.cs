@@ -139,7 +139,7 @@ namespace game.gui
         {
             Size tileSize = this.getFieldSize();
             String drawString = "P"+player.getID();
-            Font drawFont = new Font("Arial", 16);
+            Font drawFont = new Font("Arial", 9, FontStyle.Bold);
             SolidBrush drawBrush = new SolidBrush(Color.Black);
             PointF drawPoint = new PointF( player.getXPos() * tileSize.Width, player.getYPos() * tileSize.Height + tileSize.Height / 2 - tileSize.Height / 4);
             graphics.DrawString(drawString, drawFont, drawBrush, drawPoint);
@@ -258,6 +258,6 @@ namespace game.gui
         {
             this.chatWindow.AppendText(source + ": " + message + "\r\n");
         }
- 
+
     }
 }

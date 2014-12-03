@@ -45,9 +45,6 @@ namespace game
                     this.ip = ip;
                     this.port = port;
                     GameManager.gameManager = this;
-                    createDefaultGame();
-                    
-                    //Thread guiStart = new Thread(gui.start);
                 }
             //}
             //catch (Exception e)
@@ -74,9 +71,6 @@ namespace game
         /// </summary>
         private void createDefaultGame()
         {
-            //this.map = createDefaultMap();
-            Map m = new Map(20, 20);
-            this.map = m;
             createDefaultEntities();
         }
 
@@ -140,7 +134,10 @@ namespace game
             ParserGate parser = new ParserGate();
             Thread parserThread = new Thread(parser.extractMessage);
             parserThread.Start();
+            gui = new Gui();
             this.sendCommand("get:map");
+            this.sendCommand("get:ents");
+           
         }
 
          /// <summary>
@@ -410,6 +407,12 @@ namespace game
         public void refreshGui()
         {
             gui.Refresh();
+        }
+
+        public void startGui()
+        {
+            Thread t = new Thread(gui.start);
+            t.Start();
         }
 
         [ContractInvariantMethod]

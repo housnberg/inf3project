@@ -32,8 +32,8 @@ namespace game
             this.setID(id);
             this.setBusy(isBusy);
             this.setDesc(desc);
-            this.setXPos(xPos);
-            this.setYPos(yPos);
+            this.setXPos(x);
+            this.setYPos(y);
         }
 
         public override String ToString()

@@ -19,6 +19,7 @@ namespace game.Parser
         private bool messageIsValid;
         private static UInt16 messageCounter = 0;
         private static GameManager gameManager;
+        private static Boolean alreadyDrawn = false;
 
         /// <summary>
         /// Receives incoming messages from the buffer.
@@ -174,6 +175,12 @@ namespace game.Parser
                 ParserChallengeResult parserChallengeResult = new ParserChallengeResult(this, message, this.messageIsValid);
                 parserChallengeResult.parseChallenge(message);
             }
+            else if (message.Contains("begin:ents") && message.Contains("end:ents"))
+            {
+                Console.WriteLine("Entities Parser chosen!");
+                List<Token> tokenList = this.parseEntities(message);
+                this.passInformation("Entities", tokenList);
+            }
             else if (message.Contains("begin:player") && message.Contains("end:player"))
             {
                 Console.WriteLine("Player Parser chosen!");
@@ -195,12 +202,6 @@ namespace game.Parser
             {
                 Console.WriteLine("Online Parser chosen!");
                 this.parseOnline(message);
-            }
-            else if (message.Contains("begin:ents") && message.Contains("end:ents"))
-            {
-                Console.WriteLine("Entities Parser chosen!");
-                List<Token> tokenList = this.parseEntities(message);
-                this.passInformation("Entities", tokenList);
             }
             else if (message.Contains("begin:players") && message.Contains("end:players"))
             {
@@ -494,9 +495,15 @@ namespace game.Parser
                     {
                         Map map = (Map)value;
                         gameManager.setMap(map);
-                        Gui gui = gameManager.getGui();
-                        gui = new Gui();
-                        gui.start();
+                        if (alreadyDrawn == false)
+                        {
+                            gameManager.startGui();
+                            //Gui gui = gameManager.getGui();
+                            //gui = new Gui();
+                            //gui.start();
+                            alreadyDrawn = true;
+                        }
+                        
                     }
                 }
                 else if (toDo.Equals("Update")&& value!=null)
@@ -556,6 +563,7 @@ namespace game.Parser
                 }
                 else if (toDo.Equals("Entities") && value != null)
                 {
+                    Console.WriteLine("Creates Entities");
                     if (value is List<Token>)
                     {
                         List<Token> tokenList = (List<Token>)value;
@@ -579,6 +587,10 @@ namespace game.Parser
                     Console.Out.WriteLine("String was not recognized!");
                 }
             }
+            //if (alreadyDrawn == true)
+            //{
+            //    gameManager.refreshGui();
+            //}
             
         }
 

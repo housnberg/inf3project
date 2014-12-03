@@ -100,6 +100,7 @@ namespace game.Parser
             Contract.Requires(partOfMessage != null && messageIsValid);
             if (partOfMessage != null && messageIsValid)
             {
+                message = message.Trim();
                 if (!messageIsCut)
                 {
                     partOfMessage = parserGate.deleteLines("begin:player", "end:player", partOfMessage);
