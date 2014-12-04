@@ -175,7 +175,7 @@ namespace game.client
                     if (message != null && message.Length > 0)
                     {
                         //for test purposes only
-                        Console.WriteLine(message);
+                        //Console.WriteLine(message);
                         buffer.put(message);
                     }
                 }

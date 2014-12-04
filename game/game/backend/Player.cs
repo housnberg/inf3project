@@ -16,13 +16,6 @@ namespace game
             this.setType("Player");
         }
 
-        public Player(int xPos, int yPos) 
-        {
-            this.setXPos(xPos);
-            this.setYPos(yPos);
-           
-        }
-
     }
 
  

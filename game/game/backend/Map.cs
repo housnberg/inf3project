@@ -26,10 +26,7 @@ namespace game
         /// <param name="width">Width of the map</param>
         private void setWidth(int width)
         {
-            if (width < 5 || width > 30)
-            {
-                throw new Exception("Breite kann nicht kleiner als 5 oder größer als 30 sein!");
-            }
+           
             this.width = width;
         }
 
@@ -39,10 +36,7 @@ namespace game
         /// <param name="height">Height of the map</param>
         private void setHeight(int height)
         {
-            if (height < 5 || height > 30)
-            {
-                throw new Exception("Höhe kann nicht kleiner als 5 oder größer als 30 sein!");
-            }
+          
             this.height = height;
         }
 

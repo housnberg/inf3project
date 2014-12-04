@@ -106,7 +106,7 @@ namespace game.Parser
 
                 String mapData = message.Remove(message.IndexOf("begin:cells"));
                 mapData = mapData.Trim();
-                String[] mapDataArray = Regex.Split(mapData, "\n");
+                String[] mapDataArray = Regex.Split(mapData, "\r\n");
                 for (int i = 0; i < mapDataArray.Length; i++)
                 {
                     mapDataArray[i] = mapDataArray[i].Substring(mapDataArray[i].IndexOf(":") + 1);
@@ -114,6 +114,7 @@ namespace game.Parser
                 int width = Convert.ToInt32(mapDataArray[0]);
                 int height = Convert.ToInt32(mapDataArray[1]);
                 Map map = new Map(height, width);
+                GameManager.getGameManagerInstance().setMap(map);
 
                 foreach (String s in cellArray)
                 {
@@ -146,7 +147,11 @@ namespace game.Parser
                 String properties = partOfMessage.Substring(partOfMessage.IndexOf("begin:props"));
                 partOfMessage = partOfMessage.Remove(partOfMessage.IndexOf("begin:props"));
                 partOfMessage = partOfMessage.Trim();
-                String[] rowsAndColumns = Regex.Split(partOfMessage, "\n");
+                String[] rowsAndColumns = Regex.Split(partOfMessage, "\r\n");
+                for (int i = 0; i < rowsAndColumns.Length; i++)
+                {
+                    rowsAndColumns[i] = rowsAndColumns[i].Substring(rowsAndColumns[i].IndexOf(":") + 1);
+                }
                 int row = Convert.ToInt32(rowsAndColumns[0]);
                 int column = Convert.ToInt32(rowsAndColumns[1]);
                 List<FieldType> fieldTypes = this.parseProperty(properties);
@@ -173,7 +178,7 @@ namespace game.Parser
             {
                 partOfMessage = this.parserGate.deleteLines("begin:props", "end:props", partOfMessage);
                 partOfMessage = partOfMessage.Trim();
-                String[] fieldTypes = Regex.Split(partOfMessage, "\n");
+                String[] fieldTypes = Regex.Split(partOfMessage, "\r\n");
                 List<FieldType> properties = new List<FieldType>();
                 foreach (String s in fieldTypes)
                 {

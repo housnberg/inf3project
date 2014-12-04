@@ -15,11 +15,5 @@ namespace game
             this.setType("Dragon");
         }
 
-        public Dragon(int xPos, int yPos)
-        {
-            this.setXPos(xPos);
-            this.setYPos(yPos);
-        }
-
     }
 }

@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using game.client;
 using game.backend;
 using System.Collections;
+using game.gui;
 
 namespace game.Parser
 {
@@ -18,6 +19,7 @@ namespace game.Parser
         private bool messageIsValid;
         private static UInt16 messageCounter = 0;
         private static GameManager gameManager;
+        private static Boolean alreadyDrawn = false;
 
         /// <summary>
         /// Receives incoming messages from the buffer.
@@ -87,15 +89,15 @@ namespace game.Parser
             while (true)//while client.connected()
             {
                 this.message = buffer.getElement();
-                try
-                {
+                //try
+                //{
                     Console.WriteLine("Begin parsing!");
                     this.parse();
-                }
-                catch (ArgumentException e)
-                {
-                    Console.WriteLine(e.Message);
-                }
+                //}
+                //catch (ArgumentException e)
+                //{
+                //    Console.WriteLine(e.Message);
+                //}
 
                 Contract.Ensures(message != null);
         
@@ -173,6 +175,12 @@ namespace game.Parser
                 ParserChallengeResult parserChallengeResult = new ParserChallengeResult(this, message, this.messageIsValid);
                 parserChallengeResult.parseChallenge(message);
             }
+            else if (message.Contains("begin:ents") && message.Contains("end:ents"))
+            {
+                Console.WriteLine("Entities Parser chosen!");
+                List<Token> tokenList = this.parseEntities(message);
+                this.passInformation("Entities", tokenList);
+            }
             else if (message.Contains("begin:player") && message.Contains("end:player"))
             {
                 Console.WriteLine("Player Parser chosen!");
@@ -194,12 +202,6 @@ namespace game.Parser
             {
                 Console.WriteLine("Online Parser chosen!");
                 this.parseOnline(message);
-            }
-            else if (message.Contains("begin:ents") && message.Contains("end:ents"))
-            {
-                Console.WriteLine("Entities Parser chosen!");
-                List<Token> tokenList = this.parseEntities(message);
-                this.passInformation("Entities", tokenList);
             }
             else if (message.Contains("begin:players") && message.Contains("end:players"))
             {
@@ -379,15 +381,17 @@ namespace game.Parser
                 }
                 String[] entities = Regex.Split(partOfMessage, "#");
                 ParserToken parserToken = new ParserToken(this, partOfMessage, this.messageIsValid, true);
-                foreach (String s in entities)
+                for (int i = 0; i < entities.Length; i++  )
                 {
-                    if (s.Contains("type:Player"))
+                    if (entities[i].Contains("type:Player"))
                     {
-                        tokenList.Add(parserToken.parsePlayer(s, true));
+                        entities[i] = entities[i].Trim();
+                        tokenList.Add(parserToken.parsePlayer(entities[i], true));
                     }
-                    else if (s.Contains("type:Dragon"))
+                    else if (entities[i].Contains("type:Dragon"))
                     {
-                        tokenList.Add(parserToken.parseDragon(s, true));
+                        entities[i] = entities[i].Trim();
+                        tokenList.Add(parserToken.parseDragon(entities[i], true));
                     }
                 }
 
@@ -435,7 +439,7 @@ namespace game.Parser
                     else
                     {
                         this.setMessageIsValid(false);
-                        throw new SystemException("Message is invalid. the partOfMessage contain no begin:player and end:player. ParserGate, parsePlayer");
+                        throw new SystemException("Message is invalid.0 the partOfMessage contain no begin:player and end:player. ParserGate, parsePlayer");
                     }
                 }
                 else
@@ -473,7 +477,7 @@ namespace game.Parser
         {
             Contract.Requires(messageIsValid);
             Contract.Requires(toDo != null);
-            Console.WriteLine("Object arrived in pass Information!");
+            Console.WriteLine("Object arrived in pass Information! - " + toDo);
             if (this.messageIsValid)
             {
                 if (toDo.Equals("Players")&& value != null)
@@ -493,26 +497,38 @@ namespace game.Parser
                     {
                         Map map = (Map)value;
                         gameManager.setMap(map);
+                        if (alreadyDrawn == false)
+                        {
+                            gameManager.startGui();
+                            //Gui gui = gameManager.getGui();
+                            //gui = new Gui();
+                            //gui.start();
+                            alreadyDrawn = true;
+                        }
+                        
                     }
                 }
-                else if (toDo.Equals("Update" )&& value!=null)
+                else if (toDo.Equals("Update")&& value!=null)
                 {
                     if (value is Token)
                     {
-
                         Token tok = (Token)value;
-                        if (tok != null)
+                        Token t = gameManager.findToken(tok);
+                        
                         {
-                            Token t = gameManager.findToken(tok);
                             if (t != null)
                             {
                                 t = tok;
                             }
                             else
                             {
-                                gameManager.storePlayer((Player)tok);
+                                if (tok.getType().Equals("Player")){
+                                    gameManager.storePlayer((Player)tok);
+                                }else{
+                                    gameManager.storeDragon((Dragon)tok);
+                                } 
                             }
-                        }                        
+                        }      
                         
                     }
                     else
@@ -549,6 +565,7 @@ namespace game.Parser
                 }
                 else if (toDo.Equals("Entities") && value != null)
                 {
+                    Console.WriteLine("Creates Entities");
                     if (value is List<Token>)
                     {
                         List<Token> tokenList = (List<Token>)value;
@@ -572,6 +589,10 @@ namespace game.Parser
                     Console.Out.WriteLine("String was not recognized!");
                 }
             }
+            //if (alreadyDrawn == true)
+            //{
+            //    gameManager.refreshGui();
+            //}
             
         }
 
