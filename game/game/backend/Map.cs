@@ -74,5 +74,15 @@ namespace game
                 fields[field.getColumn(), field.getRow()] = field;
             }
         }
+
+        public Field findField(Field field)
+        {
+            int row = field.getRow();
+            int col = field.getColumn();
+
+            Field f = fields[row, col];
+
+            return f;
+        }
     }
 }
