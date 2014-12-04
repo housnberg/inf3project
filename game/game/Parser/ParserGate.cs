@@ -499,10 +499,7 @@ namespace game.Parser
                         gameManager.setMap(map);
                         if (alreadyDrawn == false)
                         {
-                            gameManager.startGui();
-                            //Gui gui = gameManager.getGui();
-                            //gui = new Gui();
-                            //gui.start();
+                            //gameManager.startGui();
                             alreadyDrawn = true;
                         }
                         
@@ -533,7 +530,10 @@ namespace game.Parser
                     }
                     else
                     {
-                        //TODO
+                        Console.Out.WriteLine("Parser updates Map Field");
+                        Field field = (Field)value;
+                        Field f = gameManager.getMap().findField(field);
+                        f = field;
                     }
                    
                 }
@@ -583,6 +583,7 @@ namespace game.Parser
                             }
                         }
                     }
+                    gameManager.startGui();
                 }
                 else
                 {
