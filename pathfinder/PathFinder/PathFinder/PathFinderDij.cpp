@@ -8,17 +8,21 @@ using namespace std;
 namespace PathFinder {
 	extern "C" {
 		const int EDGEWEIGHT = 1;
-		static const int MAXDISTANCE = 10000;
+		static const int MAXDISTANCE = 100000;
 		vector<Node> nodes;
+		bool found = false;
 
 		__declspec(dllexport) int* findPath(int from, int to, int* map, int mapWidth, int mapHeight, int pathLength);
 
 		int* givePath(Node* ref, int from, int pathLength);
 		void calcDistance(Node* ref, int numb);
 
-
+		//
 		int* findPath(int from, int to, int* map, int mapWidth, int mapHeight, int pathLength) {
-			cout << "STARTED THE PATHFINDER";
+			cout << "ENTERED THE DLL AND STARTED THE PATHFINDER\n";
+			if (from == to) {
+				throw runtime_error("you cannot move here");
+			}
 			for (int i = 0; i < mapWidth*mapHeight; i++) {
 				if (map[i] != 0) {
 					if (i == from) {
@@ -36,10 +40,8 @@ namespace PathFinder {
 					nodes.push_back(n);
 				}
 			}
-			bool c = false;
-			//sucht den Knoten mit der minimalen Distanz und speichert diesen als besucht
-			while (!c) {
-				int min = 100000;
+			while (!found) {
+				int min = MAXDISTANCE;
 				Node* minNode;
 				for (Node n : nodes) {
 					if (n.getId() != -1) {
@@ -51,22 +53,27 @@ namespace PathFinder {
 						}
 					}
 				}
-				minNode->setVisited(true);
-
-				//Ziel ist gefunden
+				if (minNode) {
+					minNode->setVisited(true);
+				}
+				else {
+					return 0;
+				}
+				//found the destination point
 				if (minNode->getId() == to) {
+					found = true;
 					return (givePath(minNode, from, pathLength));
 				}
 
-				//such die Nachbarknoten für den Knoten mit minimaler Distanz
-				//befindet sich auf der Linken kante
+				//searches for the neigbour nodes
+				//referenz point is located at the left edge
 				if (minNode->getId() % mapWidth == 0) {
-					//befindet sich in der oberen linken ecke
+					//is located at the left upper corner 
 					if (minNode->getId() == 0) {
 						calcDistance(minNode, 1);
 						calcDistance(minNode, mapWidth);
 					}
-					//Befindet sich an der unteren Linkten ecke
+					//is located at the left lower corner 
 					else if (minNode->getId() == ((mapWidth*mapHeight) - mapWidth)) {
 						calcDistance(minNode, 1);
 						calcDistance(minNode, (-1)*mapWidth);
@@ -77,14 +84,14 @@ namespace PathFinder {
 						calcDistance(minNode, mapWidth);
 					}
 				}
-				//befindet sich auf der rechten kante
+				//is located at the right edge
 				else if (minNode->getId() % mapWidth == mapWidth - 1) {
-					//befindet sich in der oberen rechten ecke
+					//is located at the right upper corner 
 					if (minNode->getId() == mapWidth - 1) {
 						calcDistance(minNode, -1);
 						calcDistance(minNode, mapWidth);
 					}
-					//Befindet sich an der unteren rechten ecke
+					//is located at the right lower corner 
 					else if (minNode->getId() == ((mapWidth*mapHeight) - 1)) {
 						calcDistance(minNode, -1);
 						calcDistance(minNode, -1);
@@ -95,19 +102,19 @@ namespace PathFinder {
 						calcDistance(minNode, mapWidth);
 					}
 				}
-				//bfindet sich auf der unteren Kante
+				//is located at the lower edge
 				else if (minNode->getId() > ((mapWidth*mapHeight) - mapWidth) && minNode->getId() < ((mapWidth*mapHeight) - 1)) {
 					calcDistance(minNode, 1);
 					calcDistance(minNode, -1);
 					calcDistance(minNode, (-1)*mapWidth);
 				}
-				//befindet sich auf der oberen Kante
+				//is located at the upper edge 
 				else if (minNode->getId() > 0 && minNode->getId() < mapWidth - 1) {
 					calcDistance(minNode, -1);
 					calcDistance(minNode, 1);
 					calcDistance(minNode, mapWidth);
 				}
-				//Befindet sich irgendwo in der mitte
+				//is located anywhere else
 				else {
 					calcDistance(minNode, 1);
 					calcDistance(minNode, -1);
@@ -117,6 +124,7 @@ namespace PathFinder {
 			}
 		}
 
+		//calculates the distance of two neighboring nodes
 		void calcDistance(Node* ref, int numb) {
 			Node* neighbor = &nodes[ref->getId() + numb];
 			if (neighbor->getId() != -1) {
@@ -130,20 +138,28 @@ namespace PathFinder {
 			}
 		}
 
+		//returns the whole path from start to destination point (backwards)
+		//returns 
 		int* givePath(Node* ref, int from, int pathLength) {
-			int* path = new int[pathLength];
-			int count = 0;
-			Node* prev = ref;
-			cout << "FOUND THE FOLLOWING PATH (BACKWARDS)";
-			while (prev->getId() != from) {
-				//For test purposes only
-				cout << "\n" << prev->getId();
-				path[count] = prev->getId();
-				prev = prev->getPrev();
+			try {
+				int* path = new int[pathLength];
+				int count = 0;
+				Node* prev = ref;
+				cout << "FOUND THE FOLLOWING PATH (BACKWARDS)";
+				while (prev->getId() != from) {
+					//For test purposes only
+					cout << "\n" << prev->getId();
+					path[count] = prev->getId();
+					prev = prev->getPrev();
+				}
+				return path;
 			}
-			return path;
+			catch (exception) {
+				return 0;
+			}
 		}
 
+		//frees the ram
 		void freeArray(int* pointer) {
 			delete[] pointer;
 		}
