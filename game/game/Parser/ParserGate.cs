@@ -501,15 +501,19 @@ namespace game.Parser
                     {
 
                         Token tok = (Token)value;
-                        Token t = gameManager.findToken(tok);
-                        if (t != null)
+                        if (tok != null)
                         {
-                            t = tok;
-                        }
-                        else
-                        {
-                            gameManager.storePlayer((Player)tok);
-                        }
+                            Token t = gameManager.findToken(tok);
+                            if (t != null)
+                            {
+                                t = tok;
+                            }
+                            else
+                            {
+                                gameManager.storePlayer((Player)tok);
+                            }
+                        }                        
+                        
                     }
                     else
                     {
