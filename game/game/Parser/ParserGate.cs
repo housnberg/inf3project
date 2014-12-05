@@ -496,13 +496,7 @@ namespace game.Parser
                     if (value is Map)
                     {
                         Map map = (Map)value;
-                        gameManager.setMap(map);
-                        if (alreadyDrawn == false)
-                        {
-                            //gameManager.startGui();
-                            alreadyDrawn = true;
-                        }
-                        
+                        gameManager.setMap(map);  
                     }
                 }
                 else if (toDo.Equals("Update")&& value!=null)
@@ -535,7 +529,7 @@ namespace game.Parser
                         Field f = gameManager.getMap().findField(field);
                         f = field;
                     }
-                   
+                        gameManager.refreshGui();
                 }
                 else if(toDo.Equals("Delete") && value != null){
                     if (value is Token)
@@ -583,17 +577,32 @@ namespace game.Parser
                             }
                         }
                     }
-                    gameManager.startGui();
+                    if (alreadyDrawn == false)
+                    {
+                        gameManager.startGui();
+                        alreadyDrawn = true;
+                    }
+                    else
+                    {
+                        gameManager.refreshGui();
+                    }
                 }
                 else
                 {
                     Console.Out.WriteLine("String was not recognized!");
                 }
             }
-            //if (alreadyDrawn == true)
+
+            //if (alreadyDrawn == false)
+            //{
+            //    gameManager.startGui();
+            //    alreadyDrawn = true;
+            //}
+            //else
             //{
             //    gameManager.refreshGui();
             //}
+                
             
         }
 

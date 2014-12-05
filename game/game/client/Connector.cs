@@ -62,7 +62,6 @@ namespace game.client
             Contract.Requires(ip.Length < 16);
             Contract.Requires(port >= 0);
             Contract.Requires(port <= 65535);
-            lock (buffer)
             
                 try
                 {
@@ -204,8 +203,6 @@ namespace game.client
         /// <returns>the used buffer</returns>
         public ClientBuffer getBuffer()
         {
-            lock (buffer) // Is that right?
-
             return buffer;
         }
 

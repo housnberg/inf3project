@@ -26,6 +26,7 @@ namespace game
         private Gui gui;
         private String ip;
         private UInt16 port;
+       
    
         /// <summary>
         /// constructor creates only one game instance
@@ -406,11 +407,21 @@ namespace game
         /// </summary>
         public void refreshGui()
         {
-            gui.Refresh();
+           if (gui != null)
+           {
+               lock (gui)
+               {
+                   gui.Invoke(gui.myDelegate);
+               }
+
+            }
+           
+            
         }
 
         public void startGui()
         {
+            gui = new Gui();
             Thread t = new Thread(gui.start);
             t.Start();
         }
