@@ -11,10 +11,11 @@ namespace PathFinder {
 		static const int MAXDISTANCE = 100000;
 		vector<Node> nodes;
 		bool found = false;
+		int* path;
 
 		__declspec(dllexport) int* findPath(int from, int to, int* map, int mapWidth, int mapHeight, int pathLength);
 
-		int* givePath(Node* ref, int from, int pathLength);
+		void givePath(Node* ref, int from, int pathLength);
 		void calcDistance(Node* ref, int numb);
 
 		//
@@ -57,71 +58,74 @@ namespace PathFinder {
 					minNode->setVisited(true);
 				}
 				else {
-					return 0;
+					found = true;
+					path = 0;
 				}
 				//found the destination point
 				if (minNode->getId() == to) {
 					found = true;
-					return (givePath(minNode, from, pathLength));
+					givePath(minNode, from, pathLength);
 				}
-
-				//searches for the neigbour nodes
-				//referenz point is located at the left edge
-				if (minNode->getId() % mapWidth == 0) {
-					//is located at the left upper corner 
-					if (minNode->getId() == 0) {
-						calcDistance(minNode, 1);
-						calcDistance(minNode, mapWidth);
-					}
-					//is located at the left lower corner 
-					else if (minNode->getId() == ((mapWidth*mapHeight) - mapWidth)) {
-						calcDistance(minNode, 1);
-						calcDistance(minNode, (-1)*mapWidth);
-					}
-					else {
-						calcDistance(minNode, 1);
-						calcDistance(minNode, (-1)*mapWidth);
-						calcDistance(minNode, mapWidth);
-					}
-				}
-				//is located at the right edge
-				else if (minNode->getId() % mapWidth == mapWidth - 1) {
-					//is located at the right upper corner 
-					if (minNode->getId() == mapWidth - 1) {
-						calcDistance(minNode, -1);
-						calcDistance(minNode, mapWidth);
-					}
-					//is located at the right lower corner 
-					else if (minNode->getId() == ((mapWidth*mapHeight) - 1)) {
-						calcDistance(minNode, -1);
-						calcDistance(minNode, -1);
-					}
-					else {
-						calcDistance(minNode, -1);
-						calcDistance(minNode, (-1)*mapWidth);
-						calcDistance(minNode, mapWidth);
-					}
-				}
-				//is located at the lower edge
-				else if (minNode->getId() > ((mapWidth*mapHeight) - mapWidth) && minNode->getId() < ((mapWidth*mapHeight) - 1)) {
-					calcDistance(minNode, 1);
-					calcDistance(minNode, -1);
-					calcDistance(minNode, (-1)*mapWidth);
-				}
-				//is located at the upper edge 
-				else if (minNode->getId() > 0 && minNode->getId() < mapWidth - 1) {
-					calcDistance(minNode, -1);
-					calcDistance(minNode, 1);
-					calcDistance(minNode, mapWidth);
-				}
-				//is located anywhere else
 				else {
-					calcDistance(minNode, 1);
-					calcDistance(minNode, -1);
-					calcDistance(minNode, mapWidth);
-					calcDistance(minNode, (-1)*mapWidth);
+					//searches for the neigbour nodes
+					//referenz point is located at the left edge
+					if (minNode->getId() % mapWidth == 0) {
+						//is located at the left upper corner 
+						if (minNode->getId() == 0) {
+							calcDistance(minNode, 1);
+							calcDistance(minNode, mapWidth);
+						}
+						//is located at the left lower corner 
+						else if (minNode->getId() == ((mapWidth*mapHeight) - mapWidth)) {
+							calcDistance(minNode, 1);
+							calcDistance(minNode, (-1)*mapWidth);
+						}
+						else {
+							calcDistance(minNode, 1);
+							calcDistance(minNode, (-1)*mapWidth);
+							calcDistance(minNode, mapWidth);
+						}
+					}
+					//is located at the right edge
+					else if (minNode->getId() % mapWidth == mapWidth - 1) {
+						//is located at the right upper corner 
+						if (minNode->getId() == mapWidth - 1) {
+							calcDistance(minNode, -1);
+							calcDistance(minNode, mapWidth);
+						}
+						//is located at the right lower corner 
+						else if (minNode->getId() == ((mapWidth*mapHeight) - 1)) {
+							calcDistance(minNode, -1);
+							calcDistance(minNode, -1);
+						}
+						else {
+							calcDistance(minNode, -1);
+							calcDistance(minNode, (-1)*mapWidth);
+							calcDistance(minNode, mapWidth);
+						}
+					}
+					//is located at the lower edge
+					else if (minNode->getId() > ((mapWidth*mapHeight) - mapWidth) && minNode->getId() < ((mapWidth*mapHeight) - 1)) {
+						calcDistance(minNode, 1);
+						calcDistance(minNode, -1);
+						calcDistance(minNode, (-1)*mapWidth);
+					}
+					//is located at the upper edge 
+					else if (minNode->getId() > 0 && minNode->getId() < mapWidth - 1) {
+						calcDistance(minNode, -1);
+						calcDistance(minNode, 1);
+						calcDistance(minNode, mapWidth);
+					}
+					//is located anywhere else
+					else {
+						calcDistance(minNode, 1);
+						calcDistance(minNode, -1);
+						calcDistance(minNode, mapWidth);
+						calcDistance(minNode, (-1)*mapWidth);
+					}
 				}
 			}
+			return path;
 		}
 
 		//calculates the distance of two neighboring nodes
@@ -140,9 +144,9 @@ namespace PathFinder {
 
 		//returns the whole path from start to destination point (backwards)
 		//returns 
-		int* givePath(Node* ref, int from, int pathLength) {
+		void givePath(Node* ref, int from, int pathLength) {
 			try {
-				int* path = new int[pathLength];
+				path = new int[pathLength];
 				int count = 0;
 				Node* prev = ref;
 				cout << "FOUND THE FOLLOWING PATH (BACKWARDS)";
@@ -151,11 +155,10 @@ namespace PathFinder {
 					cout << "\n" << prev->getId();
 					path[count] = prev->getId();
 					prev = prev->getPrev();
-				}
-				return path;
+				};
 			}
 			catch (exception) {
-				return 0;
+				path = 0;
 			}
 		}
 
