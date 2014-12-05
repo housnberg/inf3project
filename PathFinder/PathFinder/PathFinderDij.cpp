@@ -145,7 +145,6 @@ namespace PathFinder {
 
 		//calculate the whole path from start to destination point (backwards)
 		void givePath(Node* ref, int from, int pathLength) {
-			try {
 				path = new int[pathLength];
 				int count = 0;
 				Node* prev = ref;
@@ -155,11 +154,11 @@ namespace PathFinder {
 					cout << "\n" << prev->getId();
 					path[count] = prev->getId();
 					prev = prev->getPrev();
+					count++;
 				};
-			}
-			catch (exception) {
-				path = 0;
-			}
+				if (count > pathLength) {
+					path = 0;
+				}
 		}
 
 		//frees the ram
