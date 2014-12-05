@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -14,15 +15,26 @@ namespace game.gui
     {
         private GameManager gameManager = GameManager.getGameManagerInstance();
         private List<Color> playerColors = new List<Color>();
+        public delegate void refGui();
+        public refGui myDelegate;
         public Gui() : base()
         {
             //Application.EnableVisualStyles();
             //Application.SetCompatibleTextRenderingDefault(false);
+            myDelegate = new refGui(refreshGui);
             InitializeComponent();
             this.board.Paint += board_PaintMap;
             this.board.Paint += board_PaintEntities;
             this.board.KeyPress += board_KeyPress;
             this.chatInput.KeyPress += chat_KeyPress;
+            //Thread t = new Thread(initGui);
+            //t.Start();
+        }
+
+        private void refreshGui()
+        {
+            this.Refresh();
+                //this.Update();
         }
 
         /// <summary>
