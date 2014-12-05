@@ -133,7 +133,7 @@ namespace PathFinder {
 		void calcDistance(Node* ref, int numb) {
 			Node* neighbor = &nodes[ref->getId() + numb];
 			if (neighbor->getId() != -1) {
-				if (!nodes[ref->getId() + numb].getVisited()) {
+				if (!neighbor->getVisited()) {
 					int distance = (ref->getDistance() + EDGEWEIGHT);
 					if (neighbor->getDistance() > distance) {
 						neighbor->setDistance(distance);
