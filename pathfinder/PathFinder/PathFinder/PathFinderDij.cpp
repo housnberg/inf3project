@@ -18,11 +18,13 @@ namespace PathFinder {
 		void givePath(Node* ref, int from, int pathLength);
 		void calcDistance(Node* ref, int numb);
 
-		//
 		int* findPath(int from, int to, int* map, int mapWidth, int mapHeight, int pathLength) {
 			cout << "ENTERED THE DLL AND STARTED THE PATHFINDER\n";
 			if (from == to) {
 				throw runtime_error("you cannot move here");
+			}
+			if (map[from] == 0 || map[to] == 0) {
+				throw new runtime_error("the field is not passable");
 			}
 			for (int i = 0; i < mapWidth*mapHeight; i++) {
 				if (map[i] != 0) {
@@ -58,8 +60,7 @@ namespace PathFinder {
 					minNode->setVisited(true);
 				}
 				else {
-					found = true;
-					path = 0;
+					throw new runtime_error("cannot find a path");
 				}
 				//found the destination point
 				if (minNode->getId() == to) {
@@ -142,8 +143,7 @@ namespace PathFinder {
 			}
 		}
 
-		//returns the whole path from start to destination point (backwards)
-		//returns 
+		//calculate the whole path from start to destination point (backwards)
 		void givePath(Node* ref, int from, int pathLength) {
 			try {
 				path = new int[pathLength];
