@@ -407,10 +407,15 @@ namespace game
         /// </summary>
         public void refreshGui()
         {
-            if (gui != null)
-            {
-                gui.Invoke(gui.myDelegate);  
+           if (gui != null)
+           {
+               lock (gui)
+               {
+                   gui.Invoke(gui.myDelegate);
+               }
+
             }
+           
             
         }
 

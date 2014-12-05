@@ -529,7 +529,7 @@ namespace game.Parser
                         Field f = gameManager.getMap().findField(field);
                         f = field;
                     }
-                   
+                        gameManager.refreshGui();
                 }
                 else if(toDo.Equals("Delete") && value != null){
                     if (value is Token)
@@ -577,7 +577,15 @@ namespace game.Parser
                             }
                         }
                     }
-                    gameManager.startGui();
+                    if (alreadyDrawn == false)
+                    {
+                        gameManager.startGui();
+                        alreadyDrawn = true;
+                    }
+                    else
+                    {
+                        gameManager.refreshGui();
+                    }
                 }
                 else
                 {

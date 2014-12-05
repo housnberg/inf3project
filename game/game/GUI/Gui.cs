@@ -21,20 +21,23 @@ namespace game.gui
         {
             //Application.EnableVisualStyles();
             //Application.SetCompatibleTextRenderingDefault(false);
-            myDelegate = new refGui(refreshGui);
+            
             InitializeComponent();
             this.board.Paint += board_PaintMap;
             this.board.Paint += board_PaintEntities;
             this.board.KeyPress += board_KeyPress;
             this.chatInput.KeyPress += chat_KeyPress;
+            myDelegate = new refGui(refreshGui);
             //Thread t = new Thread(initGui);
             //t.Start();
         }
 
         private void refreshGui()
         {
-            this.Refresh();
-                //this.Update();
+            //board_PaintEntities(null, null);
+            board.Refresh();
+            //this.Update();
+
         }
 
         /// <summary>
