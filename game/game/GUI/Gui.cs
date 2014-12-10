@@ -40,6 +40,12 @@ namespace game.gui
 
         }
 
+        public void appendChatMessage(String message)
+        {
+            this.chatWindow.AppendText(message + "\r\n");//For Test Purposes only!
+            this.refreshGui();
+        }
+
         /// <summary>
         /// Painting the Map by creating a GraphicsBuffer, filling it an executing in the end
         /// </summary>
@@ -158,7 +164,6 @@ namespace game.gui
             SolidBrush drawBrush = new SolidBrush(Color.Black);
             PointF drawPoint = new PointF( player.getXPos() * tileSize.Width, player.getYPos() * tileSize.Height + tileSize.Height / 2 - tileSize.Height / 4);
             graphics.DrawString(drawString, drawFont, drawBrush, drawPoint);
-            Console.Out.WriteLine("Player" + player.getID() + " X:" + player.getXPos() + " Y:" + player.getYPos());
         }
 
         /// <summary>
@@ -201,25 +206,21 @@ namespace game.gui
                 case (char)Keys.Left:
                 case 'a':
                 case 'A':
-                    //Console.Out.WriteLine("Command sent: 'ask:mv:lft'");//this.backend.sendCommand("ask:mv:lft");
                     gameManager.sendCommand("lft");
                     break;
                 case (char)Keys.Right:
                 case 'd':
                 case 'D':
-                    //Console.Out.WriteLine("Command sent: 'ask:mv:rgt'");;//this.backend.sendCommand("ask:mv:rgt");
                     gameManager.sendCommand("rgt");
                     break;
                 case (char)Keys.Up:
                 case 'w':
                 case 'W':
-                    //Console.Out.WriteLine("Command sent: 'ask:mv:up'");//this.backend.sendCommand("ask:mv:up");
                     gameManager.sendCommand("up");
                     break;
                 case (char)Keys.Down:
                 case 's':
                 case 'S':
-                    //Console.Out.WriteLine("Command sent: 'ask:mv:dwn'");//this.backend.sendCommand("ask:mv:dwn");
                     gameManager.sendCommand("dwn");
                     break;
             }
@@ -242,15 +243,11 @@ namespace game.gui
                     if (message.StartsWith("/"))
                     {
                         message = message.Substring(1, message.Length - 1);
-                        Console.Out.WriteLine("Command sent: '/" + message + "'");//For Test Purposes only!
                         gameManager.sendCommand(message);
-                        this.chatWindow.AppendText(message +"\r\n");//For Test Purposes only!
                     }
                     else
                     {
-                        Console.Out.WriteLine("Message sent: '" + message + "'");//For Test Purposes only!
                         gameManager.sendMessage(message);
-                        this.chatWindow.AppendText(message + "\r\n");//For Test Purposes only!
                     }
                     this.chatInput.Focus();
                 }

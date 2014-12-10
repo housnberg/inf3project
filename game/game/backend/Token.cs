@@ -92,17 +92,17 @@ namespace game
             Contract.Requires(desc != null);
             Contract.Requires(desc.Length >= 2);
             Contract.Requires(desc.Length <= 16);
-            //try
-            //{
-                //if (name == null || name.Length < 2 || name.Length > 16)
-                //{
-                //    throw new ArgumentException("The name of a Token needs to be a least 2 characters and at most 16 characters long!");
-                //}
-            //}
-            //catch (Exception exception)
-            //{
-            //    Console.Out.WriteLine(exception.Message);
-            //}
+            try
+            {
+                if (desc == null || desc.Length < 2 || desc.Length > 16)
+                {
+                    throw new ArgumentException("The name of a Token needs to be a least 2 characters and at most 16 characters long!");
+                }
+            }
+            catch (Exception exception)
+            {
+                Console.Out.WriteLine(exception.Message);
+            }
 
             this.desc = desc;
         }
@@ -113,17 +113,20 @@ namespace game
         /// <param name="id">The ID of the Token</param>
         public void setID(int id)
         {
-            Contract.Requires(id > 0);
-            //Contract.Requires(id < 100);
+            Contract.Requires(id >= 0);
 
-            //try
-            //{
-                 this.id = id;
-            //}
-            //catch (Exception exception)
-            //{
-            //    Console.Out.WriteLine(exception.Message);
-            //}
+            try
+            {
+                if (id < 0)
+                {
+                    throw new ArgumentException("The Token ID is not allowed to be smaller than 0!");
+                }
+                this.id = id;
+            }
+            catch (Exception exception)
+            {
+                Console.Out.WriteLine(exception.Message);
+            }
            
         }
 
@@ -136,16 +139,6 @@ namespace game
         {
             try
             {
-                //if (this.busy == true && busy == true)
-                //{
-                //    throw new ArgumentException("The Token is already in busy mode!");
-                //}
-
-                //if (this.busy == false && busy == false)
-                //{
-                //    throw new ArgumentException("The Token has already left busy mode!");
-                //}
-
                 this.busy = busy;
             }
             catch (Exception exception)

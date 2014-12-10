@@ -35,8 +35,8 @@ namespace game
         /// <param name="port">port number of the server</param>
         public GameManager(String ip, UInt16 port)
         {
-            //try
-            //{
+            try
+            {
                 if (gameManager != null)
                 {
                     throw new SystemException("there is already a game running");
@@ -47,11 +47,11 @@ namespace game
                     this.port = port;
                     GameManager.gameManager = this;
                 }
-            //}
-            //catch (Exception e)
-            //{
-            //    Console.WriteLine(e.Message);
-            //}
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
  
         }
 
@@ -166,7 +166,6 @@ namespace game
                         break;
                     default:
                         connector.sendServerMessage(message);
-                        Console.WriteLine("------->Message Send: " + message);
                         break;
                 }
             }
@@ -277,7 +276,8 @@ namespace game
             int counter = 0;
             Player player = null;
 
-            //try{
+            try
+            {
 
                 if (id <= 0)
                 {
@@ -305,11 +305,11 @@ namespace game
                     throw new ArgumentException("The Player with the ID '" + id + "'  does not exist in this game, for he may have been already deleted!");
 
                 }
-            //}
-            //catch (Exception exception)
-            //{
-            //    Console.Out.WriteLine(exception.Message);
-            //}
+            }
+            catch (Exception exception)
+            {
+                Console.Out.WriteLine(exception.Message);
+            }
            
             
         }
@@ -484,5 +484,10 @@ namespace game
             Contract.Invariant(this.connector != null);
         }
 
+
+        public void drawMessage(String message)
+        {
+            gui.appendChatMessage(message);
+        }
     }
 }

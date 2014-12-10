@@ -173,8 +173,6 @@ namespace game.client
                     message = receiver.receive();
                     if (message != null && message.Length > 0)
                     {
-                        //for test purposes only
-                        //Console.WriteLine(message);
                         buffer.put(message);
                     }
                 }

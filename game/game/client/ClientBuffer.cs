@@ -34,14 +34,14 @@ namespace game.client
         {
             Contract.Requires(message != null);
             Contract.Requires(message.Length > 0);
-            //try
-            //{
-            Monitor.Enter(buffer);
-            if ((message == null) || (message.Length < 0))
+            try
             {
-                throw new ArgumentException("The message is null or smaller 0, or the fifo is null");
-            }
-           
+                Monitor.Enter(buffer);
+                if ((message == null) || (message.Length < 0))
+                {
+                    throw new ArgumentException("The message is null or smaller 0, or the fifo is null");
+                }
+
                 fullServerMessage += message + "\r\n";
                 Contract.Ensures(!buffer.isEmpty());
 
@@ -56,18 +56,18 @@ namespace game.client
                     fifo.Add(tmp[0].Trim() + "\r\nend:" + messageCounter);
                     fullServerMessage = tmp[1];
                     messageCounter++;
-                    
+
                 }
-            //}
-            //catch (Exception exception)
-            //{
-            //    Console.WriteLine(exception.Message);
-            //}
-            //finally
-            //{
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception.Message);
+            }
+            finally
+            {
                 Monitor.PulseAll(buffer);
                 Monitor.Exit(buffer);
-            //}
+            }
         }
 
         /// <summary>
@@ -80,8 +80,8 @@ namespace game.client
             Contract.Requires(fifo.ElementAt(0) != null);
             Contract.Requires(!(this.isEmpty()));
             String message = "";
-            //try
-            //{
+            try
+            {
                 Monitor.Enter(buffer);
                 while (this.isEmpty())
                 {
@@ -90,17 +90,17 @@ namespace game.client
                 message = fifo.ElementAt(0);
                 fifo.RemoveAt(0);
                 Contract.Ensures(!(buffer.isFull()));
-               
-            //}
-            //catch (Exception exception)
-            //{
-            //    Console.WriteLine(exception.Message);
-            //}
-            //finally
-            //{
+
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception.Message);
+            }
+            finally
+            {
                 Monitor.PulseAll(buffer);
                 Monitor.Exit(buffer);
-            //}
+            }
             return message;
         }
 
