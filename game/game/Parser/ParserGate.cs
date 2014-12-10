@@ -486,7 +486,8 @@ namespace game.Parser
                     {
                         List<Player> players = (List<Player>)value;
                         foreach(Player p in players){
-                            gameManager.storePlayer(p);
+                            //gameManager.storePlayer(p);
+                            gameManager.replaceToken(p);
                         }
                     }
                 }
@@ -504,23 +505,7 @@ namespace game.Parser
                     if (value is Token)
                     {
                         Token tok = (Token)value;
-                        Token t = gameManager.findToken(tok);
-                        
-                        {
-                            if (t != null)
-                            {
-                                t = tok;
-                            }
-                            else
-                            {
-                                if (tok.getType().Equals("Player")){
-                                    gameManager.storePlayer((Player)tok);
-                                }else{
-                                    gameManager.storeDragon((Dragon)tok);
-                                } 
-                            }
-                        }      
-                        
+                        gameManager.replaceToken(tok);                
                     }
                     else
                     {
@@ -568,12 +553,14 @@ namespace game.Parser
                             if (t is Player)
                             {
                                 Player p = (Player)t;
-                                gameManager.storePlayer(p);
+                                //gameManager.storePlayer(p);
+                                gameManager.replaceToken(p);
                             }
                             else
                             {
                                 Dragon d = (Dragon)t;
-                                gameManager.storeDragon(d);
+                                //gameManager.storeDragon(d);
+                                gameManager.replaceToken(d);
                             }
                         }
                     }

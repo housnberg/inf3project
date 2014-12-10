@@ -402,6 +402,58 @@ namespace game
             return gui;
         }
 
+        public void replaceToken(Token token)
+        {
+            Boolean found = false;
+            int count = 0;
+            if (token is Player)
+            {
+                Player player = (Player)token;
+                while (found != true)
+                {
+                    if (count == players.Count)
+                    {
+                        this.storePlayer(player);
+                        found = true;
+                    }
+                    else if (players.Count > 0 && players[count].getID() == player.getID())
+                    {
+                        //players.Remove(players[count]);
+                        //players.Add(player);
+                        players[count] = (Player)token;
+                        found = true;
+                    }
+                    else
+                    {
+                        count++;
+                    }
+                }
+            }
+            else
+            {
+                Dragon dragon = (Dragon)token;
+                while (found != true)
+                {
+                    if (count == players.Count)
+                    {
+                        this.storeDragon(dragon);
+                        found = true;
+                    }
+                    else if (dragons.Count > 0 && dragons[count].getID() == dragon.getID())
+                    {
+                        dragons.Remove(dragons[count]);
+                        dragons.Add(dragon);
+                        found = true;
+                    }
+                    else
+                    {
+                        count++;
+                    }
+                }   
+            }
+  
+        }
+
         /// <summary>
         /// Forces the GUI to repaint
         /// </summary>
@@ -415,8 +467,7 @@ namespace game
                }
 
             }
-           
-            
+
         }
 
         public void startGui()
