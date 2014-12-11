@@ -4,6 +4,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include <iostream>
+#include <string>
 using namespace std;
 
 
@@ -22,14 +23,15 @@ namespace PathFinder {
 		void calcDistance(Node* ref, int numb);
 		void findNeighbors(Node* ref, int numb, int mapWidth, int mapHeight);
 		void initializeNodes(int from, int to, int* map, int mapSize);
+		void throwErrorMessage(string errorMessage);
 
 		int* findPath(int from, int to, int* map, int mapWidth, int mapHeight, int pathLength) {
 			cout << "ENTERED THE DLL AND STARTED THE PATHFINDER\n";
 			if (from == to) {
-				throw runtime_error("you cannot move here");
+				throwErrorMessage("you cannot move here");
 			}
 			if (map[from] == 0 || map[to] == 0) {
-				throw new runtime_error("the field is not passable");
+				throwErrorMessage("the field is not passable");
 			}
 			initializeNodes(from, to, map, mapWidth*mapHeight);
 			for (Node node : nodes) {
@@ -40,7 +42,7 @@ namespace PathFinder {
 			}
 			while (!found) {
 				int min = MAXDISTANCE;
-				Node* minNode;
+				Node* minNode = 0;
 				Node* tmp;
 				for (unsigned int i = 0; i < nodes.size(); i++) {
 					tmp = &nodes[i];
@@ -53,7 +55,7 @@ namespace PathFinder {
 						}
 					}
 				}
-				if (minNode != nullptr) {
+				if (minNode) {
 					minNode->setVisited(true);
 					if (minNode->getId() == to) {
 						cout << "-FOUND THE DESTINATION POINT\n";
@@ -76,8 +78,7 @@ namespace PathFinder {
 					}
 				}
 				else {
-					found = true;
-					cout << "kein knotn vorhanden\n";
+					throwErrorMessage("cannot find a valid path");
 				}
 			}
 			return path;
@@ -136,6 +137,13 @@ namespace PathFinder {
 		//frees the ram
 		void freeArray(int* pointer) {
 			delete[] pointer;
+		}
+
+		void throwErrorMessage(string errorMessage) {
+			string error = "RUNTIME ERROR: ";
+			error += errorMessage + "\n";
+			cout << error;
+			throw new runtime_error(error);
 		}
 	}
 }

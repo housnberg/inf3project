@@ -1,5 +1,7 @@
 #pragma once
 #include <vector>
+#include <string>
+#include <iostream>
 using namespace std;
 
 class Node
@@ -23,5 +25,5 @@ private:
 	Node* prev;
 	vector<Node*> neighbors;
 	void setId(int id);
-
+	void throwErrorMessage(string errorMessage);
 };

@@ -1,7 +1,5 @@
 #include "stdafx.h"
 #include "Node.h"
-#include <iostream>
-#include <vector>
 using namespace std;
 
 
@@ -18,7 +16,7 @@ void Node::setDistance(int distance)
 		this->distance = distance;
 	}
 	else {
-		throw new runtime_error("you cannot set a negative distance");
+		throwErrorMessage("you cannot set a negative distance");
 	}
 }
 
@@ -28,7 +26,7 @@ void Node::setPrev(Node* prev)
 		this->prev = prev;
 	}
 	else {
-		throw new runtime_error("you cannot set a null neighbor");
+		throwErrorMessage("you cannot set a NULL previous node");
 	}
 }
 
@@ -43,7 +41,7 @@ void Node::setId(int id)
 		this->id = id;
 	}
 	else {
-		throw new runtime_error("you cannot set a negative distance");
+		throwErrorMessage("you cannot set a negative id");
 	}
 }
 
@@ -72,11 +70,17 @@ void Node::setNeighbor(Node* neighbor) {
 		this->neighbors.push_back(neighbor);
 	}
 	else {
-		throw new runtime_error("you cannot set a null neighbor");
+		throwErrorMessage("you cannot set a NULL neighbor");
 	}
 }
 
-
 vector<Node*>* Node::getNeighbors() {
 	return &neighbors;
+}
+
+void Node::throwErrorMessage(string errorMessage) {
+	string error = "RUNTIME ERROR: ";
+	error += errorMessage + "\n";
+	cout << error;
+	throw new runtime_error(error);
 }
