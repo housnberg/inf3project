@@ -36,14 +36,15 @@ namespace PathFinder {
 			}
 			initializeNodes(from, to, map, mapWidth*mapHeight);
 			for (Node node : nodes) {
-				findNeighbors(&nodes[node.getId()], 1, mapWidth, mapHeight);
-				findNeighbors(&nodes[node.getId()], -1, mapWidth, mapHeight);
-				findNeighbors(&nodes[node.getId()], mapWidth, mapWidth, mapHeight);
-				findNeighbors(&nodes[node.getId()], (-1)*mapWidth, mapWidth, mapHeight);
+				Node* ref = &nodes[node.getId()];
+				findNeighbors(ref, 1, mapWidth, mapHeight);
+				findNeighbors(ref, -1, mapWidth, mapHeight);
+				findNeighbors(ref, mapWidth, mapWidth, mapHeight);
+				findNeighbors(ref, (-1)*mapWidth, mapWidth, mapHeight);
 			}
 			while (!found) {
 				int min = MAXDISTANCE;
-				Node* minNode = 0;
+				Node* minNode = 0; // equivalent to Node* minNode = nullptr
 				Node* tmp;
 				for (unsigned int i = 0; i < nodes.size(); i++) {
 					tmp = &nodes[i];
