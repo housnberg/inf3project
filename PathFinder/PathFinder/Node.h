@@ -1,9 +1,11 @@
 #pragma once
+#include <vector>
 using namespace std;
+
 class Node
 {
 public:
-	Node(int id);
+	Node(int id, int distance);
 	void setPrev(Node* prev);
 	void setDistance(int distance);
 	void setVisited(bool visited);
@@ -11,12 +13,15 @@ public:
 	int getDistance();
 	int getId();
 	bool getVisited();
+	vector<Node*>* getNeighbors();
+	void setNeighbor(Node* neighbor);
 
 private:
 	int id;
-	int distance = 100000;
+	int distance;
 	bool visited = false;
 	Node* prev;
+	vector<Node*> neighbors;
 	void setId(int id);
 
 };
