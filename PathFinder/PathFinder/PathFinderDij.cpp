@@ -19,6 +19,7 @@ namespace PathFinder {
 		int* path;
 
 		__declspec(dllexport) int* findPath(int from, int to, int* map, int mapWidth, int mapHeight, int pathLength);
+		__declspec(dllexport) void freeArray(int* pointer);
 		void givePath(Node* ref, int from, int pathLength);
 		void calcDistance(Node* ref, int numb);
 		void findNeighbors(Node* ref, int numb, int mapWidth, int mapHeight);
@@ -121,16 +122,14 @@ namespace PathFinder {
 			path = new int[pathLength];
 			int count = 0;
 			Node* prev = ref;
-			cout << "FOUND THE FOLLOWING PATH (BACKWARDS)";
+			cout << "FOUND THE FOLLOWING PATH (BACKWARDS)\n";
 			while (prev->getId() != from) {
-				//For test purposes only
-				cout << "\n" << prev->getId();
 				path[count] = prev->getId();
 				prev = prev->getPrev();
 				count++;
 			}
 			if (count > pathLength) {
-				path = nullptr;
+				path = 0;
 			}
 		}
 
