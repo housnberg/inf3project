@@ -472,6 +472,42 @@ namespace game
 
         }
 
+        /// <summary>
+        /// This method brings the token to the destination
+        /// </summary>
+        public void PathWalker(int [] step){
+            int x = step[0];
+            int y = step[1];
+            
+       
+
+        }
+
+
+        /// <summary>
+        /// This method create an array contains the way to the distination in reverse order
+        /// </summary>
+        public int [] getWayToDestinaton(){
+           //int[] path = new int[32];
+           //IntPtr pointer = findPath(1, 27, map, width, height, 32);
+           //foreach (int i in path)
+           //{
+           //     if (i <= width * height && i >= 0)
+           //     {
+           //             Console.Write(i + " ");
+           //     }
+           //     }
+           // }
+           
+
+          return null;
+        }
+            
+       
+
+
+
+
         public void startGui()
         {
             gui = new Gui();
