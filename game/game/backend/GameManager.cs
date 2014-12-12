@@ -434,15 +434,17 @@ namespace game
                 Dragon dragon = (Dragon)token;
                 while (found != true)
                 {
-                    if (count == players.Count)
+                    if (count == dragons.Count)
                     {
                         this.storeDragon(dragon);
                         found = true;
                     }
                     else if (dragons.Count > 0 && dragons[count].getID() == dragon.getID())
                     {
-                        dragons.Remove(dragons[count]);
-                        dragons.Add(dragon);
+                        //dragons.Remove(dragons[count]);
+                        //dragons.Add(dragon);
+                        //found = true;
+                        dragons[count] = dragon;
                         found = true;
                     }
                     else
