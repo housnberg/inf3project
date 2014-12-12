@@ -44,7 +44,9 @@ namespace DllTest
                 {
                     if (i <= width * height && i >= 0)
                     {
-                        Console.Write(i + " ");
+                        //Console.Write(i + " ");
+                        int[] coord = pointToCoordinate(i, width);
+                        Console.Write(coord[0] + "|" + coord[1] + " ");
                     }
                 }
             }
@@ -54,5 +56,14 @@ namespace DllTest
             }
             Console.ReadKey();
         }
+
+        public static int[] pointToCoordinate(int point, int mapWidth)
+        {
+            int[] coord = new int[2];
+            coord[0] = point % mapWidth;
+            coord[1] = point / mapWidth;
+            return coord;
+        }
+
     }
 }
