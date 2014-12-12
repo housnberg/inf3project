@@ -26,6 +26,10 @@ namespace PathFinder {
 		void initializeNodes(int from, int to, int* map, int mapSize);
 		void throwErrorMessage(string errorMessage);
 
+		/*
+		DOKU
+		
+		*/
 		int* findPath(int from, int to, int* map, int mapWidth, int mapHeight, int pathLength) {
 			cout << "ENTERED THE DLL AND STARTED THE PATHFINDER\n";
 			if (from == to) {
@@ -45,15 +49,11 @@ namespace PathFinder {
 			while (!found) {
 				int min = MAXDISTANCE;
 				Node* minNode = 0; // equivalent to Node* minNode = nullptr
-				Node* tmp;
-				for (unsigned int i = 0; i < nodes.size(); i++) {
-					tmp = &nodes[i];
-					if (tmp->getDistance() < INFDISTANCE) {
-						if (tmp->getDistance() < min) {
-							if (!tmp->getVisited()) {
-								minNode = tmp;
-								min = minNode->getDistance();
-							}
+				for (Node tmp : nodes) {
+					if (tmp.getDistance() < min) {
+						if (!tmp.getVisited()) {
+							minNode = &nodes[tmp.getId()];
+							min = minNode->getDistance();
 						}
 					}
 				}
