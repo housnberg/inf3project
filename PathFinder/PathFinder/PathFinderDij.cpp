@@ -28,9 +28,9 @@ namespace PathFinder {
 
 		/*
 		DOKU
-		
+		switched the parameters to/from 
 		*/
-		int* findPath(int from, int to, int* map, int mapWidth, int mapHeight, int pathLength) {
+		int* findPath(int to, int from, int* map, int mapWidth, int mapHeight, int pathLength) {
 			cout << "ENTERED THE DLL AND STARTED THE PATHFINDER\n";
 			if (from == to) {
 				throwErrorMessage("you cannot move here");
@@ -125,8 +125,9 @@ namespace PathFinder {
 			Node* prev = ref;
 			cout << "FOUND THE FOLLOWING PATH (BACKWARDS)\n";
 			while (prev->getId() != from) {
-				path[count] = prev->getId();
+				//path[count] = prev->getId();
 				prev = prev->getPrev();
+				path[count] = prev->getId();
 				count++;
 			}
 			if (count > pathLength) {

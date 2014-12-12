@@ -31,13 +31,13 @@ namespace DllTest
             map[16] = 0;
             map[17] = 0;
             map[18] = 0;
-            map[27] = 0;
+            //map[27] = 0;
             map[22] = 0;
             try
             {
                 int[] path = new int[32];
                 Console.WriteLine("Found DLL: " + File.Exists("PathFinder.dll"));
-                IntPtr pointer = findPath(1, 27, map, width, height, 32);
+                IntPtr pointer = findPath(1, 11, map, width, height, 32);
                 Marshal.Copy(pointer, path, 0, path.Length);
                 Console.WriteLine("Returned Path:");
                 foreach (int i in path)
