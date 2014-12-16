@@ -271,5 +271,18 @@ namespace game.gui
             this.chatWindow.AppendText(source + ": " + message + "\r\n");
         }
 
+        private void Gui_MouseDown(object sender, MouseEventArgs e)
+        {
+            
+        }
+
+        private void board_MouseDown(object sender, MouseEventArgs e)
+        {
+            Point mouseDownLocation = new Point(e.X, e.Y);
+            Point myPoint = new Point(e.Y / this.getFieldSize().Height, e.X / this.getFieldSize().Width);
+            Console.Out.WriteLine(mouseDownLocation.ToString());
+            Console.Out.WriteLine("Calculated Point: " + myPoint.ToString());
+        }
+
     }
 }

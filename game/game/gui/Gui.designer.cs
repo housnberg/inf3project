@@ -40,6 +40,7 @@
             this.board.Name = "board";
             this.board.Size = new System.Drawing.Size(400, 400);
             this.board.TabIndex = 0;
+            this.board.MouseDown += new System.Windows.Forms.MouseEventHandler(this.board_MouseDown);
             // 
             // chatWindow
             // 
@@ -80,6 +81,7 @@
             this.MaximizeBox = false;
             this.Name = "Gui";
             this.Text = "Game - Inf3 - Group 8";
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Gui_MouseDown);
             this.ResumeLayout(false);
             this.PerformLayout();
 
