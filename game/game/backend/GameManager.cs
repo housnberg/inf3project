@@ -68,6 +68,33 @@ namespace game
             }
         }
 
+        public int[] getOneDimensionalMap()
+        {
+            int[] oneDimensionalMap = new int[map.getWidth() * map.getHeight()];
+            if (map != null)
+            {
+                int counter = 0;
+                Field[,] fields = map.getFields();
+                for (int row = 0; row < map.getHeight(); row++)
+                {
+                    for (int col = 0; col < map.getWidth(); col++)
+                    {
+                        if (fields[row, col].isWalkable())
+                        {
+                            oneDimensionalMap[counter] = 1;
+                        }
+                        else
+                        {
+                            oneDimensionalMap[counter] = 0;
+                        }
+                        counter++;
+                    }
+                }
+            }
+            return oneDimensionalMap;
+            
+        }
+
         /// <summary>
         /// Creates a default Game with a default Map and default Entities
         /// </summary>

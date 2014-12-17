@@ -282,6 +282,7 @@ namespace game.gui
             Point myPoint = new Point(e.Y / this.getFieldSize().Height, e.X / this.getFieldSize().Width);
             Console.Out.WriteLine(mouseDownLocation.ToString());
             Console.Out.WriteLine("Calculated Point: " + myPoint.ToString());
+            //gameManager.getOneDimensionalMap();
         }
 
     }
