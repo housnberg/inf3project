@@ -457,20 +457,6 @@ namespace game
         }
 
         /// <summary>
-        /// converts a 2 dimensional coordinate for a given point
-        /// </summary>
-        /// <param name="point">1 dimensional point</param>
-        /// <param name="mapWidth">width of the map</param>
-        /// <returns>arra of the 2 dimensional coordinate (coord[0]=col=x, coord[1]=row=y)</returns>
-        public int[] pointToCoordinate(int point, int mapWidth)
-        {
-            int[] coord = new int[2];
-            coord[0] = point % mapWidth;
-            coord[1] = point / mapWidth;
-            return coord;
-        }
-
-        /// <summary>
         /// Forces the GUI to repaint
         /// </summary>
         public void refreshGui()
