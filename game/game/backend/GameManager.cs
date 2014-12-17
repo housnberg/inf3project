@@ -12,11 +12,18 @@ using game.gui;
 using System.Windows.Forms;
 using System.Threading;
 using game.backend;
+using System.Runtime.InteropServices;
+using System.IO;
 
 namespace game
 {
     public class GameManager
     {
+
+
+        [DllImport("PathFinder.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern IntPtr findPath(int from, int to, int[] map, int mapw, int maph, int plength);
+
         private int numberOfPlayers;
         private Map map;
         private Connector connector;
@@ -27,7 +34,8 @@ namespace game
         private String ip;
         private UInt16 port;
         private Player thisPlayer;
-       
+        private PathWalker pwInstance = PathWalker.getPathWalkerInstance();
+        
    
         /// <summary>
         /// constructor creates only one game instance
@@ -478,40 +486,23 @@ namespace game
 
         }
 
-        /// <summary>
-        /// This method brings the token to the destination
-        /// </summary>
-        public void PathWalker(int [] step){
-            int x = step[0];
-            int y = step[1];
-            
-       
-
+        public void takePath(int row, int col)
+        {
+            try
+            {
+                int[] path = new int[32];
+                Console.WriteLine("Found DLL: " + File.Exists("PathFinder.dll"));
+                IntPtr pointer = findPath(1, 11, path, map.getWidth(), map.getHeight(), 32);
+                Marshal.Copy(pointer, path, 0, path.Length);
+                pwInstance.setPath(path);
+                pwInstance.setMapWidth(map.getWidth());
+                pwInstance.walk();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
-
-
-        /// <summary>
-        /// This method create an array contains the way to the distination in reverse order
-        /// </summary>
-        public int [] getWayToDestinaton(){
-           //int[] path = new int[32];
-           //IntPtr pointer = findPath(1, 27, map, width, height, 32);
-           //foreach (int i in path)
-           //{
-           //     if (i <= width * height && i >= 0)
-           //     {
-           //             Console.Write(i + " ");
-           //     }
-           //     }
-           // }
-           
-
-          return null;
-        }
-            
-       
-
-
 
 
         public void startGui()

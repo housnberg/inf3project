@@ -13,12 +13,9 @@ namespace game.backend
         private int[] path;
         private bool walking = false;
 
-        private PathWalker()
-        {
+        private PathWalker() {}
 
-        }
-
-        public PathWalker getPathWalkerInstance() 
+        public static PathWalker getPathWalkerInstance() 
         {
             return PathWalkerInstance;
         }
