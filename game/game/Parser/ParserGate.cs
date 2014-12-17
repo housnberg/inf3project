@@ -512,9 +512,9 @@ namespace game.Parser
                     if (value is Player)
                     {
                         Player player = (Player)value;
-                        gameManager.replaceToken(player);
+                        gameManager.setThisPlayer(player);
                     }
-                    drawGui();
+                    //drawGui();
                 }
                 else if (toDo.Equals("Entities") && value != null)
                 {

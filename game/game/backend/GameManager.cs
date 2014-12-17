@@ -26,6 +26,7 @@ namespace game
         private Gui gui;
         private String ip;
         private UInt16 port;
+        private Player thisPlayer;
        
    
         /// <summary>
@@ -138,6 +139,7 @@ namespace game
             gui = new Gui();
             this.sendCommand("get:map");
             this.sendCommand("get:ents");
+            this.sendCommand("get:me");
            
         }
 
@@ -420,7 +422,9 @@ namespace game
                     {
                         //players.Remove(players[count]);
                         //players.Add(player);
-                        players[count] = (Player)token;
+                        //players[count] = (Player)token;
+                        players[count].setXPos(player.getXPos());
+                        players[count].setYPos(player.getYPos());
                         found = true;
                     }
                     else
@@ -444,7 +448,9 @@ namespace game
                         //dragons.Remove(dragons[count]);
                         //dragons.Add(dragon);
                         //found = true;
-                        dragons[count] = dragon;
+                        //dragons[count] = dragon;
+                        dragons[count].setXPos(dragon.getXPos());
+                        dragons[count].setYPos(dragon.getYPos());
                         found = true;
                     }
                     else
@@ -526,6 +532,28 @@ namespace game
         public void drawMessage(String message)
         {
             gui.appendChatMessage(message);
+        }
+
+        public void setThisPlayer(Player player)
+        {
+            Boolean found = false;
+            int count = 0;
+                while (found != true)
+                {
+                    if (count == players.Count)
+                    {
+                        found = true;
+                    }
+                    else if (players.Count > 0 && players[count].getID() == player.getID())
+                    {
+                        this.thisPlayer = players[count];
+                        found = true;
+                    }
+                    else
+                    {
+                        count++;
+                    }
+              }    
         }
     }
 }
