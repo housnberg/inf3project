@@ -34,7 +34,7 @@ namespace game
         private String ip;
         private UInt16 port;
         private Player thisPlayer;
-        private PathWalker pwInstance = PathWalker.getPathWalkerInstance();
+        private PathWalker pwInstance;
         
    
         /// <summary>
@@ -55,6 +55,7 @@ namespace game
                     this.ip = ip;
                     this.port = port;
                     GameManager.gameManager = this;
+                    pwInstance = PathWalker.getPathWalkerInstance();
                 }
             }
             catch (Exception e)
@@ -517,13 +518,20 @@ namespace game
         {
             try
             {
-                int[] path = new int[32];
-                Console.WriteLine("Found DLL: " + File.Exists("PathFinder.dll"));
-                IntPtr pointer = findPath(1, 11, path, map.getWidth(), map.getHeight(), 32);
-                Marshal.Copy(pointer, path, 0, path.Length);
-                pwInstance.setPath(path);
-                pwInstance.setMapWidth(map.getWidth());
-                pwInstance.walk();
+                if (!pwInstance.isWalking()) {
+                    int[] path = new int[32];
+                    int[] oneDimensionalMap = this.getOneDimensionalMap();
+                    int from = coordinateToPoint(thisPlayer.getYPos(), thisPlayer.getXPos());
+                    Console.WriteLine("FROM: " + from);
+                    int to = coordinateToPoint(row, col);
+                    Console.WriteLine("TO: " + to);
+                    Console.WriteLine("Found DLL: " + File.Exists("PathFinder.dll"));
+                    IntPtr pointer = findPath(from, to, oneDimensionalMap, map.getWidth(), map.getHeight(), 32);
+                    Marshal.Copy(pointer, path, 0, path.Length);
+                    pwInstance.setPath(path);
+                    pwInstance.setMapWidth(map.getWidth());
+                    pwInstance.walk(thisPlayer.getYPos(), thisPlayer.getXPos());
+                }
             }
             catch (Exception e)
             {
@@ -531,6 +539,9 @@ namespace game
             }
         }
 
+        private int coordinateToPoint(int row, int col) {
+            return (row * map.getWidth() + col);
+        }
 
         public void startGui()
         {

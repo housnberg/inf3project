@@ -125,11 +125,11 @@ namespace PathFinder {
 			Node* prev = ref;
 			cout << "FOUND THE FOLLOWING PATH (BACKWARDS)\n";
 			while (prev->getId() != from) {
-				//path[count] = prev->getId();
+				count++;
 				prev = prev->getPrev();
 				path[count] = prev->getId();
-				count++;
 			}
+			path[0] = count;
 			if (count > pathLength) {
 				path = 0;
 			}

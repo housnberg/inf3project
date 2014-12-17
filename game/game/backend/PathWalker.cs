@@ -8,10 +8,12 @@ namespace game.backend
 {
     class PathWalker
     {
+        private GameManager gameManager = GameManager.getGameManagerInstance();
         private static PathWalker PathWalkerInstance = new PathWalker();
-        private int index = 0;
+        private int index = 1;
         private int[] path;
         private bool walking = false;
+        private int width;
 
         private PathWalker() {}
 
@@ -38,41 +40,62 @@ namespace game.backend
             }
         }
 
-        public void walk(int rowPlayer, int colPlayer)
+        public void walk(int colPlayer, int rowPlayer)
         {
             if (walking)
             {
-                int[] coord = pointToCoordinate(path[index++], 10);
-                int col = coord[0];
-                int row = coord[1];
-                if (row == rowPlayer)
+                int anzPfade = path[0];
+                if (index <= anzPfade)
                 {
-                    if (col < colPlayer)
+                    int[] coord = pointToCoordinate(path[index++], width);
+                    int col = coord[0];
+                    Console.WriteLine("COL PATH: " + col);
+                    Console.WriteLine("COL PLAYER: " + colPlayer);
+                    int row = coord[1];
+                    Console.WriteLine("ROW PATH: " + row);
+                    Console.WriteLine("ROW PLAYER: " + rowPlayer);
+                    if (gameManager != null)
+                        Console.WriteLine("DER GAME MANAGER IST NICHT NULL");
+                    if (row == rowPlayer)
                     {
-                        //move up
+                        if (col < colPlayer)
+                        {
+                            gameManager.sendCommand("ask:mv:up");
+                        }
+                        else
+                        {
+                            gameManager.sendCommand("ask:mv:dwn");
+                        }
+                    }
+                    else if (col == colPlayer)
+                    {
+                        if (row < rowPlayer)
+                        {
+                            gameManager.sendCommand("ask:mv:lft");
+                        }
+                        else
+                        {
+                            gameManager.sendCommand("ask:mv:rgt");
+                        }
                     }
                     else
                     {
-                        //move down
-                    }
-                }
-                else if (col == colPlayer)
-                {
-                    if (row < rowPlayer)
-                    {
-                        //move left
-                    }
-                    else
-                    {
-                        //move right
+                        throw new Exception("unable to move");
                     }
                 }
                 else
                 {
-                    throw new Exception("unable to move");
+                    stopWalking();
                 }
             }
 
+        }
+
+        private void stopWalking()
+        {
+            index = 1;
+            path = null;
+            walking = false;
         }
 
         /// <summary>
@@ -80,13 +103,18 @@ namespace game.backend
         /// </summary>
         /// <param name="point">1 dimensional point</param>
         /// <param name="mapWidth">width of the map</param>
-        /// <returns>arra of the 2 dimensional coordinate (coord[0]=col=x, coord[1]=row=y)</returns>
+        /// <returns>arra of the 2 dimensional coordinate (coord[0]=col, coord[1]=row)</returns>
         public int[] pointToCoordinate(int point, int mapWidth)
         {
             int[] coord = new int[2];
-            coord[0] = point % mapWidth;
-            coord[1] = point / mapWidth;
+            coord[1] = point % mapWidth;
+            coord[0] = point / mapWidth;
             return coord;
+        }
+
+        public void setMapWidth(int width)
+        {
+            this.width = width;
         }
     }
 }

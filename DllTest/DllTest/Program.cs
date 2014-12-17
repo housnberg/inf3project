@@ -40,7 +40,13 @@ namespace DllTest
                 IntPtr pointer = findPath(1, 11, map, width, height, 32);
                 Marshal.Copy(pointer, path, 0, path.Length);
                 Console.WriteLine("Returned Path:");
-                foreach (int i in path)
+                int anzPfade = path[0];
+                for (int i = 1; i <= anzPfade; i++)
+                {
+                    int[] coord = pointToCoordinate(path[i], width);
+                    Console.Write(coord[0] + "|" + coord[1] + " ");
+                }
+                /*foreach (int i in path)
                 {
                     if (i <= width * height && i >= 0)
                     {
@@ -48,7 +54,7 @@ namespace DllTest
                         int[] coord = pointToCoordinate(i, width);
                         Console.Write(coord[0] + "|" + coord[1] + " ");
                     }
-                }
+                }*/
             }
             catch (Exception e)
             {
