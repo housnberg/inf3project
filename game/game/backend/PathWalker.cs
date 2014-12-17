@@ -17,6 +17,10 @@ namespace game.backend
 
         private PathWalker() {}
 
+        /// <summary>
+        /// singleton
+        /// </summary>
+        /// <returns>returns the only possible PathWalker instance</returns>
         public static PathWalker getPathWalkerInstance() 
         {
             return PathWalkerInstance;
@@ -40,6 +44,12 @@ namespace game.backend
             }
         }
 
+        /// <summary>
+        /// will be called by the GameManager and/or PlayerObserver when a user clicks on a map cell.
+        /// finds the right server-command for a given destination.
+        /// </summary>
+        /// <param name="colPlayer">column of the player</param>
+        /// <param name="rowPlayer">row of the player</param>
         public void walk(int colPlayer, int rowPlayer)
         {
             if (walking)
@@ -49,13 +59,7 @@ namespace game.backend
                 {
                     int[] coord = pointToCoordinate(path[index++], width);
                     int col = coord[0];
-                    Console.WriteLine("COL PATH: " + col);
-                    Console.WriteLine("COL PLAYER: " + colPlayer);
                     int row = coord[1];
-                    Console.WriteLine("ROW PATH: " + row);
-                    Console.WriteLine("ROW PLAYER: " + rowPlayer);
-                    if (gameManager != null)
-                        Console.WriteLine("DER GAME MANAGER IST NICHT NULL");
                     if (row == rowPlayer)
                     {
                         if (col < colPlayer)
@@ -91,6 +95,9 @@ namespace game.backend
 
         }
 
+        /// <summary>
+        /// resets all needed attributes to default values after the PathWalker finishes walking.
+        /// </summary>
         private void stopWalking()
         {
             index = 1;
@@ -99,11 +106,11 @@ namespace game.backend
         }
 
         /// <summary>
-        /// converts a 2 dimensional coordinate for a given point
+        /// converts a two dimensional coordinate for a given point
         /// </summary>
         /// <param name="point">1 dimensional point</param>
         /// <param name="mapWidth">width of the map</param>
-        /// <returns>arra of the 2 dimensional coordinate (coord[0]=col, coord[1]=row)</returns>
+        /// <returns>array of the 2 dimensional coordinate (coord[0]=col, coord[1]=row)</returns>
         public int[] pointToCoordinate(int point, int mapWidth)
         {
             int[] coord = new int[2];

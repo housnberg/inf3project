@@ -514,6 +514,12 @@ namespace game
 
         }
 
+        /// <summary>
+        /// will be called by the gui when the user clicks on a map cell.
+        /// this method uses the PathFinder.dll
+        /// </summary>
+        /// <param name="row">row of the clicked cell</param>
+        /// <param name="col">column of the clicked cell</param>
         public void takePath(int row, int col)
         {
             try
@@ -539,6 +545,12 @@ namespace game
             }
         }
 
+        /// <summary>
+        /// converts a two dimensioal coordinate to a one dimensional point
+        /// </summary>
+        /// <param name="row">row of the coordinate</param>
+        /// <param name="col">column of the coordinate</param>
+        /// <returns></returns>
         private int coordinateToPoint(int row, int col) {
             return (row * map.getWidth() + col);
         }
