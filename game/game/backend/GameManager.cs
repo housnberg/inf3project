@@ -553,7 +553,7 @@ namespace game
         /// </summary>
         /// <param name="row">row of the coordinate</param>
         /// <param name="col">column of the coordinate</param>
-        /// <returns></returns>
+        /// <returns>converted coordinate</returns>
         private int coordinateToPoint(int row, int col) {
             return (row * map.getWidth() + col);
         }
