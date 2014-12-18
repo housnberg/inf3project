@@ -51,10 +51,13 @@
     <Compile Include="backend\Field.cs" />
     <Compile Include="backend\FieldType.cs" />
     <Compile Include="backend\GameManager.cs" />
+    <Compile Include="backend\IAmObservable.cs" />
+    <Compile Include="backend\IObserver.cs" />
     <Compile Include="backend\Map.cs" />
     <Compile Include="backend\Minigame.cs" />
     <Compile Include="backend\PathWalker.cs" />
     <Compile Include="backend\Player.cs" />
+    <Compile Include="backend\PlayerObserver.cs" />
     <Compile Include="gui\Gui.cs">
       <SubType>Form</SubType>
     </Compile>
