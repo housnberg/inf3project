@@ -9,13 +9,13 @@ namespace game.backend
     interface IAmObservable<PlayerObserver>
     {
 
-        public void addObserver(PlayerObserver observer);
-        public void deleteObserver(PlayerObserver observer);
-        public void deleteAllObservers();
-        public void onIdChange();
-        public void onIsBusyChange();
-        public void onDescChange();
-        public void onPosChange();
-        public void onPointChange();
+        void addObserver(PlayerObserver observer);
+        void deleteObserver(PlayerObserver observer);
+        void deleteAllObservers();
+        void IdChange();
+        void IsBusyChange();
+        void DescChange();
+        void PosChange();
+        void PointChange();
     }
 }

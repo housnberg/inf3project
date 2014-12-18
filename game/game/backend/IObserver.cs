@@ -8,6 +8,10 @@ namespace game.backend
 {
     interface IObserver
     {
-        public void getUpdate();
+        void onIdChange();
+        void onIsBusyChange();
+        void onDescChange();
+        void onPosChange();
+        void onPointChange();
     }
 }

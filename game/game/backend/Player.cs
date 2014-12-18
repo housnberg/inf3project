@@ -17,45 +17,46 @@ namespace game
             : base(id, isBusy, desc, x, y, points)
         {
             this.setType("Player");
+            this.addObserver(new PlayerObserver()); //for test purpose
         }
 
 
 
 
-        public override void setID(int id)
+        public new void setID(int id)
         {
             base.setID(id);
-            this.onIdChange();
+            this.IdChange();
         }
 
-        public override void setBusy(bool busy)
+        public void setBusy(bool busy)
         {
             base.setBusy(busy);
-            this.onIsBusyChange();
+            this.IsBusyChange();
         }
 
-        public override void setDesc(String desc)
+        public void setDesc(String desc)
         {
             base.setDesc(desc);
-            this.onDescChange();
+            this.DescChange();
         }
 
-        public override void setXPos(int xPos)
+        public void setXPos(int xPos)
         {
             base.setXPos(xPos);
-            this.onPosChange();
+            this.PosChange();
         }
 
-        public override void setYPos(int yPos)
+        public void setYPos(int yPos)
         {
             base.setYPos(yPos);
-            this.onPosChange();
+            this.PosChange();
         }
 
-        public override void setPoints(int points)
+        public void setPoints(int points)
         {
             base.setPoints(points);
-            this.onPointChange();
+            this.PointChange();
         }
 
         public void addObserver(PlayerObserver observer)
@@ -89,7 +90,7 @@ namespace game
             }
         }
 
-        public void onIdChange()
+        public void IdChange()
         {
             if (this.observerList != null)
             {
@@ -103,7 +104,7 @@ namespace game
             }
         }
 
-        public void onIsBusyChange()
+        public void IsBusyChange()
         {
             if (this.observerList != null)
             {
@@ -117,7 +118,7 @@ namespace game
             }
         }
 
-        public void onDescChange()
+        public void DescChange()
         {
             if (this.observerList != null)
             {
@@ -131,7 +132,7 @@ namespace game
             }
         }
 
-        public void onPosChange()
+        public void PosChange()
         {
             if (this.observerList != null)
             {
@@ -145,7 +146,7 @@ namespace game
             }
         }
 
-        public void onPointChange()
+        public void PointChange()
         {
             if (this.observerList != null)
             {
