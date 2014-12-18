@@ -98,7 +98,7 @@ namespace game.backend
         /// <summary>
         /// resets all needed attributes to default values after the PathWalker finishes walking.
         /// </summary>
-        private void stopWalking()
+        public void stopWalking()
         {
             index = 1;
             path = null;
