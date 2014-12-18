@@ -534,19 +534,16 @@ namespace game
                     int[] path = new int[32];
                     int[] oneDimensionalMap = this.getOneDimensionalMap();
                     int from = coordinateToPoint(thisPlayer.getYPos(), thisPlayer.getXPos());
-                    Console.WriteLine("FROM: " + from);
                     int to = coordinateToPoint(row, col);
-                    Console.WriteLine("TO: " + to);
                     IntPtr pointer = findPath(from, to, oneDimensionalMap, map.getWidth(), map.getHeight(), 32);
                     Marshal.Copy(pointer, path, 0, path.Length);
-                    //freeArray(pointer);
                     pwInstance.setPath(path);
-                    pwInstance.setMapWidth(map.getWidth());
                     pwInstance.walk(thisPlayer.getYPos(), thisPlayer.getXPos());
                 }
             }
             catch (Exception e)
             {
+                pwInstance.stopWalking();
                 Console.WriteLine(e.Message);
             }
         }
@@ -559,6 +556,20 @@ namespace game
         /// <returns></returns>
         private int coordinateToPoint(int row, int col) {
             return (row * map.getWidth() + col);
+        }
+
+        /// <summary>
+        /// converts a two dimensional coordinate for a given point
+        /// </summary>
+        /// <param name="point">1 dimensional point</param>
+        /// <param name="mapWidth">width of the map</param>
+        /// <returns>array of the 2 dimensional coordinate (coord[0]=col, coord[1]=row)</returns>
+        public int[] pointToCoordinate(int point)
+        {
+            int[] coord = new int[2];
+            coord[1] = point % map.getWidth();
+            coord[0] = point / map.getWidth();
+            return coord;
         }
 
         public void startGui()

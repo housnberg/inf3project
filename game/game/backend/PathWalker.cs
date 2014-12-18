@@ -13,7 +13,6 @@ namespace game.backend
         private int index = 1;
         private int[] path;
         private bool walking = false;
-        private int width;
 
         private PathWalker() {}
 
@@ -24,11 +23,6 @@ namespace game.backend
         public static PathWalker getPathWalkerInstance() 
         {
             return PathWalkerInstance;
-        }
-
-        public bool isWalking()
-        {
-            return walking;
         }
 
         public void setPath(int[] path)
@@ -45,6 +39,15 @@ namespace game.backend
         }
 
         /// <summary>
+        /// returns whether the PathWalker is running or not
+        /// </summary>
+        /// <returns></returns>
+        public bool isWalking()
+        {
+            return walking;
+        }
+
+        /// <summary>
         /// will be called by the GameManager and/or PlayerObserver when a user clicks on a map cell.
         /// finds the right server-command for a given destination.
         /// </summary>
@@ -57,7 +60,7 @@ namespace game.backend
                 int anzPfade = path[0];
                 if (index <= anzPfade)
                 {
-                    int[] coord = pointToCoordinate(path[index++], width);
+                    int[] coord = gameManager.pointToCoordinate(path[index++]);
                     int col = coord[0];
                     int row = coord[1];
                     if (row == rowPlayer)
@@ -103,25 +106,6 @@ namespace game.backend
             index = 1;
             path = null;
             walking = false;
-        }
-
-        /// <summary>
-        /// converts a two dimensional coordinate for a given point
-        /// </summary>
-        /// <param name="point">1 dimensional point</param>
-        /// <param name="mapWidth">width of the map</param>
-        /// <returns>array of the 2 dimensional coordinate (coord[0]=col, coord[1]=row)</returns>
-        public int[] pointToCoordinate(int point, int mapWidth)
-        {
-            int[] coord = new int[2];
-            coord[1] = point % mapWidth;
-            coord[0] = point / mapWidth;
-            return coord;
-        }
-
-        public void setMapWidth(int width)
-        {
-            this.width = width;
         }
     }
 }
