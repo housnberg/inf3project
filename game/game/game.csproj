@@ -53,6 +53,8 @@
     <Compile Include="backend\GameManager.cs" />
     <Compile Include="backend\Map.cs" />
     <Compile Include="backend\Minigame.cs" />
+    <Compile Include="backend\Observable.cs" />
+    <Compile Include="backend\Observer.cs" />
     <Compile Include="backend\PathWalker.cs" />
     <Compile Include="backend\Player.cs" />
     <Compile Include="gui\Gui.cs">
