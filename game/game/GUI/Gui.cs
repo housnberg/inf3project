@@ -159,11 +159,22 @@ namespace game.gui
         protected void drawPlayer(Graphics graphics, Player player)
         {
             Size tileSize = this.getFieldSize();
-            String drawString = "P"+player.getID();
-            Font drawFont = new Font("Arial", 9, FontStyle.Bold);
-            SolidBrush drawBrush = new SolidBrush(Color.Black);
-            PointF drawPoint = new PointF( player.getXPos() * tileSize.Width, player.getYPos() * tileSize.Height + tileSize.Height / 2 - tileSize.Height / 4);
-            graphics.DrawString(drawString, drawFont, drawBrush, drawPoint);
+            
+            //if (player.getID() == gameManager.getThisPlayer().getID())
+            //{
+            //    Image myImage = Image.FromFile("C:\\Users\\Kosta\\Dropbox\\Studium\\GitRepo\\inf3project2\\game\\game\\bild1.png");
+            //    Point ulCorner = new Point(player.getXPos() * tileSize.Height, player.getYPos() * tileSize.Width);
+            //    graphics.DrawImage(myImage, ulCorner);
+            //}
+            //else
+            //{
+                String drawString = "P" + player.getID();
+                Font drawFont = new Font("Arial", 9, FontStyle.Bold);
+                SolidBrush drawBrush = new SolidBrush(Color.Black);
+                PointF drawPoint = new PointF(player.getXPos() * tileSize.Width, player.getYPos() * tileSize.Height + tileSize.Height / 2 - tileSize.Height / 4);
+                graphics.DrawString(drawString, drawFont, drawBrush, drawPoint);
+            //}
+            
         }
 
         /// <summary>

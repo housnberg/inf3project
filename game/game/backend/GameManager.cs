@@ -561,5 +561,14 @@ namespace game
                     }
               }    
         }
+
+        /// <summary>
+        /// Returns this Player
+        /// </summary>
+        /// <returns>Returns this Player</returns>
+        public Player getThisPlayer()
+        {
+            return thisPlayer;
+        }
     }
 }
