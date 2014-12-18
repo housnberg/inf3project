@@ -531,11 +531,12 @@ namespace game
             try
             {
                 if (!pwInstance.isWalking()) {
-                    int[] path = new int[32];
+                    int pathLength = map.getWidth() * map.getHeight() / 4;
+                    int[] path = new int[pathLength];
                     int[] oneDimensionalMap = this.getOneDimensionalMap();
                     int from = coordinateToPoint(thisPlayer.getYPos(), thisPlayer.getXPos());
                     int to = coordinateToPoint(row, col);
-                    IntPtr pointer = findPath(from, to, oneDimensionalMap, map.getWidth(), map.getHeight(), 32);
+                    IntPtr pointer = findPath(from, to, oneDimensionalMap, map.getWidth(), map.getHeight(), pathLength);
                     Marshal.Copy(pointer, path, 0, path.Length);
                     pwInstance.setPath(path);
                     pwInstance.walk(thisPlayer.getYPos(), thisPlayer.getXPos());
