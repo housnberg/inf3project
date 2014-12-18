@@ -8,6 +8,9 @@ namespace game.backend
 {
     public class PlayerObserver : IObserver
     {
+        PathWalker pwInstance = PathWalker.getPathWalkerInstance();
+        GameManager gameManager = GameManager.getGameManagerInstance();
+
         public void onIdChange()
         {
             Console.WriteLine("Player ID has changed.");
@@ -26,6 +29,7 @@ namespace game.backend
         public void onPosChange()
         {
             Console.WriteLine("Player position has changed.");
+            pwInstance.walk(gameManager.getThisPlayer().getYPos(), gameManager.getThisPlayer().getXPos());
         }
 
         public void onPointChange()
