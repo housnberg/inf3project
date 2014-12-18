@@ -98,7 +98,7 @@ namespace game
                 {
                     foreach (PlayerObserver playerObserver in this.observerList)
                     {
-
+                        playerObserver.onIdChange();
                     }
                 }
             }
@@ -112,7 +112,7 @@ namespace game
                 {
                     foreach (PlayerObserver playerObserver in this.observerList)
                     {
-
+                        playerObserver.onIsBusyChange();
                     }
                 }
             }
@@ -126,7 +126,7 @@ namespace game
                 {
                     foreach (PlayerObserver playerObserver in this.observerList)
                     {
-
+                        playerObserver.onDescChange();
                     }
                 }
             }
@@ -140,7 +140,7 @@ namespace game
                 {
                     foreach (PlayerObserver playerObserver in this.observerList)
                     {
-
+                        playerObserver.onPosChange();
                     }
                 }
             }
