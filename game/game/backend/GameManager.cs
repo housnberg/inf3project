@@ -536,7 +536,7 @@ namespace game
                     int[] oneDimensionalMap = this.getOneDimensionalMap();
                     int from = coordinateToPoint(thisPlayer.getYPos(), thisPlayer.getXPos());
                     int to = coordinateToPoint(row, col);
-                    IntPtr pointer = findPath(from, to, oneDimensionalMap, map.getWidth(), map.getHeight(), pathLength);
+                    IntPtr pointer = findPath(from, to, oneDimensionalMap, map.getWidth(), map.getHeight(), path.Length);
                     Marshal.Copy(pointer, path, 0, path.Length);
                     pwInstance.setPath(path);
                     pwInstance.walk(thisPlayer.getYPos(), thisPlayer.getXPos());
