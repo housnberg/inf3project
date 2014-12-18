@@ -67,6 +67,10 @@ namespace game
  
         }
 
+        /// <summary>
+        /// Sets Map Attribute
+        /// </summary>
+        /// <param name="map">Map to be set the 'Game Map'</param>
         public void setMap(Map map)
         {
             if (map != null)
@@ -79,6 +83,10 @@ namespace game
             }
         }
 
+        /// <summary>
+        /// Converts the 2D-Map to a 1D Map
+        /// </summary>
+        /// <returns>int[] Map illustrated as an 1D Array</returns>
         public int[] getOneDimensionalMap()
         {
             int[] oneDimensionalMap = new int[map.getWidth() * map.getHeight()];
@@ -104,63 +112,6 @@ namespace game
             }
             return oneDimensionalMap;
             
-        }
-
-        /// <summary>
-        /// Creates a default Game with a default Map and default Entities
-        /// </summary>
-        private void createDefaultGame()
-        {
-            createDefaultEntities();
-        }
-
-        /// <summary>
-        /// Creates default entities, called by createDefaultGame()
-        /// </summary>
-        private void createDefaultEntities()
-        {
-            Dragon dragon = new Dragon(3, false, "Dragon 3", 5, 5);
-            //Player playerOne = new Player(5, 1);
-            //Player playerTwo = new Player(4, 1);
-
-            //playerOne.setID(1);
-            //playerTwo.setID(2);
-
-            dragons.Add(dragon);
-            //players.Add(playerOne);
-            //players.Add(playerTwo);
-        }
-
-        /// <summary>
-        /// Creates default Map with a WALL-Border and WALKABLE-Fields in the middle
-        /// </summary>
-        /// <returns>Default Map to illustrate on the Frontend</returns>
-        private Map createDefaultMap()
-        {
-            Map map = new Map(10, 10);
-            this.map = map;
-            Field f;
-            List<FieldType> attributes = new List<FieldType>();
-            for (int i = 0; i < map.getHeight(); i++)
-            {
-                for (int j = 0; j < map.getWidth(); j++)
-                {
-                    attributes = new List<FieldType>();
-                    if (i == 0 || j == 0 || i == map.getHeight() - 1 || j == map.getWidth() - 1)
-                    {
-                        attributes.Add(FieldType.WALL);
-                        f = new Field(i, j, attributes);
-                        map.setField(f);
-                    }
-                    else
-                    {
-                        attributes.Add(FieldType.WALKABLE);
-                        f = new Field(i, j, attributes);
-                        map.setField(f);
-                    }
-                }
-            }
-            return map;
         }
 
         /// <summary>
@@ -275,38 +226,13 @@ namespace game
             }
         }
 
-        public Token findToken(Token token)
+        /// <summary>
+        /// Adds the dragon to the game
+        /// </summary>
+        /// <param name="dragon">Dragon to be stored in the 'dragons'-List</param>
+        public void storeDragon(Dragon dragon)
         {
-            Token wanted = null;
-            if (token is Player)
-            {
-                foreach (Player p in players)
-                {
-                    if (p.getID() == token.getID())
-                    {
-                        wanted = p;
-                        break;
-                    }
-                }
-            }
-            else
-            {
-                foreach (Dragon d in dragons)
-                {
-                    if (d.getID() == token.getID())
-                    {
-                        wanted = d;
-                        break;
-                    }
-                }
-            }
-            return wanted;
-            
-        }
-
-        public void storeDragon(Dragon d)
-        {
-            dragons.Add(d);
+            dragons.Add(dragon);
         }
 
         /// <summary>
@@ -319,15 +245,13 @@ namespace game
             Boolean found = false;
             int counter = 0;
             Player player = null;
-
             try
             {
-
                 if (id <= 0)
                 {
                     throw new ArgumentException("The ID " + id + " is not valid! Only IDs > 0 are allowed!");
                 }
-               
+
                 do
                 {
                     player = players.ElementAt(counter);
@@ -340,7 +264,6 @@ namespace game
                     {
                         counter++;
                     }
-                    
 
                 } while (found != true);
 
@@ -392,6 +315,9 @@ namespace game
             Contract.Requires(map != null);
         }
 
+        /// <summary>
+        /// Deletes the current Map of the game. Called by the Parser.
+        /// </summary>
         public void deleteMap()
         {
             this.map = null;
@@ -400,52 +326,70 @@ namespace game
         /// <summary>
         /// Returns the number of Players participating in the game
         /// </summary>
+        /// <returns>Integer-Number of players participatinh in the game</returns>
         public int getNumberOfPlayers()
         {
             return numberOfPlayers;
         }
 
+        /// <summary>
+        /// Returns the Map of the game
+        /// </summary>
+        /// <returns>Map-Object which is the Map of the game</returns>
         public Map getMap()
         {
             return this.map;
         }
       
+        /// <summary>
+        /// Returns the Height of the Map
+        /// </summary>
+        /// <returns>Integer value representing the Height of the Map</returns>
         public int getMapHeight()
         {
             return this.map.getHeight();
         }
 
+        /// <summary>
+        /// Returns the Width of the Map
+        /// </summary>
+        /// <returns>Integer value representing the Width of the Map</returns>
         public int getMapWidth()
         {
             return this.map.getWidth();
         }
 
+        /// <summary>
+        /// Retuns the specific GameManagerObject; Adapted Singleton Architecture
+        /// </summary>
+        /// <returns>Singleton of GameManager</returns>
         public static GameManager getGameManagerInstance()
         {
             return GameManager.gameManager;
         }
 
-
+        /// <summary>
+        /// Returns the List of the Players participating in the game
+        /// </summary>
+        /// <returns>Players-List of the game</returns>
         public List<Player> getPlayers()
         {
             return this.players;
         }
 
+        /// <summary>
+        /// Returns the List of the Dragons participating in the game
+        /// </summary>
+        /// <returns>Dragons-List of the game</returns>
         public List<Dragon> getDragons()
         {
             return this.dragons;
         }
 
-        public Connector getConnector()
-        {
-            return this.connector;
-        }
-
-        public Gui getGui()
-        {
-            return gui;
-        }
-
+        /// <summary>
+        /// Searches for a Token in this game. Modifies x/y Coordinates if Token already exists, else a new Token is stored; called by the Parser
+        /// </summary>
+        /// <param name="token">Token to be either modified or stored</param>
         public void replaceToken(Token token)
         {
             Boolean found = false;
@@ -462,9 +406,6 @@ namespace game
                     }
                     else if (players.Count > 0 && players[count].getID() == player.getID())
                     {
-                        //players.Remove(players[count]);
-                        //players.Add(player);
-                        //players[count] = (Player)token;
                         players[count].setXPos(player.getXPos());
                         players[count].setYPos(player.getYPos());
                         found = true;
@@ -487,10 +428,6 @@ namespace game
                     }
                     else if (dragons.Count > 0 && dragons[count].getID() == dragon.getID())
                     {
-                        //dragons.Remove(dragons[count]);
-                        //dragons.Add(dragon);
-                        //found = true;
-                        //dragons[count] = dragon;
                         dragons[count].setXPos(dragon.getXPos());
                         dragons[count].setYPos(dragon.getYPos());
                         found = true;
@@ -573,6 +510,9 @@ namespace game
             return coord;
         }
 
+        /// <summary>
+        /// Starts the Gui
+        /// </summary>
         public void startGui()
         {
             gui = new Gui();
@@ -587,12 +527,19 @@ namespace game
             Contract.Invariant(this.connector != null);
         }
 
-
+        /// <summary>
+        /// Calls GUI Function that appends the Message to the Text box
+        /// </summary>
+        /// <param name="message">Message to be appended on the Text Box</param>
         public void drawMessage(String message)
         {
             gui.appendChatMessage(message);
         }
 
+        /// <summary>
+        /// Sets the client started the game to thisPlayer
+        /// </summary>
+        /// <param name="player">Player-Representation of the client</param>
         public void setThisPlayer(Player player)
         {
             Boolean found = false;

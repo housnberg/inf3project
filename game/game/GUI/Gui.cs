@@ -261,7 +261,7 @@ namespace game.gui
 
         /// <summary>
         /// Appends a chat-message to the chat-window as a new line. Can be called from the backend or other participants to display incoming chat-messages.
-        /// Messages will always be displays in the fasion of:
+        /// Messages will always be displays in the fashion of:
         /// sender: message
         /// </summary>
         /// <param name="source">the source of the message</param>
@@ -271,16 +271,14 @@ namespace game.gui
             this.chatWindow.AppendText(source + ": " + message + "\r\n");
         }
 
-        private void Gui_MouseDown(object sender, MouseEventArgs e)
-        {
-            
-        }
-
+        /// <summary>
+        /// Listens to Mouse-Presses done on the game Board. Converts the calculatet Coordinates to Game Coordinates
+        /// </summary>
+        /// <param name="sender">Sender that made an action for an event to happen</param>
+        /// <param name="e">Mouse-Event triggered by the Sender</param>
         private void board_MouseDown(object sender, MouseEventArgs e)
         {
-            Point mouseDownLocation = new Point(e.X, e.Y);
             Point myPoint = new Point(e.Y / this.getFieldSize().Height, e.X / this.getFieldSize().Width);
-            Console.Out.WriteLine(mouseDownLocation.ToString());
             Console.Out.WriteLine("Calculated Point: " + myPoint.ToString());
             gameManager.takePath(myPoint.X, myPoint.Y);
         }
