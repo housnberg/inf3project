@@ -15,7 +15,7 @@ namespace PathFinder {
 		static const int MAXDISTANCE = 100000;
 		static const int STARTDISTANCE = 0;
 		vector<Node> nodes;
-		bool found = false;
+		bool found;
 		int* path;
 
 		__declspec(dllexport) int* findPath(int from, int to, int* map, int mapWidth, int mapHeight, int pathLength);
@@ -31,6 +31,8 @@ namespace PathFinder {
 		switched the parameters to/from 
 		*/
 		int* findPath(int to, int from, int* map, int mapWidth, int mapHeight, int pathLength) {
+			found = false;
+			nodes.clear();
 			cout << "ENTERED THE DLL AND STARTED THE PATHFINDER\n";
 			if (from == to) {
 				throwErrorMessage("you cannot move here");

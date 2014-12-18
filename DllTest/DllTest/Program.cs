@@ -16,6 +16,21 @@ namespace DllTest
 
         static void Main(string[] args)
         {
+            test(4, 1);
+            test(1, 11);
+            test(11, 1);
+            Console.ReadKey();
+        }
+
+        public static int[] pointToCoordinate(int point, int mapWidth)
+        {
+            int[] coord = new int[2];
+            coord[0] = point % mapWidth;
+            coord[1] = point / mapWidth;
+            return coord;
+        }
+
+        public static void test(int from, int to)  {
             int width = 5;
             int height = 6;
             int[] map = new int[width*height];
@@ -37,7 +52,7 @@ namespace DllTest
             {
                 int[] path = new int[32];
                 Console.WriteLine("Found DLL: " + File.Exists("PathFinder.dll"));
-                IntPtr pointer = findPath(1, 11, map, width, height, 32);
+                IntPtr pointer = findPath(from, to, map, width, height, 32);
                 Marshal.Copy(pointer, path, 0, path.Length);
                 Console.WriteLine("Returned Path:");
                 int anzPfade = path[0];
@@ -46,30 +61,11 @@ namespace DllTest
                     int[] coord = pointToCoordinate(path[i], width);
                     Console.Write(coord[0] + "|" + coord[1] + " ");
                 }
-                /*foreach (int i in path)
-                {
-                    if (i <= width * height && i >= 0)
-                    {
-                        //Console.Write(i + " ");
-                        int[] coord = pointToCoordinate(i, width);
-                        Console.Write(coord[0] + "|" + coord[1] + " ");
-                    }
-                }*/
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }
-            Console.ReadKey();
         }
-
-        public static int[] pointToCoordinate(int point, int mapWidth)
-        {
-            int[] coord = new int[2];
-            coord[0] = point % mapWidth;
-            coord[1] = point / mapWidth;
-            return coord;
-        }
-
     }
 }

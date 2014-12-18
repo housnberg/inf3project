@@ -23,6 +23,8 @@ namespace game
 
         [DllImport("PathFinder.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr findPath(int from, int to, int[] map, int mapw, int maph, int plength);
+        [DllImport("PathFinder.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void freeArray(IntPtr pointer);
 
         private int numberOfPlayers;
         private Map map;
@@ -192,15 +194,19 @@ namespace game
                 {
                     case "lft":
                         connector.sendServerMessage("ask:mv:lft");
+                        pwInstance.stopWalking();
                         break;
                     case "rgt":
                         connector.sendServerMessage("ask:mv:rgt");
+                        pwInstance.stopWalking();
                         break;
                     case "up":
                         connector.sendServerMessage("ask:mv:up");
+                        pwInstance.stopWalking();
                         break;
                     case "dwn":
                         connector.sendServerMessage("ask:mv:dwn");
+                        pwInstance.stopWalking();
                         break;
                     default:
                         connector.sendServerMessage(message);
@@ -531,9 +537,9 @@ namespace game
                     Console.WriteLine("FROM: " + from);
                     int to = coordinateToPoint(row, col);
                     Console.WriteLine("TO: " + to);
-                    Console.WriteLine("Found DLL: " + File.Exists("PathFinder.dll"));
                     IntPtr pointer = findPath(from, to, oneDimensionalMap, map.getWidth(), map.getHeight(), 32);
                     Marshal.Copy(pointer, path, 0, path.Length);
+                    //freeArray(pointer);
                     pwInstance.setPath(path);
                     pwInstance.setMapWidth(map.getWidth());
                     pwInstance.walk(thisPlayer.getYPos(), thisPlayer.getXPos());
