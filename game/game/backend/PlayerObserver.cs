@@ -41,7 +41,15 @@ namespace game.backend
         public void onPosChange()
         {
             Console.WriteLine("Player position has changed.");
-            pwInstance.walk(gameManager.getThisPlayer().getYPos(), gameManager.getThisPlayer().getXPos());
+            try
+            {
+                pwInstance.walk(gameManager.getThisPlayer().getYPos(), gameManager.getThisPlayer().getXPos());
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            
         }
 
         /// <summary>

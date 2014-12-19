@@ -55,6 +55,7 @@ namespace game.backend
         /// <param name="rowPlayer">row of the player</param>
         public void walk(int colPlayer, int rowPlayer)
         {
+            Console.WriteLine("start walking");
             if (walking)
             {
                 int anzPfade = path[0];
@@ -103,6 +104,7 @@ namespace game.backend
         /// </summary>
         public void stopWalking()
         {
+            Console.WriteLine("stop walking");
             index = 1;
             path = null;
             walking = false;
