@@ -406,8 +406,15 @@ namespace game
                     }
                     else if (players.Count > 0 && players[count].getID() == player.getID())
                     {
-                        players[count].setXPos(player.getXPos());
-                        players[count].setYPos(player.getYPos());
+                        if (players[count].getXPos() != player.getXPos())
+                        {
+                            players[count].setXPos(player.getXPos());
+                        }
+                        else if (players[count].getYPos() != player.getYPos())
+                        {
+                           players[count].setYPos(player.getYPos());
+                        }                       
+                       
                         found = true;
                     }
                     else
