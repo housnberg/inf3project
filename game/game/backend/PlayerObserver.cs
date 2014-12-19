@@ -43,14 +43,10 @@ namespace game.backend
             Console.WriteLine("Player position has changed.");
             try
             {
-                if (pwInstance.isWalking())
-                {
-                    pwInstance.walk(gameManager.getThisPlayer().getYPos(), gameManager.getThisPlayer().getXPos());
-                }
+                pwInstance.walk(gameManager.getThisPlayer().getYPos(), gameManager.getThisPlayer().getXPos());
             }
             catch (Exception e)
             {
-                pwInstance.stopWalking();
                 Console.WriteLine(e.Message);
             }
             
