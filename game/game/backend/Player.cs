@@ -26,7 +26,7 @@ namespace game
         /// New setter, calls the IdChange method.
         /// </summary>
         /// <param name="id">the new id</param>
-        public void setID(int id)
+        public new void setID(int id)
         {
             base.setID(id);
             this.IdChange();
@@ -36,7 +36,7 @@ namespace game
         /// New setter, calls the IsBusyChange method.
         /// </summary>
         /// <param name="busy">the new busy status</param>
-        public void setBusy(bool busy)
+        public new void setBusy(bool busy)
         {
             base.setBusy(busy);
             this.IsBusyChange();
@@ -46,7 +46,7 @@ namespace game
         /// New setter, calls the DescChange() method at the end.
         /// </summary>
         /// <param name="desc">the new description</param>
-        public void setDesc(String desc)
+        public new void setDesc(String desc)
         {
             base.setDesc(desc);
             this.DescChange();
@@ -56,7 +56,7 @@ namespace game
         /// New setter, calls the PosChange() method at the end.
         /// </summary>
         /// <param name="xPos">new x-Position</param>
-        public void setXPos(int xPos)
+        public new void setXPos(int xPos)
         {
             base.setXPos(xPos);
             this.PosChange();
@@ -66,7 +66,7 @@ namespace game
         /// New setter, calls the PosChange() method at the end.
         /// </summary>
         /// <param name="yPos">the new y-Position</param>
-        public void setYPos(int yPos)
+        public new void setYPos(int yPos)
         {
             base.setYPos(yPos);
             this.PosChange();
@@ -76,7 +76,7 @@ namespace game
         /// New setter, calls the PointChange() method at the end.
         /// </summary>
         /// <param name="points">the new points</param>
-        public void setPoints(int points)
+        public new void setPoints(int points)
         {
             base.setPoints(points);
             this.PointChange();

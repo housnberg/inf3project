@@ -11,7 +11,7 @@ namespace game.backend
         void onIdChange();
         void onIsBusyChange();
         void onDescChange();
-        void onPosChange(int yPos, int xPos);
+        void onPosChange();
         void onPointChange();
     }
 }
