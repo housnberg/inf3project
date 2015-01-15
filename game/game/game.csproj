@@ -58,6 +58,7 @@
     <Compile Include="backend\PathWalker.cs" />
     <Compile Include="backend\Player.cs" />
     <Compile Include="backend\PlayerObserver.cs" />
+    <Compile Include="backend\search\LinearSearch.cs" />
     <Compile Include="gui\Gui.cs">
       <SubType>Form</SubType>
     </Compile>
