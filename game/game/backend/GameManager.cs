@@ -627,6 +627,16 @@ namespace game
             return LinearSearch<Player>.find(players, (player) => player.getID() == id);
         }
 
+        /// <summary>
+        /// searches a player based on an id
+        /// </summary>
+        /// <param name="reference"></param>
+        /// /// <param name="id"></param>
+        /// <returns>the player if he found one</returns>
+        public Player searchBinaryId(Player reference, int id)
+        {
+            return BinarySearch<Player>.find(players, reference, (refPlayer, player) => refPlayer.getID() - id);
+        }
 
 
     }
