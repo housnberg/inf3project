@@ -16,7 +16,7 @@ namespace game.backend
         /// </summary>
         public void onIdChange()
         {
-            Console.WriteLine("Player ID has changed.");
+            //Console.WriteLine("Player ID has changed.");
         }
 
         /// <summary>
@@ -24,7 +24,7 @@ namespace game.backend
         /// </summary>
         public void onIsBusyChange()
         {
-            Console.WriteLine("Player isBusy has changed.");
+            //Console.WriteLine("Player isBusy has changed.");
         }
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace game.backend
         /// </summary>
         public void onDescChange()
         {
-            Console.WriteLine("Player description has changed");
+            //Console.WriteLine("Player description has changed");
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace game.backend
         /// </summary>
         public void onPosChange()
         {
-            Console.WriteLine("Player position has changed.");
+            //Console.WriteLine("Player position has changed.");
             try
             {
                 if (gameManager.getThisPlayer() != null && pwInstance.isWalking())
@@ -61,7 +61,7 @@ namespace game.backend
         /// </summary>
         public void onPointChange()
         {
-            Console.WriteLine("Player points have changed.");
+            //Console.WriteLine("Player points have changed.");
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace game.backend
@@ -97,6 +98,7 @@ namespace game.backend
                 }
             }
 
+            Thread.Sleep(100);
         }
 
         /// <summary>

@@ -14,7 +14,6 @@ namespace game.gui
     public partial class Gui : Form
     {
         private GameManager gameManager = GameManager.getGameManagerInstance();
-        private List<Color> playerColors = new List<Color>();
         public delegate void refGui();
         public refGui myDelegate;
         public Gui() : base()
