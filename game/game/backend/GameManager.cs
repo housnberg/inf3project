@@ -14,6 +14,7 @@ using System.Threading;
 using game.backend;
 using System.Runtime.InteropServices;
 using System.IO;
+using game.backend.search;
 
 namespace game
 {
@@ -577,5 +578,56 @@ namespace game
         {
             return thisPlayer;
         }
+
+        /// <summary>
+        /// searches for a player who is not busy
+        /// </summary>
+        /// <returns>player who is not busy</returns>
+        public Player searchLinearNotBusy()
+        {
+            return LinearSearch<Player>.find(players, (player) => player.getBusy() == false);
+        }
+
+        /// <summary>
+        /// searches for a player who has less points than me and who is not busy
+        /// </summary>
+        /// <returns>player with less points than me</returns>
+        public Player searchLinearPoints()
+        {
+            return LinearSearch<Player>.find(players, (player) => player.getPoints() < thisPlayer.getPoints() && player.getBusy() == false);
+        }
+
+        /// <summary>
+        /// searches for a player who has less points than an given number and who is not busy
+        /// </summary>
+        /// <returns>player with less points than the given number/returns>
+        public Player searchLinearPoints(int number)
+        {
+            return LinearSearch<Player>.find(players, (player) => player.getPoints() < number && player.getBusy() == false);
+        }
+
+        /// <summary>
+        /// searches for a player whose distance between me and him is smaller than a given number
+        /// </summary>
+        /// <param name="distance"></param>
+        /// <returns>player whose distance between me and him is smaller than a given number</returns>
+        public Player searchLinearDistance(int distance)
+        {
+            return LinearSearch<Player>.find(players, (player) => Math.Abs(thisPlayer.getXPos() - player.getXPos()) 
+                + Math.Abs(thisPlayer.getYPos() - player.getYPos()) - 1 < distance);
+        }
+
+        /// <summary>
+        /// searches for a player with a given id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>player with a given id</returns>
+        public Player searchLinearId(int id)
+        {
+            return LinearSearch<Player>.find(players, (player) => player.getID() == id);
+        }
+
+
+
     }
 }
