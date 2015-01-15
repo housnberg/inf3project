@@ -20,8 +20,6 @@ namespace game
             this.addObserver(new PlayerObserver()); //for test purpose
         }
 
-
-
         /// <summary>
         /// New setter, calls the IdChange method.
         /// </summary>
@@ -80,6 +78,11 @@ namespace game
         {
             base.setPoints(points);
             this.PointChange();
+        }
+
+        public int getPoints()
+        {
+            return this.getPoints();
         }
 
         /// <summary>

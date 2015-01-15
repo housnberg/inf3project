@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SearchAndSort
+namespace game.backend.search
 {
-    class LinearSearch<C>
+    public abstract class LinearSearch<C>
     {
         /// <summary>
         /// Linear search through a list. Searches as long as the list is not exhausted and the searched element is not found yet.
@@ -14,7 +14,7 @@ namespace SearchAndSort
         /// <param name="list">the list to search through</param>
         /// <param name="criterion">the criterion from which we determine, whether we have found our element</param>
         /// <returns>the element, if it is found, or the default value of type C, if not</returns>
-        public C find(List<C> list, Func<C, bool> criterion)
+        public static C find(List<C> list, Func<C, bool> criterion)
         {
             C result = default(C);
             int i = 0;
