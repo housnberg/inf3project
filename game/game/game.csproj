@@ -60,7 +60,6 @@
     <Compile Include="backend\PlayerObserver.cs" />
     <Compile Include="backend\search\BinarySearch.cs" />
     <Compile Include="backend\search\LinearSearch.cs" />
-    <Compile Include="backend\search\QuickSort.cs" />
     <Compile Include="gui\Gui.cs">
       <SubType>Form</SubType>
     </Compile>
